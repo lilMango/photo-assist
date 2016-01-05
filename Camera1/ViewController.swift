@@ -26,6 +26,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+
     override func viewWillAppear(animated: Bool) {
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
@@ -56,6 +57,7 @@ class ViewController: UIViewController {
             print("Failed at add Output to capture Session")
         }
         
+        self.view.sendSubviewToBack(overlayView)
         
     }
     
@@ -65,8 +67,11 @@ class ViewController: UIViewController {
         
     }
     
-    @IBOutlet weak var previewView: UIView!
     
+    @IBOutlet weak var textOverlay: UITextView!
+    @IBOutlet weak var overlayView: UIView!
+    @IBOutlet weak var overlayButton: UIButton!
+    @IBOutlet weak var previewView: UIView!
 
     @IBOutlet weak var capturedImage: UIImageView!
 
@@ -87,7 +92,27 @@ class ViewController: UIViewController {
             })
         }
 
+        //THe closest thing to manipulating Z-index of views
+        self.view.bringSubviewToFront(textOverlay)
     }
+
+    @IBAction func toggleShowOverlay(sender: UIButton) {
+        if let isOverlayText = overlayButton.titleLabel?.text {
+            if isOverlayText=="Overlay" {
+                //Show overlay
+                self.view.bringSubviewToFront(overlayView)
+
+                overlayButton.setTitle("No Overlay", forState: UIControlState.Normal)
+                
+            }else {
+                //No overlay showing
+                overlayButton.setTitle("Overlay", forState: UIControlState.Normal)
+                self.view.sendSubviewToBack(overlayView)
+            }
+        }
+        
+    }
+    
 
 }
 

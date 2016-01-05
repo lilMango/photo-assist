@@ -18,9 +18,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
-                                <rect key="frame" x="0.0" y="46" width="600" height="442"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6NC-QY-anu">
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
+                                <rect key="frame" x="0.0" y="79" width="600" height="442"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view alpha="0.34999999999999998" contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atm-5w-zH6">
+                                <rect key="frame" x="0.0" y="79" width="600" height="442"/>
+                                <color key="backgroundColor" red="0.065892377967909324" green="0.22439713777316572" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3T-c2-511">
                                 <rect key="frame" x="262" y="528" width="77" height="30"/>
@@ -34,20 +45,25 @@
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rI-EQ-4VS">
-                                <rect key="frame" x="534" y="528" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <rect key="frame" x="531" y="528" width="52" height="30"/>
+                                <state key="normal" title="Overlay"/>
+                                <connections>
+                                    <action selector="toggleShowOverlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rCb-Lm-rmi"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="K3T-c2-511" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1d6-x9-JWh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2rI-EQ-4VS" secondAttribute="trailing" id="Zcz-gM-y6G"/>
-                            <constraint firstItem="K3T-c2-511" firstAttribute="centerX" secondItem="8Jg-fS-hDs" secondAttribute="centerX" id="aBD-UU-3Ox"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="capturedImage" destination="0xg-0X-q4S" id="MPI-uG-MmL"/>
+                        <outlet property="overlayButton" destination="2rI-EQ-4VS" id="DZn-7v-GqR"/>
+                        <outlet property="overlayView" destination="atm-5w-zH6" id="S6e-J1-16L"/>
                         <outlet property="previewView" destination="8Jg-fS-hDs" id="YaM-OD-WLY"/>
+                        <outlet property="textOverlay" destination="6NC-QY-anu" id="Rnv-hL-TWW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
