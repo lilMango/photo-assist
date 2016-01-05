@@ -82,6 +82,7 @@ class ViewController: UIViewController {
                     
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     self.capturedImage.image = image
+                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 }
             })
         }
