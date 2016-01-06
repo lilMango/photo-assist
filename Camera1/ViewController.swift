@@ -19,6 +19,18 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //Initialize overlay with some stock phot
+        let defaultOverlayImg=UIImage(named:"halfdome.jpg")
+        
+        let overlayImageView=UIImageView(image: defaultOverlayImg)
+        //overlayImageView.frame=overlayView.frame
+
+        overlayImageView.frame=CGRect(x:0,y:0,
+            width:overlayView.frame.width/2,
+            height:overlayView.frame.height/2)
+        overlayView.addSubview(overlayImageView)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,6 +87,11 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var capturedImage: UIImageView!
 
+    
+    /**
+     * Take a picture.
+     * TODO send to camera roll
+     */
     @IBAction func didPressTakePhoto(sender: UIButton) {
         
         if let videoConnection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo) {
@@ -96,6 +113,9 @@ class ViewController: UIViewController {
         self.view.bringSubviewToFront(textOverlay)
     }
 
+    /*
+    *   Toggle showing of overlay
+    */
     @IBAction func toggleShowOverlay(sender: UIButton) {
         if let isOverlayText = overlayButton.titleLabel?.text {
             if isOverlayText=="Overlay" {

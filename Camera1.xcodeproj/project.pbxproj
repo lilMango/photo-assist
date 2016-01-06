@@ -13,6 +13,7 @@
 		568FC6BA1C31CE8600D64FEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 568FC6B91C31CE8600D64FEA /* Assets.xcassets */; };
 		568FC6BD1C31CE8600D64FEA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 568FC6BB1C31CE8600D64FEA /* LaunchScreen.storyboard */; };
 		568FC6C81C31CE8700D64FEA /* Camera1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC6C71C31CE8700D64FEA /* Camera1Tests.swift */; };
+		56C04F531C3C944900974F53 /* halfdome.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 56C04F521C3C944900974F53 /* halfdome.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		568FC6C31C31CE8700D64FEA /* Camera1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Camera1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FC6C71C31CE8700D64FEA /* Camera1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera1Tests.swift; sourceTree = "<group>"; };
 		568FC6C91C31CE8700D64FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		56C04F521C3C944900974F53 /* halfdome.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = halfdome.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		568FC6B11C31CE8600D64FEA /* Camera1 */ = {
 			isa = PBXGroup;
 			children = (
+				56C04F521C3C944900974F53 /* halfdome.jpg */,
 				568FC6B21C31CE8600D64FEA /* AppDelegate.swift */,
 				568FC6B41C31CE8600D64FEA /* ViewController.swift */,
 				568FC6B61C31CE8600D64FEA /* Main.storyboard */,
@@ -181,6 +184,7 @@
 				568FC6BD1C31CE8600D64FEA /* LaunchScreen.storyboard in Resources */,
 				568FC6BA1C31CE8600D64FEA /* Assets.xcassets in Resources */,
 				568FC6B81C31CE8600D64FEA /* Main.storyboard in Resources */,
+				56C04F531C3C944900974F53 /* halfdome.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +399,7 @@
 				568FC6CE1C31CE8700D64FEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		568FC6CF1C31CE8700D64FEA /* Build configuration list for PBXNativeTarget "Camera1Tests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +408,7 @@
 				568FC6D11C31CE8700D64FEA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
