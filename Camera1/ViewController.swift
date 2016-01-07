@@ -10,7 +10,8 @@ import UIKit
 import AVFoundation
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController,UIImagePickerControllerDelegate,
+    UINavigationControllerDelegate{
 
     var captureSession: AVCaptureSession?
     var stillImageOutput: AVCaptureStillImageOutput?
@@ -30,7 +31,10 @@ class ViewController: UIViewController {
             width:overlayView.frame.width/2,
             height:overlayView.frame.height/2)
         overlayView.addSubview(overlayImageView)
-        
+
+        captureImageBtn.backgroundColor=UIColor.blueColor()
+        captureImageBtn.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -85,7 +89,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var overlayButton: UIButton!
     @IBOutlet weak var previewView: UIView!
 
-    @IBOutlet weak var capturedImage: UIImageView!
+    @IBOutlet weak var captureImageBtn: UIButton!
 
     
     /**
@@ -103,7 +107,8 @@ class ViewController: UIViewController {
                     let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
                     
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
-                    self.capturedImage.image = image
+                    //self.capturedImage.image = image
+                    self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
                     UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 }
             })
@@ -133,6 +138,18 @@ class ViewController: UIViewController {
         
     }
     
+    /*
+    * Leads user to Photo Library/camera roll
+    */
+    @IBAction func viewPhotoLibrary(sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            var imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
+            imagePicker.allowsEditing = true
+            self.presentViewController(imagePicker, animated: true, completion: nil)
+        }
+    }
 
 }
 

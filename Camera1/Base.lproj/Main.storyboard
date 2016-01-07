@@ -40,15 +40,24 @@
                                     <action selector="didPressTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xJD-tB-7to"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0xg-0X-q4S">
-                                <rect key="frame" x="20" y="506" width="96" height="74"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rI-EQ-4VS">
                                 <rect key="frame" x="531" y="528" width="52" height="30"/>
                                 <state key="normal" title="Overlay"/>
                                 <connections>
                                     <action selector="toggleShowOverlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rCb-Lm-rmi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lub-39-iM7">
+                                <rect key="frame" x="21" y="529" width="90" height="63"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                </accessibility>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Library">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="viewPhotoLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vLT-Ss-Abp"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -59,7 +68,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="capturedImage" destination="0xg-0X-q4S" id="MPI-uG-MmL"/>
+                        <outlet property="captureImageBtn" destination="Lub-39-iM7" id="Xyd-Eb-WMW"/>
                         <outlet property="overlayButton" destination="2rI-EQ-4VS" id="DZn-7v-GqR"/>
                         <outlet property="overlayView" destination="atm-5w-zH6" id="S6e-J1-16L"/>
                         <outlet property="previewView" destination="8Jg-fS-hDs" id="YaM-OD-WLY"/>
