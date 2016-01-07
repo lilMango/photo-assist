@@ -17,21 +17,19 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     var stillImageOutput: AVCaptureStillImageOutput?
     var previewLayer: AVCaptureVideoPreviewLayer?
     
+    var overlayImg:UIImage?=UIImage(named:"halfdome.jpg")
+    var overlayImageView:UIImageView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        //Initialize overlay with some stock phot
-        let defaultOverlayImg=UIImage(named:"halfdome.jpg")
+        //Initialize overlay with some stock 
+        let bounds = UIScreen.mainScreen().bounds
+        overlayImageView=UIImageView(image: overlayImg)
+        print("main screen bounds: ",bounds)
+        overlayView.addSubview(overlayImageView!)
         
-        let overlayImageView=UIImageView(image: defaultOverlayImg)
-        //overlayImageView.frame=overlayView.frame
-
-        overlayImageView.frame=CGRect(x:0,y:0,
-            width:overlayView.frame.width/2,
-            height:overlayView.frame.height/2)
-        overlayView.addSubview(overlayImageView)
-
         captureImageBtn.backgroundColor=UIColor.blueColor()
         captureImageBtn.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
 
@@ -60,10 +58,24 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         stillImageOutput = AVCaptureStillImageOutput()
         stillImageOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
 
+        //init the preview feed
         if captureSession!.canAddOutput(stillImageOutput) {
             captureSession!.addOutput(stillImageOutput)
             
+        
+            let bounds = UIScreen.mainScreen().bounds
+            let previewViewBounds = previewView.bounds
+            print("bounds2: ",bounds)
+
+            print("previewView frame: ", previewView.frame)
+            previewView.bounds=CGRect(x:0, y:0,
+                width:414,height:previewView.bounds.height)
+                        print("previewView bounds0:", previewViewBounds)
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+
+            previewLayer?.bounds=previewView.bounds
+            //previewLayer?.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds)) //TODO what does position do??
+
             previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
             previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.Portrait
             previewView.layer.addSublayer(previewLayer!)
@@ -79,11 +91,23 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        previewLayer!.frame = previewView.bounds
+        previewLayer!.frame = CGRect(x:0, y:0,
+            width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
+        overlayImageView!.frame=CGRect(x:0, y:0,
+            width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
+        print("previewView bounds:", previewView.bounds)
+        print("overlayImage bounds: ",overlayImageView!.bounds)
+        print("overlayImage frame:",overlayImageView!.frame)
+        
+        print("previewLayer: bounds:",previewLayer?.bounds)
+        print("previewLayer: frames:", previewLayer?.frame)
         
     }
     
-    
+    /***********************************************
+    * Outlets
+    *
+    ************************************************/
     @IBOutlet weak var textOverlay: UITextView!
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var overlayButton: UIButton!
@@ -99,6 +123,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBAction func didPressTakePhoto(sender: UIButton) {
         
         if let videoConnection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo) {
+
             videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
             stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
                 if (sampleBuffer != nil) {
@@ -115,7 +140,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         }
 
         //THe closest thing to manipulating Z-index of views
-        self.view.bringSubviewToFront(textOverlay)
+        //self.view.bringSubviewToFront(textOverlay)
     }
 
     /*
@@ -146,9 +171,21 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             var imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
-            imagePicker.allowsEditing = true
+            imagePicker.allowsEditing = false
             self.presentViewController(imagePicker, animated: true, completion: nil)
         }
+    }
+
+    
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.captureImageBtn.setImage(pickedImage, forState: UIControlState.Normal)
+            overlayImageView!.image=pickedImage
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
 }
