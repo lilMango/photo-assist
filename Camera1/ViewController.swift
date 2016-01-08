@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-
+import CoreMotion
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,
     UINavigationControllerDelegate{
@@ -19,6 +19,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     
     var overlayImg:UIImage?=UIImage(named:"halfdome.jpg")
     var overlayImageView:UIImageView?
+    
+    var motionManager:CMMotionManager?
+    var motX:Int=0
+    var motY:Int=0
+    var motZ:Int=0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +37,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         
         captureImageBtn.backgroundColor=UIColor.blueColor()
         captureImageBtn.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
-
+        
+        motionManager=CMMotionManager()
+        motionManager!.gyroUpdateInterval=0.5 //half-second
+        motionManager!.startGyroUpdates()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +48,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         // Dispose of any resources that can be recreated.
     }
 
-
+    /*
+    * Setting up device stuff like camera, gyroscope,gps every time this app comes into view.
+    * Also acts like a setup
+    */
     override func viewWillAppear(animated: Bool) {
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
@@ -69,7 +80,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
 
             print("previewView frame: ", previewView.frame)
             previewView.bounds=CGRect(x:0, y:0,
-                width:414,height:previewView.bounds.height)
+                width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
                         print("previewView bounds0:", previewViewBounds)
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 
@@ -85,23 +96,45 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             print("Failed at add Output to capture Session")
         }
         
+    
         self.view.sendSubviewToBack(overlayView)
+    
+        //********** Gryoscrope inits *********
+
+        motionManager!.startGyroUpdates()
+        if motionManager?.gyroActive != nil && motionManager?.gyroActive==true  {
+            print("gyro active")
+        } else {
+            print("gyro NOT active")
+        }
         
+        if motionManager?.gyroActive != nil && motionManager?.gyroAvailable==true {
+            print("gyro available")
+        } else {
+            print("gyro NOT available")
+        }
+        print("gyroData[start]: ",motionManager?.gyroData)
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        previewLayer!.frame = CGRect(x:0, y:0,
+        previewLayer!.frame = CGRect(x:previewView.frame.minX,
+            y:0,
             width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
-        overlayImageView!.frame=CGRect(x:0, y:0,
+        overlayImageView!.frame=CGRect(x:previewView.frame.minX, y:0,
             width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
-        print("previewView bounds:", previewView.bounds)
-        print("overlayImage bounds: ",overlayImageView!.bounds)
-        print("overlayImage frame:",overlayImageView!.frame)
+    }
+    
+    /********
+     * Clean up of on device hardware
+     ********/
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
         
-        print("previewLayer: bounds:",previewLayer?.bounds)
-        print("previewLayer: frames:", previewLayer?.frame)
+        captureSession?.stopRunning()
         
+        print("gyroData[end]: ",motionManager?.gyroData)
+        motionManager?.stopGyroUpdates()
     }
     
     /***********************************************
@@ -134,7 +167,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     //self.capturedImage.image = image
                     self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
-                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+                    print("gyroData: ", self.motionManager?.gyroData)
+                    //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 }
             })
         }
