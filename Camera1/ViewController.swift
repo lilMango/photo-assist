@@ -21,10 +21,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     var overlayImageView:UIImageView?
     
     var motionManager:CMMotionManager?
-    var motX:Int=0
-    var motY:Int=0
-    var motZ:Int=0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -39,8 +36,18 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         captureImageBtn.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
         
         motionManager=CMMotionManager()
-        motionManager!.gyroUpdateInterval=0.5 //half-second
-        motionManager!.startGyroUpdates()
+        motionManager!.accelerometerUpdateInterval=0.1 //half-second
+        motionManager!.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {(accelerometerData: CMAccelerometerData?, error: NSError?)in
+            self.outputOrientationData(accelerometerData!.acceleration)
+            if (error != nil)
+            {
+                print("\(error)")
+            }
+        })
+    }
+
+    func outputOrientationData(rotationRate:CMAcceleration){
+        textOverlay.text=String(format:"%.5f\n%.5f\n%.5f",rotationRate.x,rotationRate.y,rotationRate.z)
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,10 +56,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     }
 
     /*
-    * Setting up device stuff like camera, gyroscope,gps every time this app comes into view.
+    * Setting up device stuff like camera, accelerometer, location every time this app comes into view.
     * Also acts like a setup
     */
     override func viewWillAppear(animated: Bool) {
+        self.view.sendSubviewToBack(overlayView)
+        self.view.sendSubviewToBack(textOverlay)
+        
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
         
@@ -97,23 +107,23 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         }
         
     
-        self.view.sendSubviewToBack(overlayView)
-    
-        //********** Gryoscrope inits *********
 
-        motionManager!.startGyroUpdates()
-        if motionManager?.gyroActive != nil && motionManager?.gyroActive==true  {
-            print("gyro active")
+    
+        //********** accelerometer inits *********
+
+        //motionManager!.startaccelerometerUpdates()
+        if motionManager?.accelerometerActive != nil && motionManager?.accelerometerActive==true  {
+            print("accelerometer active")
         } else {
-            print("gyro NOT active")
+            print("accelerometer NOT active")
         }
         
-        if motionManager?.gyroActive != nil && motionManager?.gyroAvailable==true {
-            print("gyro available")
+        if motionManager?.accelerometerActive != nil && motionManager?.accelerometerAvailable==true {
+            print("accelerometer available")
         } else {
-            print("gyro NOT available")
+            print("accelerometer NOT available")
         }
-        print("gyroData[start]: ",motionManager?.gyroData)
+        print("accelerometerData[start]: ",motionManager?.accelerometerData)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -133,8 +143,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         
         captureSession?.stopRunning()
         
-        print("gyroData[end]: ",motionManager?.gyroData)
-        motionManager?.stopGyroUpdates()
+        print("accelerometerData[end]: ",motionManager?.accelerometerData)
+        motionManager?.stopAccelerometerUpdates()
     }
     
     /***********************************************
@@ -148,10 +158,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
 
     @IBOutlet weak var captureImageBtn: UIButton!
 
+    @IBOutlet weak var rotXText: UITextField!
+    @IBOutlet weak var rotYText: UITextField!
+    @IBOutlet weak var rotZText: UITextField!
     
-    /**
-     * Take a picture.
-     * TODO send to camera roll
+    /* ********************************
+     * Capturing Photo sequence (get buffer, saving it)
+     * *************************************
      */
     @IBAction func didPressTakePhoto(sender: UIButton) {
         
@@ -167,7 +180,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
                     //self.capturedImage.image = image
                     self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
-                    print("gyroData: ", self.motionManager?.gyroData)
+                    print("accelerometerData: ", self.motionManager?.accelerometerData)
+                    
                     //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 }
             })
@@ -177,21 +191,24 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         //self.view.bringSubviewToFront(textOverlay)
     }
 
-    /*
-    *   Toggle showing of overlay
+    /***************************************
+    * Action for when user toggles Overlay/Photo Assist button
+    * This controls whether to turn on timers for continuous feed of accelerometer and location
+    * ***************************************
     */
     @IBAction func toggleShowOverlay(sender: UIButton) {
         if let isOverlayText = overlayButton.titleLabel?.text {
             if isOverlayText=="Overlay" {
                 //Show overlay
                 self.view.bringSubviewToFront(overlayView)
-
+                self.view.bringSubviewToFront(textOverlay)
                 overlayButton.setTitle("No Overlay", forState: UIControlState.Normal)
                 
             }else {
                 //No overlay showing
                 overlayButton.setTitle("Overlay", forState: UIControlState.Normal)
                 self.view.sendSubviewToBack(overlayView)
+                self.view.sendSubviewToBack(textOverlay)
             }
         }
         
