@@ -64,10 +64,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         
         var resultText:String=""
 
-        if let i_rot=startOrientation {
-            resultText+=String(format:"%.5f\n%.5f\n%.5f\nLocation:",i_rot.x,i_rot.y,i_rot.z)+String(startLocation)
+        if let i_rot=startOrientation,s_loc=startLocation {
+            resultText+=String(format:"%.5f\t%.5f\t%.5f-location:(%.5f,%.5f)\nalt:%.5f\n",i_rot.x,i_rot.y,i_rot.z,s_loc.coordinate.latitude,s_loc.coordinate.longitude,s_loc.altitude)
         }
-        resultText+=String(format:"%.5f\n%.5f\n%.5f\nLocation:",rotationRate.x,rotationRate.y,rotationRate.z)+String(coords)
+        
+        resultText+=String(format:"Current:\n%.5f\t%.5f\t%.5f\n",rotationRate.x,rotationRate.y,rotationRate.z)
+        resultText+=String("-location:")
+        resultText+=String(format:"(%.5f,%.5f)\nalt=%.5f",(coords?.coordinate.latitude)!, (coords?.coordinate.longitude)!, (coords?.altitude)!)
         
         textOverlay.text=resultText
     }
