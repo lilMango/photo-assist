@@ -51,6 +51,9 @@
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="heightClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="75" y="102" width="412" height="340"/>
+                                </variation>
                             </textView>
                             <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
                                 <rect key="frame" x="0.0" y="50" width="600" height="482"/>
@@ -64,8 +67,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="K3T-c2-511" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1d6-x9-JWh"/>
+                            <constraint firstItem="6NC-QY-anu" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5LO-zD-6OD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2rI-EQ-4VS" secondAttribute="trailing" id="Zcz-gM-y6G"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5LO-zD-6OD"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="constraints">
+                                <include reference="5LO-zD-6OD"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="captureImageBtn" destination="Lub-39-iM7" id="Xyd-Eb-WMW"/>
@@ -77,7 +91,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="440" y="389"/>
+            <point key="canvasLocation" x="440" y="388.5"/>
         </scene>
     </scenes>
 </document>

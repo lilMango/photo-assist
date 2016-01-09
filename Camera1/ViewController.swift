@@ -9,9 +9,11 @@
 import UIKit
 import AVFoundation
 import CoreMotion
+import CoreLocation
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,
-    UINavigationControllerDelegate{
+    UINavigationControllerDelegate,
+    CLLocationManagerDelegate{
 
     var captureSession: AVCaptureSession?
     var stillImageOutput: AVCaptureStillImageOutput?
@@ -21,7 +23,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     var overlayImageView:UIImageView?
     
     var motionManager:CMMotionManager?
-
+    var locationManager:CLLocationManager?
+    
+    //Attributes of current overlay
+    var startLocation:CLLocation?
+    var startOrientation:CMAcceleration?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -44,10 +51,25 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                 print("\(error)")
             }
         })
+        
+        locationManager=CLLocationManager()
+        locationManager!.delegate = self
+        locationManager!.requestWhenInUseAuthorization()
+        locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager!.startUpdatingLocation()
     }
 
     func outputOrientationData(rotationRate:CMAcceleration){
-        textOverlay.text=String(format:"%.5f\n%.5f\n%.5f",rotationRate.x,rotationRate.y,rotationRate.z)
+        let coords=self.locationManager!.location
+        
+        var resultText:String=""
+
+        if let i_rot=startOrientation {
+            resultText+=String(format:"%.5f\n%.5f\n%.5f\nLocation:",i_rot.x,i_rot.y,i_rot.z)+String(startLocation)
+        }
+        resultText+=String(format:"%.5f\n%.5f\n%.5f\nLocation:",rotationRate.x,rotationRate.y,rotationRate.z)+String(coords)
+        
+        textOverlay.text=resultText
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +84,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     override func viewWillAppear(animated: Bool) {
         self.view.sendSubviewToBack(overlayView)
         self.view.sendSubviewToBack(textOverlay)
+        
+        
+        locationManager!.startUpdatingLocation()
         
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
@@ -145,6 +170,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         
         print("accelerometerData[end]: ",motionManager?.accelerometerData)
         motionManager?.stopAccelerometerUpdates()
+        locationManager?.stopUpdatingLocation()
     }
     
     /***********************************************
@@ -162,9 +188,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var rotYText: UITextField!
     @IBOutlet weak var rotZText: UITextField!
     
-    /* ********************************
+    /* *************************************************************
      * Capturing Photo sequence (get buffer, saving it)
-     * *************************************
+     * *************************************************************
      */
     @IBAction func didPressTakePhoto(sender: UIButton) {
         
@@ -182,6 +208,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
                     print("accelerometerData: ", self.motionManager?.accelerometerData)
                     
+                    self.startLocation = self.locationManager?.location
+                    self.startOrientation = self.motionManager?.accelerometerData?.acceleration
                     //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
                 }
             })
@@ -239,5 +267,26 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         dismissViewControllerAnimated(true, completion: nil)
     }
 
+    // CLLocationManagerDelegate methods
+    func locationManager(manager: CLLocationManager!,
+        didUpdateLocations locations: [CLLocation]!)
+        {
+        var latestLocation: CLLocation = locations[locations.count - 1]
+    
+/*
+            self.textOverlay.text = String(format: "Latitude: %.4f\n Longitude: %.4f\n horiz acc: %.4f\n altitude: %.4f\n vertical acc: %.4f\n",
+        latestLocation.coordinate.latitude,
+        latestLocation.coordinate.longitude,
+        latestLocation.horizontalAccuracy,
+        latestLocation.altitude,
+        latestLocation.verticalAccuracy)
+    
+    
+*/
+          
+        //latestLocation.distanceFromLocation(startLocation)
+    
+
+    }
 }
 
