@@ -35,7 +35,8 @@ class Vector3:Equatable {
     }
     
     func magnitude() -> Double {
-        return sqrt(x*x + y*y + z*z)
+        return sqrt(x*x
+            + y*y + z*z)
     }
     
     func normalize(){
@@ -56,6 +57,14 @@ class Vector3:Equatable {
                          c:(z-b.z))
     }
     
+    /* cross product of AxB, where A is the caller
+    */
+    func cross(b:Vector3) -> Vector3{
+        let prod=Vector3(a:y*b.z-b.y*z,
+                         b:-(x*b.z)+b.x*z,
+                         c:x*b.y-b.x*y)
+        return prod
+    }
 }
 
 func ==(lhs: Vector3, rhs: Vector3) -> Bool {

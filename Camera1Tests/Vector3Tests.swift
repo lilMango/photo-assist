@@ -22,7 +22,7 @@ class Vector3Tests:XCTestCase {
     func testEquality() {
         var vecb=Vector3(a:0.0,b:0.0,c:0.0)
         //let res=(vec==vecb)
-        XCTAssertTrue(false)
+        //XCTAssertTrue(false)
     }
     
     func testMagnitude(){
@@ -54,5 +54,83 @@ class Vector3Tests:XCTestCase {
         XCTAssertEqual(10.0,diff.x)
         XCTAssertEqual(10.0,diff.y)
         XCTAssertEqual(10.0,diff.z)
+    }
+    
+    func testCrossXxY() {
+        let vec_i=Vector3()
+        let vec_f=Vector3()
+        var vec_res=Vector3()
+        
+        vec_i.set(1.0, b: 0.0, c: 0.0)
+        vec_f.set(0.0, b: 1.0, c: 0.0)
+        vec_res=vec_i.cross(vec_f)
+        
+        //+Z-axis
+        XCTAssertEqual(1.0, vec_res.z)
+    }
+    
+    func testCrossYxZ() {
+        let vec_i=Vector3()
+        let vec_f=Vector3()
+        var vec_res=Vector3()
+        
+        vec_i.set(0.0, b: 1.0, c: 0.0)
+        vec_f.set(0.0, b: 0.0, c: 1.0)
+        vec_res=vec_i.cross(vec_f)
+        
+        //+X-axis
+        XCTAssertEqual(1.0, vec_res.x)
+    }
+
+    func testCrossZxX() {
+        let vec_i=Vector3()
+        let vec_f=Vector3()
+        var vec_res=Vector3()
+        
+        vec_i.set(0.0, b: 0.0, c: 1.0)
+        vec_f.set(1.0, b: 0.0, c: 0.0)
+        vec_res=vec_i.cross(vec_f)
+
+        //+Y-axis
+        XCTAssertEqual(1.0, vec_res.y)
+    }
+    
+    func testCrossYxX() {
+        let vec_i=Vector3()
+        let vec_f=Vector3()
+        var vec_res=Vector3()
+        
+        vec_i.set(0.0, b: 1.0, c: 0.0)
+        vec_f.set(1.0, b: 0.0, c: 0.0)
+        vec_res=vec_i.cross(vec_f)
+        
+        //-Z-axis
+        XCTAssertEqual(-1.0, vec_res.z)
+    }
+    
+    func testCrossZxY() {
+        let vec_i=Vector3()
+        let vec_f=Vector3()
+        var vec_res=Vector3()
+        
+        vec_i.set(0.0, b: 0.0, c: 1.0)
+        vec_f.set(0.0, b: 1.0, c: 0.0)
+        vec_res=vec_i.cross(vec_f)
+        
+        //-X-axis
+        XCTAssertEqual(-1.0, vec_res.x)
+    }
+    
+    func testCrossXxZ() {
+        let vec_i=Vector3()
+        let vec_f=Vector3()
+        var vec_res=Vector3()
+        
+        vec_i.set(1.0, b: 0.0, c: 0.0)
+        vec_f.set(0.0, b: 0.0, c: 1.0)
+        vec_res=vec_i.cross(vec_f)
+        
+        //-Y-axis
+        XCTAssertEqual(-1.0, vec_res.y)
     }
 }
