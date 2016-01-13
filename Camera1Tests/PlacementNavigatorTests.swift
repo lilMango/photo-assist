@@ -35,23 +35,79 @@ class PlacementNavigatorTests: XCTestCase {
     }
     
     /**
-     * Pitch-clockwise - X-axis
+     * Pitch-counter clockwise: +X-axis
      */
-    func testPitchCW() {
+    func testPitchCCW() {
+        let v_cur = Vector3(a:0,b:1.0,c:0.0)
         let v_f = Vector3(a:0,b:0, c:1)
-        let v_cur = Vector3(a:0,b:-0.6,c:-0.8)
         
-        var rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+        let rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
 
-        XCTAssertEqual(PlacementNavigator.Rotation.PitchCW,rot)
-        
+        XCTAssertEqual(PlacementNavigator.Rotation.PitchCCW,rot)
     }
     
     /**
-    * Pitch -CCW - X-axis
-    */
-    func testPitchCCW() {
+     * Pitch-clockwise: -X-axis
+     */
+    func testPitchCW() {
+        let v_cur = Vector3(a:0,b:0.0,c:1.0)
+        let v_f = Vector3(a:0,b:1.0, c:0.0)
+
         
+        let rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+        
+        XCTAssertEqual(PlacementNavigator.Rotation.PitchCW,rot)
+    }
+    
+    /**
+     * Yaw- counter clockwise : +Y-axis
+     */
+    func testYawCCW() {
+        let v_cur = Vector3(a:-1,b:0,c:0)
+        let v_f = Vector3(a:0,b:0, c:1)
+
+        
+        let rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+        
+        XCTAssertEqual(PlacementNavigator.Rotation.YawCCW,rot)
+    }
+    
+    /**
+     * Yaw- clockwise : -Y-axis
+     */
+    func testYawCW() {
+        let v_cur = Vector3(a:0,b:0,c:1)
+        let v_f = Vector3(a:-1,b:0, c:0)
+        
+        
+        let rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+        
+        XCTAssertEqual(PlacementNavigator.Rotation.YawCW,rot)
+    }
+    
+    /**
+    * Roll- counter clockwise: +Z-axis
+    */
+    func testRollCCW() {
+        let v_cur = Vector3(a:1,b:0,c:0)
+        let v_f = Vector3(a:0,b:1, c:0)
+        
+        
+        let rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+        
+        XCTAssertEqual(PlacementNavigator.Rotation.RollCCW,rot)
     }
 
+    /**
+     * Roll- clockwise: -Z-axis
+     */
+    func testRollCW() {
+        let v_cur = Vector3(a:0,b:1,c:0)
+        let v_f = Vector3(a:1,b:0, c:0)
+        
+        
+        let rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+        
+        XCTAssertEqual(PlacementNavigator.Rotation.RollCW,rot)
+    }
 }
