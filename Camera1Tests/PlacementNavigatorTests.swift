@@ -6,7 +6,9 @@
 //  Copyright © 2016 Miguel Paysan. All rights reserved.
 //
 
+import Foundation
 import XCTest
+@testable import Camera1
 
 class PlacementNavigatorTests: XCTestCase {
 
@@ -30,6 +32,26 @@ class PlacementNavigatorTests: XCTestCase {
         self.measureBlock {
             // Put the code you want to measure the time of here.
         }
+    }
+    
+    /**
+     * Pitch-clockwise - X-axis
+     */
+    func testPitchCW() {
+        let v_f = Vector3(a:0,b:0, c:1)
+        let v_cur = Vector3(a:0,b:-0.6,c:-0.8)
+        
+        var rot:PlacementNavigator.Rotation = PlacementNavigator.getOrientationInstruction(v_f,cur:v_cur)
+
+        XCTAssertEqual(PlacementNavigator.Rotation.PitchCW,rot)
+        
+    }
+    
+    /**
+    * Pitch -CCW - X-axis
+    */
+    func testPitchCCW() {
+        
     }
 
 }

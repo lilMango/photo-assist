@@ -47,7 +47,7 @@ class Vector3Tests:XCTestCase {
     }
     
     func testSubtract() {
-        var vecb=Vector3(a:10,b:10,c:10)
+        let vecb=Vector3(a:10,b:10,c:10)
         var diff=Vector3(a:0,b:0,c:0)
         
         diff=vecb.subtract(vec)
@@ -133,4 +133,29 @@ class Vector3Tests:XCTestCase {
         //-Y-axis
         XCTAssertEqual(-1.0, vec_res.y)
     }
+    
+    
+    func testGreatestAxis() {
+        let vec=Vector3(a: 1, b: 2, c: 3)
+        XCTAssertEqual(Vector3.Axis.Z, vec.greatestAxis())
+        
+        vec.set(5, b: 4, c: 3)
+        XCTAssertEqual(Vector3.Axis.X,vec.greatestAxis())
+        
+        vec.set(-5, b: 14, c: 3)
+        XCTAssertEqual(Vector3.Axis.Y,vec.greatestAxis())
+        
+        
+        vec.set(-5, b: 4, c: 3)
+        XCTAssertEqual(Vector3.Axis.nX,vec.greatestAxis())
+        
+        vec.set(3, b: -4, c: 2)
+        XCTAssertEqual(Vector3.Axis.nY,vec.greatestAxis())
+        
+        vec.set(2, b: 4, c: -5)
+        XCTAssertEqual(Vector3.Axis.nZ,vec.greatestAxis())
+        
+    }
+    
+    
 }

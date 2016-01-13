@@ -9,7 +9,9 @@
 import Foundation
 
 class Vector3:Equatable {
-    
+    enum Axis{
+        case X,Y,Z,nX,nY,nZ
+    }
 
     var x:Double = 0.0
     var y:Double = 0.0
@@ -64,6 +66,39 @@ class Vector3:Equatable {
                          b:-(x*b.z)+b.x*z,
                          c:x*b.y-b.x*y)
         return prod
+    }
+    
+    /*
+    * Returns enum of highest valued axis in this vector
+    */
+    func greatestAxis()-> Axis {
+        var res = Axis.X
+        var high=x
+        
+        if(x<0 && abs(x)>high) {
+            res=Axis.nX
+            high=abs(x)
+            
+        }
+        if(y>high) {
+           res=Axis.Y
+           high=y
+        }
+        if(y<0 && abs(y)>high){
+            res=Axis.nY
+            high=abs(y)
+        }
+        
+        if(z>high) {
+           res=Axis.Z
+           high=z
+        }
+        
+        if(z<0 && abs(z)>high) {
+           res=Axis.nZ           
+        }
+        
+        return res
     }
 }
 
