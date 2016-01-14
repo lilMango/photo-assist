@@ -44,6 +44,21 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         
         motionManager=CMMotionManager()
         motionManager!.accelerometerUpdateInterval=0.1 //half-second
+        
+        locationManager=CLLocationManager()
+        locationManager!.delegate = self
+        locationManager!.requestWhenInUseAuthorization()
+        locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+
+        startSensors()
+    }
+    
+    
+    /****
+    * Helpers to stop and start accelerometer and location sensors
+    */
+    func startSensors() {
+        print("Sensors:ON")
         motionManager!.startAccelerometerUpdatesToQueue(NSOperationQueue.currentQueue()!, withHandler: {(accelerometerData: CMAccelerometerData?, error: NSError?)in
             self.outputOrientationData(accelerometerData!.acceleration)
             if (error != nil)
@@ -51,14 +66,16 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                 print("\(error)")
             }
         })
-        
-        locationManager=CLLocationManager()
-        locationManager!.delegate = self
-        locationManager!.requestWhenInUseAuthorization()
-        locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager!.startUpdatingLocation()
-    }
 
+    }
+    
+    func stopSensors() {
+        print("Sensors:OFF")
+        motionManager?.stopAccelerometerUpdates()
+        locationManager?.stopUpdatingLocation()
+    }
+    
     func outputOrientationData(rotationRate:CMAcceleration){
         let coords=self.locationManager!.location
         
@@ -175,9 +192,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         captureSession?.stopRunning()
         
         print("accelerometerData[end]: ",motionManager?.accelerometerData)
-        motionManager?.stopAccelerometerUpdates()
-        locationManager?.stopUpdatingLocation()
+        stopSensors()
     }
+    
     
     /***********************************************
     * Outlets
@@ -230,21 +247,30 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBAction func toggleShowOverlay(sender: UIButton) {
         if let isOverlayText = overlayButton.titleLabel?.text {
             if isOverlayText=="Overlay" {
-                //Show overlay
-                self.view.bringSubviewToFront(overlayView)
-                self.view.bringSubviewToFront(textOverlay)
-                overlayButton.setTitle("No Overlay", forState: UIControlState.Normal)
-                
+                showOverlay(true)
             }else {
-                //No overlay showing
-                overlayButton.setTitle("Overlay", forState: UIControlState.Normal)
-                self.view.sendSubviewToBack(overlayView)
-                self.view.sendSubviewToBack(textOverlay)
+                showOverlay(false)
             }
         }
-        
     }
     
+    func showOverlay(doOverlay:Bool) {
+        if doOverlay {
+            //Show overlay
+            self.view.bringSubviewToFront(overlayView)
+            self.view.bringSubviewToFront(textOverlay)
+            overlayButton.setTitle("No Overlay", forState: UIControlState.Normal)
+            startSensors()
+        } else {
+            //No overlay showing
+            self.view.sendSubviewToBack(overlayView)
+            self.view.sendSubviewToBack(textOverlay)
+            stopSensors()
+            overlayButton.setTitle("Overlay", forState: UIControlState.Normal)
+        }
+    }
+    
+
     /*
     * Leads user to Photo Library/camera roll
     */
