@@ -39,8 +39,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         print("main screen bounds: ",bounds)
         overlayView.addSubview(overlayImageView!)
         //overlayView.backgroundColor=UIColor.redColor()
-        captureImageBtn.backgroundColor=UIColor.blueColor()
-        captureImageBtn.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
+        //libraryButton.backgroundColor=UIColor.blueColor()
+        libraryButton.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
         
         motionManager=CMMotionManager()
         motionManager!.accelerometerUpdateInterval=0.1 //half-second
@@ -188,11 +188,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var overlayButton: UIButton!
     @IBOutlet weak var previewView: UIView!
 
-    @IBOutlet weak var captureImageBtn: UIButton!
+    @IBOutlet weak var libraryButton: UIButton!
 
-    @IBOutlet weak var rotXText: UITextField!
-    @IBOutlet weak var rotYText: UITextField!
-    @IBOutlet weak var rotZText: UITextField!
     
     /* *************************************************************
      * Capturing Photo sequence (get buffer, saving it)
@@ -211,7 +208,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
 
-                    //self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
+                    //self.libraryButton.setImage(image, forState: UIControlState.Normal)
                     print("accelerometerData: ", self.motionManager?.accelerometerData)
                     
                     self.startLocation = self.locationManager?.location
@@ -266,7 +263,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     // MARK: - UIImagePickerControllerDelegate Methods
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            //self.captureImageBtn.setImage(pickedImage, forState: UIControlState.Normal) // TODO? setting the button to be latest photo?
+            //self.libraryButton.setImage(pickedImage, forState: UIControlState.Normal) // TODO? setting the button to be latest photo?
             overlayImageView!.image=pickedImage
         }
         

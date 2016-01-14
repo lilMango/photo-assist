@@ -33,38 +33,20 @@
                                     <rect key="frame" x="0.0" y="30" width="400" height="50"/>
                                 </variation>
                             </textView>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eAz-jz-rsB">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6NC-QY-anu">
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
-                                <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6NC-QY-anu">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <variation key="heightClass=regular" fixedFrame="YES">
-                                            <rect key="frame" x="75" y="102" width="412" height="340"/>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
-                                        </variation>
-                                    </textView>
-                                    <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
-                                        <rect key="frame" x="-180" y="-177" width="600" height="482"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
-                                        </variation>
-                                    </view>
-                                    <view alpha="0.34999999999999998" contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atm-5w-zH6">
-                                        <rect key="frame" x="-180" y="-177" width="600" height="482"/>
-                                        <color key="backgroundColor" red="0.065892377967909324" green="0.22439713777316572" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
-                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
-                                        </variation>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
+                                <rect key="frame" x="0.0" y="78" width="400" height="400"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view alpha="0.34999999999999998" contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atm-5w-zH6">
+                                <rect key="frame" x="0.0" y="78" width="400" height="400"/>
+                                <color key="backgroundColor" red="0.065892377967909324" green="0.22439713777316572" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZDu-eP-WAr">
                                 <rect key="frame" x="0.0" y="178" width="240" height="34"/>
@@ -115,7 +97,6 @@
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZDu-eP-WAr" secondAttribute="bottom" constant="130" id="Gxq-eU-LIK"/>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XyR-41-1ua"/>
-                            <constraint firstItem="ZDu-eP-WAr" firstAttribute="top" secondItem="atm-5w-zH6" secondAttribute="bottom" constant="130" id="sTo-Wf-1rE"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -123,7 +104,6 @@
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="XyR-41-1ua"/>
-                                <exclude reference="sTo-Wf-1rE"/>
                                 <exclude reference="Gxq-eU-LIK"/>
                             </mask>
                         </variation>
@@ -133,13 +113,12 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="XyR-41-1ua"/>
-                                <include reference="sTo-Wf-1rE"/>
                                 <include reference="Gxq-eU-LIK"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="captureImageBtn" destination="Lub-39-iM7" id="Xyd-Eb-WMW"/>
+                        <outlet property="libraryButton" destination="Lub-39-iM7" id="0zN-22-SWs"/>
                         <outlet property="overlayButton" destination="2rI-EQ-4VS" id="DZn-7v-GqR"/>
                         <outlet property="overlayView" destination="atm-5w-zH6" id="S6e-J1-16L"/>
                         <outlet property="previewView" destination="8Jg-fS-hDs" id="YaM-OD-WLY"/>
