@@ -24,6 +24,15 @@ class PlacementNavigator {
         case PitchCW, PitchCCW, YawCW, YawCCW, RollCW, RollCCW, Noop
     }
 
+    static var rotationToWordsMap:[Rotation:String]=[
+        Rotation.PitchCW: "Tilt Backward",
+        Rotation.PitchCCW: "Tilt Forward",
+        Rotation.YawCW: "Swing Right side toward you",
+        Rotation.YawCCW: "Swing Left side toward you",
+        Rotation.RollCW: "turn Clockwise->",
+        Rotation.RollCCW: "turn Counter Clockwise",
+    ]
+    
     // Assumes you get to the path in a straight line and No walking up/down directions
     
     
@@ -32,7 +41,7 @@ class PlacementNavigator {
     *        Current Orientation, Current Location
     * Returns:Instruction on how to proceed to next location (direction, tilt, etc)
     */
-    static func getNavigationInstruction(dest:Vector3,cur:Vector3) {
+    static func getNavigationInstruction(dest:Vector3,cur:Vector3) -> String{
         /*priorities of instructions are:
             1)Distance (latitude/longitude) to the picture spot
             2)phone orientation
@@ -40,7 +49,12 @@ class PlacementNavigator {
         getDistanceInstruction()
         
         //if distance reasonable range then call get device orientation
-        getOrientationInstruction(dest,cur:cur)
+        let rot=getOrientationInstruction(dest,cur:cur)
+        if(rotationToWordsMap[rot] != nil){
+            return rotationToWordsMap[rot]!
+        }else{
+            return ""
+        }
     }
     
     /*
@@ -82,6 +96,7 @@ class PlacementNavigator {
         }else {
             return Rotation.Noop
         }
-        
     }
+    
+
 }

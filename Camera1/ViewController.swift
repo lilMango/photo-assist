@@ -63,15 +63,18 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         let coords=self.locationManager!.location
         
         var resultText:String=""
-
-        if let i_rot=startOrientation,s_loc=startLocation {
-            resultText+=String(format:"%.5f\t%.5f\t%.5f-location:(%.5f,%.5f)\nalt:%.5f\n",i_rot.x,i_rot.y,i_rot.z,s_loc.coordinate.latitude,s_loc.coordinate.longitude,s_loc.altitude)
-        }
         
         resultText+=String(format:"Current:\n%.5f\t%.5f\t%.5f\n",rotationRate.x,rotationRate.y,rotationRate.z)
-        resultText+=String("-location:")
-        resultText+=String(format:"(%.5f,%.5f)\nalt=%.5f",(coords?.coordinate.latitude)!, (coords?.coordinate.longitude)!, (coords?.altitude)!)
+        //resultText+=String("-location:")
+        //resultText+=String(format:"(%.5f,%.5f)\nalt=%.5f",(coords?.coordinate.latitude)!, (coords?.coordinate.longitude)!, (coords?.altitude)!)
         
+        if let i_rot=startOrientation,s_loc=startLocation {
+            resultText+=String(format:"Previous:%.5f\t%.5f\t%.5f\n",i_rot.x,i_rot.y,i_rot.z)
+            //resultText+=String(format:"+location:(%.5f,%.5f) \nalt:%.5f\n",s_loc.coordinate.latitude,s_loc.coordinate.longitude,s_loc.altitude)
+            let orientation_f=Vector3(a: i_rot.x, b: i_rot.y, c: i_rot.z)
+            let orientation_cur=Vector3(a: rotationRate.x, b: rotationRate.y, c: rotationRate.z)
+            resultText+=PlacementNavigator.getNavigationInstruction(orientation_cur, cur: orientation_f)
+        }
         textOverlay.text=resultText
     }
 
