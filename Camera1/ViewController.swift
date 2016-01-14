@@ -38,7 +38,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         overlayImageView=UIImageView(image: overlayImg)
         print("main screen bounds: ",bounds)
         overlayView.addSubview(overlayImageView!)
-        
+        //overlayView.backgroundColor=UIColor.redColor()
         captureImageBtn.backgroundColor=UIColor.blueColor()
         captureImageBtn.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
         
@@ -210,8 +210,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
                     
                     let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
-                    //self.capturedImage.image = image
-                    self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
+
+                    //self.captureImageBtn.setImage(image, forState: UIControlState.Normal)
                     print("accelerometerData: ", self.motionManager?.accelerometerData)
                     
                     self.startLocation = self.locationManager?.location
@@ -266,7 +266,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     // MARK: - UIImagePickerControllerDelegate Methods
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.captureImageBtn.setImage(pickedImage, forState: UIControlState.Normal)
+            //self.captureImageBtn.setImage(pickedImage, forState: UIControlState.Normal) // TODO? setting the button to be latest photo?
             overlayImageView!.image=pickedImage
         }
         
