@@ -79,6 +79,10 @@ class PlacementNavigator {
         //This cross product vector AxB, gives us the direction to get to A from B, and which axis to rotate with
         let prod:Vector3=cur.cross(dest)
         
+        //If there's minimal change then Noop. Sensor is sensitive, and may cause noise
+        if(prod.magnitude() < ConstantsConfig.kDeltaOrientationThreshold) {
+            return Rotation.Noop
+        }
         var dict:Dictionary<Vector3.Axis,Rotation>=Dictionary<Vector3.Axis,Rotation>()
 
         dict[Vector3.Axis.X]=Rotation.PitchCCW

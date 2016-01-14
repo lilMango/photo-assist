@@ -11,6 +11,7 @@
 		5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393691C40A3BB00EB1600 /* PlacementNavigator.swift */; };
 		5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936B1C45B6D600EB1600 /* Vector3.swift */; };
 		5673936E1C45BE8800EB1600 /* Vector3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936D1C45BE8800EB1600 /* Vector3Tests.swift */; };
+		567393701C471F9900EB1600 /* ConstantsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936F1C471F9900EB1600 /* ConstantsConfig.swift */; };
 		568FC6B31C31CE8600D64FEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC6B21C31CE8600D64FEA /* AppDelegate.swift */; };
 		568FC6B51C31CE8600D64FEA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC6B41C31CE8600D64FEA /* ViewController.swift */; };
 		568FC6B81C31CE8600D64FEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 568FC6B61C31CE8600D64FEA /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 		567393691C40A3BB00EB1600 /* PlacementNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigator.swift; sourceTree = "<group>"; };
 		5673936B1C45B6D600EB1600 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		5673936D1C45BE8800EB1600 /* Vector3Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3Tests.swift; sourceTree = "<group>"; };
+		5673936F1C471F9900EB1600 /* ConstantsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantsConfig.swift; sourceTree = "<group>"; };
 		568FC6AF1C31CE8600D64FEA /* Camera1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FC6B21C31CE8600D64FEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		568FC6B41C31CE8600D64FEA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				568FC6BB1C31CE8600D64FEA /* LaunchScreen.storyboard */,
 				568FC6BE1C31CE8600D64FEA /* Info.plist */,
 				567393691C40A3BB00EB1600 /* PlacementNavigator.swift */,
+				5673936F1C471F9900EB1600 /* ConstantsConfig.swift */,
 				5673936B1C45B6D600EB1600 /* Vector3.swift */,
 			);
 			path = Camera1;
@@ -217,6 +220,7 @@
 				568FC6B51C31CE8600D64FEA /* ViewController.swift in Sources */,
 				568FC6B31C31CE8600D64FEA /* AppDelegate.swift in Sources */,
 				5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */,
+				567393701C471F9900EB1600 /* ConstantsConfig.swift in Sources */,
 				5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
