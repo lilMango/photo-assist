@@ -50,7 +50,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         locationManager!.requestWhenInUseAuthorization()
         locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
 
-        startSensors()
+        overlayImageView!.alpha=0.33//same as initial slider value
+        showOverlay(true)
+
     }
     
     
@@ -206,6 +208,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var previewView: UIView!
 
     @IBOutlet weak var libraryButton: UIButton!
+    @IBOutlet weak var overlayOpacitySlider: UISlider!
 
     
     /* *************************************************************
@@ -259,17 +262,31 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             //Show overlay
             self.view.bringSubviewToFront(overlayView)
             self.view.bringSubviewToFront(textOverlay)
+            
             overlayButton.setTitle("No Overlay", forState: UIControlState.Normal)
+            overlayOpacitySlider.hidden=false
+            
             startSensors()
         } else {
             //No overlay showing
             self.view.sendSubviewToBack(overlayView)
             self.view.sendSubviewToBack(textOverlay)
-            stopSensors()
+
             overlayButton.setTitle("Overlay", forState: UIControlState.Normal)
+            overlayOpacitySlider.hidden=true
+            
+            stopSensors()
+
         }
     }
     
+    /**
+    * This changes the opacity of the overlay, so you can see the preview feed or more of the overlay image and helper text.
+    */
+    @IBAction func changeOverlayOpacity(sender: UISlider) {
+        textOverlay.alpha = CGFloat(sender.value)
+        overlayImageView!.alpha = CGFloat(sender.value)
+    }
 
     /*
     * Leads user to Photo Library/camera roll
@@ -294,6 +311,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         }
         
         dismissViewControllerAnimated(true, completion: nil)
+
+        showOverlay(false)
     }
 
     // CLLocationManagerDelegate methods
