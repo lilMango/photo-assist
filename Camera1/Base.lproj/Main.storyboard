@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHy-p2-pka">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHy-p2-pka">
                                 <rect key="frame" x="0.0" y="28" width="400" height="50"/>
                                 <color key="backgroundColor" red="0.08235294371843338" green="0.090196080505847931" blue="0.023529414087533951" alpha="1" colorSpace="deviceRGB"/>
                                 <attributedString key="attributedText">
@@ -55,11 +56,11 @@
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view alpha="0.34999999999999998" contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atm-5w-zH6">
+                            <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atm-5w-zH6">
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
-                                <color key="backgroundColor" red="0.065892377967909324" green="0.22439713777316572" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZDu-eP-WAr">
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="ZDu-eP-WAr">
                                 <rect key="frame" x="0.0" y="178" width="240" height="34"/>
                                 <subviews>
                                     <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lub-39-iM7">
@@ -69,9 +70,6 @@
                                         </accessibility>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <state key="normal" title="Library"/>
-                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="133" height="75"/>
-                                        </variation>
                                         <connections>
                                             <action selector="viewPhotoLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vLT-Ss-Abp"/>
                                         </connections>
@@ -79,9 +77,6 @@
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3T-c2-511">
                                         <rect key="frame" x="0.0" y="0.0" width="131" height="34"/>
                                         <state key="normal" image="captureButton"/>
-                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="133" y="0.0" width="134" height="75"/>
-                                        </variation>
                                         <connections>
                                             <action selector="didPressTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xJD-tB-7to"/>
                                         </connections>
@@ -91,39 +86,63 @@
                                         <state key="normal" title="Overlay">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="267" y="0.0" width="133" height="75"/>
-                                        </variation>
                                         <connections>
                                             <action selector="toggleShowOverlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rCb-Lm-rmi"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="1" y="535" width="400" height="75"/>
                                 </variation>
                             </stackView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Yax-qI-rrR">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="92" y="634" width="213" height="31"/>
+                                </variation>
+                                <connections>
+                                    <action selector="changeOverlayOpacity:" destination="BYZ-38-t0r" eventType="valueChanged" id="mIO-iw-ro9"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZDu-eP-WAr" secondAttribute="bottom" constant="130" id="Gxq-eU-LIK"/>
+                            <constraint firstItem="ZDu-eP-WAr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HJI-yL-eaJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Yax-qI-rrR" secondAttribute="trailing" constant="123" id="IRu-4U-tdn">
+                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                            </constraint>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XyR-41-1ua"/>
+                            <constraint firstItem="Yax-qI-rrR" firstAttribute="top" secondItem="K3T-c2-511" secondAttribute="bottom" constant="24" id="ZiK-Dz-4hs"/>
+                            <constraint firstItem="Yax-qI-rrR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="123" id="zYj-Us-jzw">
+                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="ZDu-eP-WAr"/>
+                                <exclude reference="Yax-qI-rrR"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="HJI-yL-eaJ"/>
                                 <exclude reference="XyR-41-1ua"/>
+                                <exclude reference="IRu-4U-tdn"/>
+                                <exclude reference="ZiK-Dz-4hs"/>
+                                <exclude reference="zYj-Us-jzw"/>
                                 <exclude reference="Gxq-eU-LIK"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="ZDu-eP-WAr"/>
+                                <include reference="Yax-qI-rrR"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="HJI-yL-eaJ"/>
                                 <include reference="XyR-41-1ua"/>
+                                <include reference="IRu-4U-tdn"/>
+                                <include reference="ZiK-Dz-4hs"/>
+                                <include reference="zYj-Us-jzw"/>
                                 <include reference="Gxq-eU-LIK"/>
                             </mask>
                         </variation>
@@ -131,6 +150,7 @@
                     <connections>
                         <outlet property="libraryButton" destination="Lub-39-iM7" id="0zN-22-SWs"/>
                         <outlet property="overlayButton" destination="2rI-EQ-4VS" id="DZn-7v-GqR"/>
+                        <outlet property="overlayOpacitySlider" destination="Yax-qI-rrR" id="vlH-WF-1cj"/>
                         <outlet property="overlayView" destination="atm-5w-zH6" id="S6e-J1-16L"/>
                         <outlet property="previewView" destination="8Jg-fS-hDs" id="YaM-OD-WLY"/>
                         <outlet property="textOverlay" destination="6NC-QY-anu" id="Rnv-hL-TWW"/>
