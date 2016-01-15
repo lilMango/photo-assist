@@ -19,11 +19,12 @@
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mHy-p2-pka">
                                 <rect key="frame" x="0.0" y="28" width="400" height="50"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.08235294371843338" green="0.090196080505847931" blue="0.023529414087533951" alpha="1" colorSpace="deviceRGB"/>
                                 <attributedString key="attributedText">
                                     <fragment content="refoto">
                                         <attributes>
-                                            <font key="NSFont" size="21" name="Consolas"/>
+                                            <color key="NSColor" red="0.58431372549019611" green="0.98039215686274506" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="27" name="Consolas"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
@@ -33,12 +34,22 @@
                                     <rect key="frame" x="0.0" y="30" width="400" height="50"/>
                                 </variation>
                             </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6NC-QY-anu">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6NC-QY-anu">
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="DIrections Here">
+                                        <attributes>
+                                            <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="14" name="Consolas"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                </variation>
                             </textView>
                             <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
@@ -57,21 +68,19 @@
                                             <accessibilityTraits key="traits" button="YES" image="YES"/>
                                         </accessibility>
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Library">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
+                                        <state key="normal" title="Library"/>
                                         <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="0.0" y="0.0" width="133" height="34"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="133" height="75"/>
                                         </variation>
                                         <connections>
                                             <action selector="viewPhotoLibrary:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vLT-Ss-Abp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3T-c2-511">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K3T-c2-511">
                                         <rect key="frame" x="0.0" y="0.0" width="131" height="34"/>
-                                        <state key="normal" title="Take Photo"/>
+                                        <state key="normal" image="captureButton"/>
                                         <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="133" y="0.0" width="134" height="34"/>
+                                            <rect key="frame" x="133" y="0.0" width="134" height="75"/>
                                         </variation>
                                         <connections>
                                             <action selector="didPressTakePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xJD-tB-7to"/>
@@ -79,9 +88,11 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rI-EQ-4VS">
                                         <rect key="frame" x="131" y="0.0" width="52" height="34"/>
-                                        <state key="normal" title="Overlay"/>
+                                        <state key="normal" title="Overlay">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
-                                            <rect key="frame" x="267" y="0.0" width="133" height="34"/>
+                                            <rect key="frame" x="267" y="0.0" width="133" height="75"/>
                                         </variation>
                                         <connections>
                                             <action selector="toggleShowOverlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rCb-Lm-rmi"/>
@@ -89,11 +100,11 @@
                                     </button>
                                 </subviews>
                                 <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
-                                    <rect key="frame" x="1" y="535" width="400" height="34"/>
+                                    <rect key="frame" x="1" y="535" width="400" height="75"/>
                                 </variation>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZDu-eP-WAr" secondAttribute="bottom" constant="130" id="Gxq-eU-LIK"/>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XyR-41-1ua"/>
@@ -130,4 +141,7 @@
             <point key="canvasLocation" x="439.5" y="387.75"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="captureButton" width="75" height="75"/>
+    </resources>
 </document>
