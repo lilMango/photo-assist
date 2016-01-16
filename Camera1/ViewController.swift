@@ -52,7 +52,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
 
         overlayImageView!.alpha=0.33//same as initial slider value
         showOverlay(true)
-
+        
+        switchUpdated()
     }
     
     
@@ -210,6 +211,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var libraryButton: UIButton!
     @IBOutlet weak var overlayOpacitySlider: UISlider!
 
+    @IBOutlet weak var switchSavePhoto: UISwitch!
+    @IBOutlet weak var switchSavePhotoLabel: UILabel!
+    
     
     /* *************************************************************
      * Capturing Photo sequence (get buffer, saving it)
@@ -233,7 +237,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     
                     self.startLocation = self.locationManager?.location
                     self.startOrientation = self.motionManager?.accelerometerData?.acceleration
-                    //UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+                    
+                    if(self.switchSavePhoto.on) {
+                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+                    }
                 }
             })
         }
@@ -288,8 +295,26 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         overlayImageView!.alpha = CGFloat(sender.value)
     }
 
-    /*
+    
+    /*********************************************
+     * Toggle for saving photo
+     **********************************************
+     */
+    @IBAction func switchChanged(sender: UISwitch) {
+        switchUpdated()
+    }
+    
+    func switchUpdated() {
+        if (switchSavePhoto.on) {
+            switchSavePhotoLabel.text="Save Photo:[ON]"
+        } else {
+            switchSavePhotoLabel.text="Save Photo:[OFF]"
+        }
+    }
+    
+    /*********************************************
     * Leads user to Photo Library/camera roll
+    **********************************************
     */
     @IBAction func viewPhotoLibrary(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {

@@ -54,7 +54,7 @@
                             </textView>
                             <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Jg-fS-hDs">
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.065892377969999999" green="0.22439713780000001" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="atm-5w-zH6">
                                 <rect key="frame" x="0.0" y="78" width="400" height="400"/>
@@ -91,29 +91,42 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="1" y="535" width="400" height="75"/>
-                                </variation>
                             </stackView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.33000000000000002" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Yax-qI-rrR">
                                 <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="92" y="634" width="213" height="31"/>
-                                </variation>
                                 <connections>
                                     <action selector="changeOverlayOpacity:" destination="BYZ-38-t0r" eventType="valueChanged" id="mIO-iw-ro9"/>
                                 </connections>
                             </slider>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y10-Fm-Io2">
+                                <rect key="frame" x="-25" y="-15" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="blu-xk-WdE"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kBt-g6-kpg">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="125" y="737" width="121" height="21"/>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Y10-Fm-Io2" firstAttribute="top" secondItem="Yax-qI-rrR" secondAttribute="bottom" constant="8" id="9ZC-Ng-7Bx"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZDu-eP-WAr" secondAttribute="bottom" constant="130" id="Gxq-eU-LIK"/>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HJI-yL-eaJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Yax-qI-rrR" secondAttribute="trailing" constant="123" id="IRu-4U-tdn">
                                 <variation key="heightClass=regular-widthClass=compact" constant="30"/>
                             </constraint>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="XyR-41-1ua"/>
+                            <constraint firstItem="Y10-Fm-Io2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="30" id="YDk-TN-OIy"/>
                             <constraint firstItem="Yax-qI-rrR" firstAttribute="top" secondItem="K3T-c2-511" secondAttribute="bottom" constant="24" id="ZiK-Dz-4hs"/>
+                            <constraint firstItem="kBt-g6-kpg" firstAttribute="top" secondItem="Yax-qI-rrR" secondAttribute="bottom" constant="13" id="cGD-iV-1wP"/>
+                            <constraint firstItem="kBt-g6-kpg" firstAttribute="leading" secondItem="Y10-Fm-Io2" secondAttribute="trailing" constant="26" id="ffm-ye-TSO"/>
                             <constraint firstItem="Yax-qI-rrR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="123" id="zYj-Us-jzw">
                                 <variation key="heightClass=regular-widthClass=compact" constant="30"/>
                             </constraint>
@@ -122,6 +135,8 @@
                             <mask key="subviews">
                                 <exclude reference="ZDu-eP-WAr"/>
                                 <exclude reference="Yax-qI-rrR"/>
+                                <exclude reference="Y10-Fm-Io2"/>
+                                <exclude reference="kBt-g6-kpg"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="HJI-yL-eaJ"/>
@@ -129,6 +144,10 @@
                                 <exclude reference="IRu-4U-tdn"/>
                                 <exclude reference="ZiK-Dz-4hs"/>
                                 <exclude reference="zYj-Us-jzw"/>
+                                <exclude reference="9ZC-Ng-7Bx"/>
+                                <exclude reference="YDk-TN-OIy"/>
+                                <exclude reference="cGD-iV-1wP"/>
+                                <exclude reference="ffm-ye-TSO"/>
                                 <exclude reference="Gxq-eU-LIK"/>
                             </mask>
                         </variation>
@@ -136,6 +155,8 @@
                             <mask key="subviews">
                                 <include reference="ZDu-eP-WAr"/>
                                 <include reference="Yax-qI-rrR"/>
+                                <include reference="Y10-Fm-Io2"/>
+                                <include reference="kBt-g6-kpg"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="HJI-yL-eaJ"/>
@@ -143,6 +164,10 @@
                                 <include reference="IRu-4U-tdn"/>
                                 <include reference="ZiK-Dz-4hs"/>
                                 <include reference="zYj-Us-jzw"/>
+                                <include reference="9ZC-Ng-7Bx"/>
+                                <include reference="YDk-TN-OIy"/>
+                                <include reference="cGD-iV-1wP"/>
+                                <include reference="ffm-ye-TSO"/>
                                 <include reference="Gxq-eU-LIK"/>
                             </mask>
                         </variation>
@@ -153,6 +178,8 @@
                         <outlet property="overlayOpacitySlider" destination="Yax-qI-rrR" id="vlH-WF-1cj"/>
                         <outlet property="overlayView" destination="atm-5w-zH6" id="S6e-J1-16L"/>
                         <outlet property="previewView" destination="8Jg-fS-hDs" id="YaM-OD-WLY"/>
+                        <outlet property="switchSavePhoto" destination="Y10-Fm-Io2" id="1kL-Dj-SM6"/>
+                        <outlet property="switchSavePhotoLabel" destination="kBt-g6-kpg" id="upG-nQ-4ck"/>
                         <outlet property="textOverlay" destination="6NC-QY-anu" id="Rnv-hL-TWW"/>
                     </connections>
                 </viewController>
