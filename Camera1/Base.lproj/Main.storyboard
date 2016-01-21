@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -109,9 +110,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="125" y="737" width="121" height="21"/>
-                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -139,8 +137,7 @@
                                 <exclude reference="kBt-g6-kpg"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="HJI-yL-eaJ"/>
-                                <exclude reference="XyR-41-1ua"/>
+                                <exclude reference="Gxq-eU-LIK"/>
                                 <exclude reference="IRu-4U-tdn"/>
                                 <exclude reference="ZiK-Dz-4hs"/>
                                 <exclude reference="zYj-Us-jzw"/>
@@ -148,7 +145,8 @@
                                 <exclude reference="YDk-TN-OIy"/>
                                 <exclude reference="cGD-iV-1wP"/>
                                 <exclude reference="ffm-ye-TSO"/>
-                                <exclude reference="Gxq-eU-LIK"/>
+                                <exclude reference="HJI-yL-eaJ"/>
+                                <exclude reference="XyR-41-1ua"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -159,8 +157,7 @@
                                 <include reference="kBt-g6-kpg"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="HJI-yL-eaJ"/>
-                                <include reference="XyR-41-1ua"/>
+                                <include reference="Gxq-eU-LIK"/>
                                 <include reference="IRu-4U-tdn"/>
                                 <include reference="ZiK-Dz-4hs"/>
                                 <include reference="zYj-Us-jzw"/>
@@ -168,7 +165,8 @@
                                 <include reference="YDk-TN-OIy"/>
                                 <include reference="cGD-iV-1wP"/>
                                 <include reference="ffm-ye-TSO"/>
-                                <include reference="Gxq-eU-LIK"/>
+                                <include reference="HJI-yL-eaJ"/>
+                                <include reference="XyR-41-1ua"/>
                             </mask>
                         </variation>
                     </view>

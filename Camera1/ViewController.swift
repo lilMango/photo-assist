@@ -182,7 +182,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         previewLayer!.frame = CGRect(x:previewView.frame.minX,
             y:0,
             width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
-        overlayImageView!.frame=CGRect(x:previewView.frame.minX, y:0,
+        overlayImageView!.frame=CGRect(x:previewView.frame.minX,
+            y:0,
             width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
     }
     
@@ -332,6 +333,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //self.libraryButton.setImage(pickedImage, forState: UIControlState.Normal) // TODO? setting the button to be latest photo?
+            overlayImageView!.contentMode = .ScaleAspectFit
             overlayImageView!.image=pickedImage
         }
         
