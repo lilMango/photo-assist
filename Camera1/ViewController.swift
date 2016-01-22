@@ -231,8 +231,24 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     let dataProvider = CGDataProviderCreateWithCFData(imageData)
                     let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
                     
-                    let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                    var image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
 
+                    print("imageSize:",image.size)
+                    
+                    //Resizing photo and cropping. Square for now
+                    var pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
+
+                    UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
+
+                    //Crops image so we get the square. Camera doesn't work with previewLayer specs, it captures stuff outside (above and below) the previewLayer frame. So we redraw the image centered of the actual taken photo.
+                    var diffWidthHeight=image.size.height-image.size.width
+                    
+                    image.drawInRect(CGRectMake(0, -diffWidthHeight/2, image.size.width, image.size.height))
+                    image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
+                    
+                    UIGraphicsEndImageContext()
+                    
+                    
                     //self.libraryButton.setImage(image, forState: UIControlState.Normal)
                     print("accelerometerData: ", self.motionManager?.accelerometerData)
                     
