@@ -37,6 +37,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         let bounds = UIScreen.mainScreen().bounds
         overlayImageView=UIImageView(image: overlayImg)
         print("main screen bounds: ",bounds)
+        overlayImageView!.contentMode = .ScaleAspectFit
         overlayView.addSubview(overlayImageView!)
         //overlayView.backgroundColor=UIColor.redColor()
         //libraryButton.backgroundColor=UIColor.blueColor()
@@ -349,7 +350,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             //self.libraryButton.setImage(pickedImage, forState: UIControlState.Normal) // TODO? setting the button to be latest photo?
-            overlayImageView!.contentMode = .ScaleAspectFit
+
             overlayImageView!.image=pickedImage
         }
         
