@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		563C6DBE1C54C5FB00B0A843 /* OverlaySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */; };
 		567393681C40A39100EB1600 /* PlacementNavigatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393671C40A39100EB1600 /* PlacementNavigatorTests.swift */; };
 		5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393691C40A3BB00EB1600 /* PlacementNavigator.swift */; };
 		5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936B1C45B6D600EB1600 /* Vector3.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlaySettingsViewController.swift; sourceTree = "<group>"; };
 		567393671C40A39100EB1600 /* PlacementNavigatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigatorTests.swift; sourceTree = "<group>"; };
 		567393691C40A3BB00EB1600 /* PlacementNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigator.swift; sourceTree = "<group>"; };
 		5673936B1C45B6D600EB1600 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				567393691C40A3BB00EB1600 /* PlacementNavigator.swift */,
 				5673936F1C471F9900EB1600 /* ConstantsConfig.swift */,
 				5673936B1C45B6D600EB1600 /* Vector3.swift */,
+				563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */,
 			);
 			path = Camera1;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				563C6DBE1C54C5FB00B0A843 /* OverlaySettingsViewController.swift in Sources */,
 				568FC6B51C31CE8600D64FEA /* ViewController.swift in Sources */,
 				568FC6B31C31CE8600D64FEA /* AppDelegate.swift in Sources */,
 				5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */,

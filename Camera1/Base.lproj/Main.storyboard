@@ -10,7 +10,7 @@
         <!--Overlay-->
         <scene sceneID="lXg-Fm-YvO">
             <objects>
-                <viewController id="n3C-NL-vWr" sceneMemberID="viewController">
+                <viewController id="n3C-NL-vWr" customClass="OverlaySettingsViewController" customModule="Camera1" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7ui-eJ-cWP"/>
                         <viewControllerLayoutGuide type="bottom" id="VhS-x4-uxA"/>
@@ -20,8 +20,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BTg-5D-xP3">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.78039222959999999" green="0.81960791349999995" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="78" width="406" height="400"/>
+                                    <rect key="frame" x="0.0" y="78" width="400" height="400"/>
                                 </variation>
                             </imageView>
                         </subviews>
