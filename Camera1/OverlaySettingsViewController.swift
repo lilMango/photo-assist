@@ -12,7 +12,9 @@ import Photos
 import AVFoundation
 
 class OverlaySettingsViewController: UIViewController,
-    UICollectionViewDataSource{
+    UICollectionViewDataSource,
+    UICollectionViewDelegate
+{
 
 
     let PHOTOS_MAX_COUNT:Int = 5 //max number photos to use in scroll view
@@ -28,7 +30,8 @@ class OverlaySettingsViewController: UIViewController,
             width:picWidth,height:picWidth)
         selectedOverlayImgView!.frame=CGRect(x:0, y:0,
             width:picWidth,height:picWidth)
-        
+
+        collectionView.delegate=self
         collectionView.dataSource = self
         fetchPhotoAtIndexFromEnd(0)
 
@@ -60,14 +63,28 @@ class OverlaySettingsViewController: UIViewController,
     //UICollectionViewDataSource delegate
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! OverlayCell
-
+        
         cell.backgroundColor=UIColor.redColor()
+        
         let imgView = UIImageView.init(frame: CGRectMake(0,0,100, 100))
         imgView.image=libraryPhotos[indexPath.row] as? UIImage
         
+        cell.imageView=imgView
         cell.addSubview(imgView)
 
         return cell
+    }
+    
+    
+    //UICollectionView delegate on click of cell
+    func collectionView( collectionView: UICollectionView,
+        didSelectItemAtIndexPath indexPath: NSIndexPath) {
+            print("selected:",indexPath.row)
+            
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! OverlayCell
+            
+          selectedOverlayImgView.image=libraryPhotos[indexPath.row] as? UIImage
+    
     }
     
     
