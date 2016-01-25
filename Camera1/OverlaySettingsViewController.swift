@@ -8,16 +8,108 @@
 
 import Foundation
 import UIKit
+import Photos
 
-class OverlaySettingsViewController: UIViewController {
+class OverlaySettingsViewController: UIViewController,
+    UICollectionViewDataSource{
+
+
+    let PHOTOS_MAX_COUNT:Int = 5 //max number photos to use in scroll view
     
+    var libraryPhotos:NSMutableArray!=NSMutableArray()
+    let identifier = "CellIdentifier"
     
     override func viewDidLoad() {
+
         
+        let picWidth=UIScreen.mainScreen().bounds.width
+        selectedOverlayImgView!.bounds=CGRect(x:0, y:0,
+            width:picWidth,height:picWidth)
+        selectedOverlayImgView!.frame=CGRect(x:0, y:0,
+            width:picWidth,height:picWidth)
+        
+        
+        collectionView.dataSource = self
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        fetchPhotoAtIndexFromEnd(0)
+        
+        
+        
+        print("imageView.bounds:",selectedOverlayImgView!.bounds)
+        print("imageView.frame:",selectedOverlayImgView!.frame)
+    }
     
+    
+    /*****************************
+     * UI elements
+     ******************************/
+    @IBOutlet weak var selectedOverlayImgView: UIImageView!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    
+    // UICollectionViewDataSource delegate
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    //UICollectionViewDataSource delegate
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! UICollectionViewCell
+    cell.backgroundColor = UIColor.redColor()
+    
+    return cell
+    }
+    
+    
+    /*****************************
+    * Fetch latest photos from camera roll TODO:refactor to utility
+    ******************************/
+     // Repeatedly call the following method while incrementing
+     // the index until all the photos are fetched
+    func fetchPhotoAtIndexFromEnd(index:Int) {
+        
+        let imgManager = PHImageManager.defaultManager()
+        
+        // Note that if the request is not set to synchronous
+        // the requestImageForAsset will return both the image
+        // and thumbnail; by setting synchronous to true it
+        // will return just the thumbnail
+        var requestOptions = PHImageRequestOptions()
+        requestOptions.synchronous = true
+        
+        // Sort the images by creation date
+        var fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
+        
+        if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
+            
+            // If the fetch result isn't empty,
+            // proceed with the image request
+            if fetchResult.count > 0 {
+                // Perform the image request
+                imgManager.requestImageForAsset(fetchResult.objectAtIndex(fetchResult.count - 1 - index) as! PHAsset, targetSize: view.frame.size, contentMode: PHImageContentMode.AspectFill, options: requestOptions, resultHandler: { (image, _) in
+                    
+                    // Add the returned image to your array
+                    self.libraryPhotos.addObject(image!)
+                    
+                    // If you haven't already reached the first
+                    // index of the fetch result and if you haven't
+                    // already stored all of the images you need,
+                    // perform the fetch request again with an
+                    // incremented index
+                    if index + 1 < fetchResult.count && self.libraryPhotos.count < self.PHOTOS_MAX_COUNT {
+                        self.fetchPhotoAtIndexFromEnd(index + 1)
+                    } else {
+                        // Else you have completed creating your array
+                        print("Completed array: ",self.libraryPhotos.count," photos")
+                    }
+                })
+            }
+        }
     }
     
     

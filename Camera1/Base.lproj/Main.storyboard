@@ -16,6 +16,7 @@
                         <viewControllerLayoutGuide type="bottom" id="VhS-x4-uxA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hqB-lp-hBW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BTg-5D-xP3">
@@ -25,20 +26,49 @@
                                     <rect key="frame" x="0.0" y="78" width="400" height="400"/>
                                 </variation>
                             </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="he9-2X-6oI">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="0.0" id="TsD-ct-enZ">
+                                    <size key="itemSize" width="100" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CellIdentifier" id="KyM-1s-nFH">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="477" width="400" height="200"/>
+                                </variation>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="BTg-5D-xP3"/>
+                                <exclude reference="he9-2X-6oI"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="BTg-5D-xP3"/>
+                                <include reference="he9-2X-6oI"/>
                             </mask>
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Overlay" id="SRY-tL-eEF"/>
+                    <connections>
+                        <outlet property="collectionView" destination="he9-2X-6oI" id="hQ8-Rq-Htk"/>
+                        <outlet property="selectedOverlayImgView" destination="BTg-5D-xP3" id="oKr-VM-xnq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMc-su-FWY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -147,24 +177,15 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="595" width="400" height="75"/>
-                                </variation>
                             </stackView>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.33000000000000002" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Yax-qI-rrR">
                                 <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="48" y="694" width="304" height="31"/>
-                                </variation>
                                 <connections>
                                     <action selector="changeOverlayOpacity:" destination="BYZ-38-t0r" eventType="valueChanged" id="mIO-iw-ro9"/>
                                 </connections>
                             </slider>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y10-Fm-Io2">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="50" y="732" width="51" height="31"/>
-                                </variation>
                                 <connections>
                                     <action selector="switchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="blu-xk-WdE"/>
                                 </connections>
@@ -174,9 +195,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="125" y="737" width="86" height="21"/>
-                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
