@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Photos
+import AVFoundation
 
 class OverlaySettingsViewController: UIViewController,
     UICollectionViewDataSource{
@@ -20,7 +21,7 @@ class OverlaySettingsViewController: UIViewController,
     let identifier = "CellIdentifier"
     
     override func viewDidLoad() {
-
+        super.viewDidLoad()
         
         let picWidth=UIScreen.mainScreen().bounds.width
         selectedOverlayImgView!.bounds=CGRect(x:0, y:0,
@@ -28,8 +29,9 @@ class OverlaySettingsViewController: UIViewController,
         selectedOverlayImgView!.frame=CGRect(x:0, y:0,
             width:picWidth,height:picWidth)
         
-        
         collectionView.dataSource = self
+        fetchPhotoAtIndexFromEnd(0)
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -47,21 +49,25 @@ class OverlaySettingsViewController: UIViewController,
      * UI elements
      ******************************/
     @IBOutlet weak var selectedOverlayImgView: UIImageView!
-    
-    @IBOutlet weak var collectionView: UICollectionView!
 
+    @IBOutlet weak var collectionView: UICollectionView!
     
     // UICollectionViewDataSource delegate
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return libraryPhotos.count
     }
     
     //UICollectionViewDataSource delegate
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! UICollectionViewCell
-    cell.backgroundColor = UIColor.redColor()
-    
-    return cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! OverlayCell
+
+        cell.backgroundColor=UIColor.redColor()
+        let imgView = UIImageView.init(frame: CGRectMake(0,0,100, 100))
+        imgView.image=libraryPhotos[indexPath.row] as? UIImage
+        
+        cell.addSubview(imgView)
+
+        return cell
     }
     
     
@@ -78,11 +84,11 @@ class OverlaySettingsViewController: UIViewController,
         // the requestImageForAsset will return both the image
         // and thumbnail; by setting synchronous to true it
         // will return just the thumbnail
-        var requestOptions = PHImageRequestOptions()
+        let requestOptions = PHImageRequestOptions()
         requestOptions.synchronous = true
         
         // Sort the images by creation date
-        var fetchOptions = PHFetchOptions()
+        let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
         
         if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
@@ -111,6 +117,7 @@ class OverlaySettingsViewController: UIViewController,
             }
         }
     }
+    
     
     
 }
