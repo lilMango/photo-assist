@@ -111,6 +111,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     override func viewWillAppear(animated: Bool) {
         self.view.sendSubviewToBack(overlayView)
         self.view.sendSubviewToBack(textOverlay)
+        self.view.sendSubviewToBack(previewView)
         
         overlayImageView!.image = OverlayData.image //use the singleton set by overlay settings screen
         
@@ -119,7 +120,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         captureSession = AVCaptureSession()
         captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
         
-        var backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+        let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         let input = try! AVCaptureDeviceInput(device: backCamera)
         
         if (captureSession!.canAddInput(input)) {
@@ -132,6 +133,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         stillImageOutput = AVCaptureStillImageOutput()
         stillImageOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
 
+        print("previewView frame: ", previewView.frame)
+        print("previewView bounds: ", previewView.bounds)
+        print("overlayView frame: ", overlayView.frame)
+        print("overlayView bounds: ", overlayView.bounds)
+        print("textOverlay frame: ", textOverlay.frame)
+        print("textOverlay bounds: ", textOverlay.bounds)
+        
         //init the preview feed
         if captureSession!.canAddOutput(stillImageOutput) {
             captureSession!.addOutput(stillImageOutput)
@@ -139,27 +147,22 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         
             let bounds = UIScreen.mainScreen().bounds
             let previewViewBounds = previewView.bounds
-            print("bounds2: ",bounds)
 
-            print("previewView frame: ", previewView.frame)
-            previewView.bounds=CGRect(x:0, y:0,
-                width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
-                        print("previewView bounds0:", previewViewBounds)
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 
             previewLayer?.bounds=previewView.bounds
-            //previewLayer?.position = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds)) //TODO what does position do??
-
+            previewLayer?.frame=previewView.frame
+            
             previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
             previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.Portrait
             previewView.layer.addSublayer(previewLayer!)
             
+            print("previewLayer frame: ", previewLayer!.frame)
+            print("previewLayer bounds: ", previewLayer!.bounds)
             captureSession!.startRunning()
         } else {
             print("Failed at add Output to capture Session")
         }
-        
-    
 
     
         //********** accelerometer inits *********
@@ -181,12 +184,20 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        previewLayer!.frame = CGRect(x:previewView.frame.minX,
-            y:0,
-            width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
-        overlayImageView!.frame=CGRect(x:previewView.frame.minX,
-            y:0,
-            width:UIScreen.mainScreen().bounds.width,height:previewView.bounds.height)
+        
+        //Frames are w.r.t. their immediate parent frames (not absolute) ie.
+        previewLayer!.frame = CGRect(x:0,y:0,
+            width:UIScreen.mainScreen().bounds.width,
+            height:UIScreen.mainScreen().bounds.width)
+
+        overlayImageView!.frame=CGRect(x:0,y:0,
+            width:UIScreen.mainScreen().bounds.width,
+            height:UIScreen.mainScreen().bounds.width)
+        
+        print("previewLayer frame: ", previewLayer!.frame)
+        print("overlayImageView frame: ", overlayImageView!.frame)
+        
+
     }
     
     /********
@@ -238,12 +249,12 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     print("imageSize:",image.size)
                     
                     //Resizing photo and cropping. Square for now
-                    var pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
+                    let pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
 
                     UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
 
                     //Crops image so we get the square. Camera doesn't work with previewLayer specs, it captures stuff outside (above and below) the previewLayer frame. So we redraw the image centered of the actual taken photo.
-                    var diffWidthHeight=image.size.height-image.size.width
+                    let diffWidthHeight=image.size.height-image.size.width
                     
                     image.drawInRect(CGRectMake(0, -diffWidthHeight/2, image.size.width, image.size.height))
                     image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
@@ -286,8 +297,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     func showOverlay(doOverlay:Bool) {
         if doOverlay {
             //Show overlay
-            self.view.bringSubviewToFront(overlayView)
-            self.view.bringSubviewToFront(textOverlay)
+            self.view.sendSubviewToBack(previewView)
             
             overlayButton.setTitle("No Overlay", forState: UIControlState.Normal)
             overlayOpacitySlider.hidden=false
@@ -295,9 +305,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             startSensors()
         } else {
             //No overlay showing
-            self.view.sendSubviewToBack(overlayView)
-            self.view.sendSubviewToBack(textOverlay)
-
+            self.view.bringSubviewToFront(previewView)
+            
             overlayButton.setTitle("Overlay", forState: UIControlState.Normal)
             overlayOpacitySlider.hidden=true
             
@@ -337,7 +346,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     */
     @IBAction func viewPhotoLibrary(sender: UIButton) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
-            var imagePicker = UIImagePickerController()
+            let imagePicker = UIImagePickerController()
             imagePicker.delegate = self
             imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary;
             imagePicker.allowsEditing = false
