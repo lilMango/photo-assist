@@ -26,10 +26,13 @@ class OverlaySettingsViewController: UIViewController,
         super.viewDidLoad()
         
         let picWidth=UIScreen.mainScreen().bounds.width
-        selectedOverlayImgView!.bounds=CGRect(x:0, y:0,
-            width:picWidth,height:picWidth)
-        selectedOverlayImgView!.frame=CGRect(x:0, y:0,
-            width:picWidth,height:picWidth)
+        print("screenWidth:",picWidth)
+        print("imageView.bounds:",selectedOverlayImgView!.bounds)
+        print("imageView.frame:",selectedOverlayImgView!.frame)
+//        selectedOverlayImgView!.bounds=CGRect(x:0, y:0,
+//            width:picWidth,height:picWidth)
+//        selectedOverlayImgView!.frame=CGRect(x:0, y:0,
+//            width:picWidth,height:picWidth)
 
         collectionView.delegate=self
         collectionView.dataSource = self
@@ -43,8 +46,7 @@ class OverlaySettingsViewController: UIViewController,
         
         
         
-        print("imageView.bounds:",selectedOverlayImgView!.bounds)
-        print("imageView.frame:",selectedOverlayImgView!.frame)
+        
     }
     
     

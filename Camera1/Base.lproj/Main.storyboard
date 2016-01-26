@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -19,29 +20,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BTg-5D-xP3">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTg-5D-xP3">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.78039222959999999" green="0.81960791349999995" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="400" id="tx2-r8-WKx"/>
+                                    <constraint firstAttribute="width" secondItem="BTg-5D-xP3" secondAttribute="height" multiplier="1:1" id="hFP-IC-U84"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="tx2-r8-WKx"/>
+                                        <exclude reference="hFP-IC-U84"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="78" width="400" height="400"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="tx2-r8-WKx"/>
+                                        <include reference="hFP-IC-U84"/>
                                     </mask>
                                 </variation>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="35O-nX-1YE">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="35O-nX-1YE">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="0AC-Nl-nmo"/>
-                                    <constraint firstAttribute="width" constant="400" id="A0M-Q3-GVH"/>
+                                    <constraint firstAttribute="width" secondItem="35O-nX-1YE" secondAttribute="height" multiplier="2:1" id="hdi-kz-vX4"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Ocs-bH-oo1">
                                     <size key="itemSize" width="100" height="100"/>
@@ -83,30 +82,28 @@
                                 </cells>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="0AC-Nl-nmo"/>
-                                        <exclude reference="A0M-Q3-GVH"/>
+                                        <exclude reference="hdi-kz-vX4"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="486" width="400" height="200"/>
+                                <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="0AC-Nl-nmo"/>
-                                        <include reference="A0M-Q3-GVH"/>
+                                        <include reference="hdi-kz-vX4"/>
                                     </mask>
                                 </variation>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="BTg-5D-xP3" firstAttribute="leading" secondItem="hqB-lp-hBW" secondAttribute="leadingMargin" id="8Cz-zo-C7b"/>
-                            <constraint firstItem="35O-nX-1YE" firstAttribute="centerX" secondItem="hqB-lp-hBW" secondAttribute="centerX" id="W2X-cO-i9g"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BTg-5D-xP3" secondAttribute="trailing" id="qJE-Rd-f1a"/>
-                            <constraint firstItem="35O-nX-1YE" firstAttribute="leading" secondItem="hqB-lp-hBW" secondAttribute="leadingMargin" id="vOk-js-S02"/>
-                            <constraint firstItem="BTg-5D-xP3" firstAttribute="centerX" secondItem="hqB-lp-hBW" secondAttribute="centerX" id="xtY-NX-zXO"/>
-                            <constraint firstItem="35O-nX-1YE" firstAttribute="top" secondItem="BTg-5D-xP3" secondAttribute="bottom" constant="2" id="xuj-hP-UMW"/>
-                            <constraint firstItem="BTg-5D-xP3" firstAttribute="top" secondItem="7ui-eJ-cWP" secondAttribute="bottom" constant="78" id="yjP-4Z-jQa">
-                                <variation key="heightClass=regular-widthClass=compact" constant="58"/>
+                            <constraint firstItem="35O-nX-1YE" firstAttribute="top" secondItem="BTg-5D-xP3" secondAttribute="bottom" id="0Sa-fJ-xHE"/>
+                            <constraint firstItem="BTg-5D-xP3" firstAttribute="leading" secondItem="hqB-lp-hBW" secondAttribute="leadingMargin" constant="-20" id="D76-QL-wBn"/>
+                            <constraint firstItem="BTg-5D-xP3" firstAttribute="trailing" secondItem="hqB-lp-hBW" secondAttribute="trailingMargin" constant="-20" id="E89-pG-bca">
+                                <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                             </constraint>
+                            <constraint firstItem="BTg-5D-xP3" firstAttribute="top" secondItem="7ui-eJ-cWP" secondAttribute="bottom" constant="58" id="PM7-d1-1HZ"/>
+                            <constraint firstItem="35O-nX-1YE" firstAttribute="trailing" secondItem="hqB-lp-hBW" secondAttribute="trailingMargin" constant="-20" id="mYA-ZZ-I0O">
+                                <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                            </constraint>
+                            <constraint firstItem="35O-nX-1YE" firstAttribute="leading" secondItem="hqB-lp-hBW" secondAttribute="leadingMargin" constant="-20" id="vOk-js-S02"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -114,13 +111,12 @@
                                 <exclude reference="35O-nX-1YE"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="8Cz-zo-C7b"/>
-                                <exclude reference="qJE-Rd-f1a"/>
-                                <exclude reference="xtY-NX-zXO"/>
-                                <exclude reference="yjP-4Z-jQa"/>
-                                <exclude reference="W2X-cO-i9g"/>
+                                <exclude reference="D76-QL-wBn"/>
+                                <exclude reference="E89-pG-bca"/>
+                                <exclude reference="PM7-d1-1HZ"/>
+                                <exclude reference="0Sa-fJ-xHE"/>
+                                <exclude reference="mYA-ZZ-I0O"/>
                                 <exclude reference="vOk-js-S02"/>
-                                <exclude reference="xuj-hP-UMW"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -129,13 +125,12 @@
                                 <include reference="35O-nX-1YE"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="8Cz-zo-C7b"/>
-                                <include reference="qJE-Rd-f1a"/>
-                                <include reference="xtY-NX-zXO"/>
-                                <include reference="yjP-4Z-jQa"/>
-                                <include reference="W2X-cO-i9g"/>
+                                <include reference="D76-QL-wBn"/>
+                                <include reference="E89-pG-bca"/>
+                                <include reference="PM7-d1-1HZ"/>
+                                <include reference="0Sa-fJ-xHE"/>
+                                <include reference="mYA-ZZ-I0O"/>
                                 <include reference="vOk-js-S02"/>
-                                <include reference="xuj-hP-UMW"/>
                             </mask>
                         </variation>
                     </view>
