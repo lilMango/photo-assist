@@ -78,7 +78,7 @@ class OverlaySettingsViewController: UIViewController,
     }
     
     
-    //UICollectionView delegate on click of cell
+    //UICollectionView delegate on click of cell and selecting photo from library
     func collectionView( collectionView: UICollectionView,
         didSelectItemAtIndexPath indexPath: NSIndexPath) {
             print("selected:",indexPath.row)
@@ -86,6 +86,10 @@ class OverlaySettingsViewController: UIViewController,
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! OverlayCell
             
           selectedOverlayImgView.image=libraryPhotos[indexPath.row] as? UIImage
+            
+            //TODO: Perhaps set this once and other overlay data
+            // when user saves overlay?
+            OverlayData.image = selectedOverlayImgView.image
     
     }
     

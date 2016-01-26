@@ -21,6 +21,7 @@
 		568FC6C81C31CE8700D64FEA /* Camera1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC6C71C31CE8700D64FEA /* Camera1Tests.swift */; };
 		56C04F531C3C944900974F53 /* halfdome.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 56C04F521C3C944900974F53 /* halfdome.jpg */; };
 		56EFECF51C561AE100F9230F /* OverlayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EFECF41C561AE100F9230F /* OverlayCell.swift */; };
+		56EFECF71C57165700F9230F /* OverlayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EFECF61C57165700F9230F /* OverlayData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +53,7 @@
 		568FC6C91C31CE8700D64FEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56C04F521C3C944900974F53 /* halfdome.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = halfdome.jpg; sourceTree = "<group>"; };
 		56EFECF41C561AE100F9230F /* OverlayCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayCell.swift; sourceTree = "<group>"; };
+		56EFECF61C57165700F9230F /* OverlayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				5673936B1C45B6D600EB1600 /* Vector3.swift */,
 				563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */,
 				56EFECF41C561AE100F9230F /* OverlayCell.swift */,
+				56EFECF61C57165700F9230F /* OverlayData.swift */,
 			);
 			path = Camera1;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56EFECF71C57165700F9230F /* OverlayData.swift in Sources */,
 				563C6DBE1C54C5FB00B0A843 /* OverlaySettingsViewController.swift in Sources */,
 				56EFECF51C561AE100F9230F /* OverlayCell.swift in Sources */,
 				568FC6B51C31CE8600D64FEA /* ViewController.swift in Sources */,

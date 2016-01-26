@@ -112,6 +112,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         self.view.sendSubviewToBack(overlayView)
         self.view.sendSubviewToBack(textOverlay)
         
+        overlayImageView!.image = OverlayData.image //use the singleton set by overlay settings screen
         
         locationManager!.startUpdatingLocation()
         
