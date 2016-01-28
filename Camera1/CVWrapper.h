@@ -17,5 +17,6 @@
 
 + (UIImage*) processWithArray:(NSArray*)imageArray;
 
++ (UIImage*) toGreyImage:(UIImage*)inputImage;
 
 @end

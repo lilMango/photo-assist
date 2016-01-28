@@ -1,10 +1,12 @@
 //
-//  CVWrapper.m
+//  CVWrapper.mm
 //  Camera1
 //
 //  Created by Miguel Paysan on 1/25/16.
 //  Copyright © 2016 Miguel Paysan. All rights reserved.
 //
+// .mm files can use both Objective C and C++
+// best to minimize mix and just make calls to c++ interface
 
 #import "CVWrapper.h"
 #import "UIImage+OpenCV.h"
@@ -49,11 +51,21 @@
     }
     NSLog (@"stitching...");
     
-    //Method to CPP specific code
+    //Method to call CPP specific code
     cv::Mat stitchedMat = stitch (matImages);
     UIImage* result =  [UIImage imageWithCVMat:stitchedMat];
     return result;
 }
 
++ (UIImage*) toGreyImage:(UIImage*)inputImage
+{
+    cv::Mat inputMat = [inputImage CVMat3];
+    
+    cv::Mat greyMat;
+    cv::cvtColor(inputMat, greyMat, CV_BGR2GRAY);
+    
+    UIImage* result = [UIImage imageWithCVMat:greyMat];
+    return result;
+}
 
 @end
