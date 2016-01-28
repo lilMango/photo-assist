@@ -74,6 +74,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		567BD58B1C59E753004E81DF /* OverlaySettings */ = {
+			isa = PBXGroup;
+			children = (
+				56EFECF61C57165700F9230F /* OverlayData.swift */,
+				563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */,
+				56EFECF41C561AE100F9230F /* OverlayCell.swift */,
+			);
+			name = OverlaySettings;
+			sourceTree = "<group>";
+		};
+		567BD58C1C59E770004E81DF /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				567393691C40A3BB00EB1600 /* PlacementNavigator.swift */,
+				5673936F1C471F9900EB1600 /* ConstantsConfig.swift */,
+				5673936B1C45B6D600EB1600 /* Vector3.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		568FC6A61C31CE8600D64FEA = {
 			isa = PBXGroup;
 			children = (
@@ -102,12 +122,8 @@
 				568FC6B91C31CE8600D64FEA /* Assets.xcassets */,
 				568FC6BB1C31CE8600D64FEA /* LaunchScreen.storyboard */,
 				568FC6BE1C31CE8600D64FEA /* Info.plist */,
-				567393691C40A3BB00EB1600 /* PlacementNavigator.swift */,
-				5673936F1C471F9900EB1600 /* ConstantsConfig.swift */,
-				5673936B1C45B6D600EB1600 /* Vector3.swift */,
-				563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */,
-				56EFECF41C561AE100F9230F /* OverlayCell.swift */,
-				56EFECF61C57165700F9230F /* OverlayData.swift */,
+				567BD58C1C59E770004E81DF /* Helpers */,
+				567BD58B1C59E753004E81DF /* OverlaySettings */,
 			);
 			path = Camera1;
 			sourceTree = "<group>";
