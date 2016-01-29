@@ -8,6 +8,56 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--OpenCV-->
+        <scene sceneID="kWy-Mq-4yU">
+            <objects>
+                <viewController id="mPH-lf-CNJ" customClass="CVImageViewController" customModule="Camera1" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JDt-UZ-OrH"/>
+                        <viewControllerLayoutGuide type="bottom" id="W9G-cp-mfW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lfB-HG-6Y0">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PEu-T9-gds">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="83" y="45" width="250" height="250"/>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U8S-q1-JN7">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.23921570181846619" green="0.0" blue="0.81960791349411011" alpha="1" colorSpace="deviceRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="88" y="362" width="250" height="250"/>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="PEu-T9-gds"/>
+                                <exclude reference="U8S-q1-JN7"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="PEu-T9-gds"/>
+                                <include reference="U8S-q1-JN7"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="OpenCV" id="Cxs-Ko-o5g"/>
+                    <connections>
+                        <outlet property="cameraImgView" destination="U8S-q1-JN7" id="7Jm-Q7-R3f"/>
+                        <outlet property="overlayImgView" destination="PEu-T9-gds" id="Bzg-Q2-8hn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D3T-81-spt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180.5" y="1401"/>
+        </scene>
         <!--Overlay-->
         <scene sceneID="lXg-Fm-YvO">
             <objects>
@@ -158,6 +208,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="x3x-vD-KYN"/>
                         <segue destination="n3C-NL-vWr" kind="relationship" relationship="viewControllers" id="uJy-Zh-x0z"/>
+                        <segue destination="mPH-lf-CNJ" kind="relationship" relationship="viewControllers" id="bfx-mt-1On"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sGv-gg-3pl" userLabel="First Responder" sceneMemberID="firstResponder"/>

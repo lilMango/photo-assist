@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		563C6DBE1C54C5FB00B0A843 /* OverlaySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */; };
+		5664EB851C5B3D7C008A4DE5 /* CVImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */; };
 		567393681C40A39100EB1600 /* PlacementNavigatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393671C40A39100EB1600 /* PlacementNavigatorTests.swift */; };
 		5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393691C40A3BB00EB1600 /* PlacementNavigator.swift */; };
 		5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936B1C45B6D600EB1600 /* Vector3.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlaySettingsViewController.swift; sourceTree = "<group>"; };
+		5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVImageViewController.swift; sourceTree = "<group>"; };
 		567393671C40A39100EB1600 /* PlacementNavigatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigatorTests.swift; sourceTree = "<group>"; };
 		567393691C40A3BB00EB1600 /* PlacementNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigator.swift; sourceTree = "<group>"; };
 		5673936B1C45B6D600EB1600 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
@@ -146,8 +148,8 @@
 				567BD5961C59EAC3004E81DF /* UImage+CVMatrix */,
 				56C04F521C3C944900974F53 /* halfdome.jpg */,
 				568FC6B21C31CE8600D64FEA /* AppDelegate.swift */,
-				568FC6B41C31CE8600D64FEA /* ViewController.swift */,
 				568FC6B61C31CE8600D64FEA /* Main.storyboard */,
+				568FC6B41C31CE8600D64FEA /* ViewController.swift */,
 				568FC6B91C31CE8600D64FEA /* Assets.xcassets */,
 				568FC6BB1C31CE8600D64FEA /* LaunchScreen.storyboard */,
 				568FC6BE1C31CE8600D64FEA /* Info.plist */,
@@ -158,6 +160,7 @@
 				567BD5981C59EC7C004E81DF /* CVWrapper.mm */,
 				567BD59A1C59EEDE004E81DF /* stitching.cpp */,
 				567BD59B1C59EEDE004E81DF /* stitching.h */,
+				5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */,
 			);
 			path = Camera1;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				568FC6B31C31CE8600D64FEA /* AppDelegate.swift in Sources */,
 				5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */,
 				567393701C471F9900EB1600 /* ConstantsConfig.swift in Sources */,
+				5664EB851C5B3D7C008A4DE5 /* CVImageViewController.swift in Sources */,
 				567BD5991C59EC7C004E81DF /* CVWrapper.mm in Sources */,
 				5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */,
 				567BD5941C59EA85004E81DF /* UIImage+Rotate.m in Sources */,

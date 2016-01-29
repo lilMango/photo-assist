@@ -22,5 +22,9 @@ import UIKit
 class OverlayData {
     static var image:UIImage! = UIImage(named:"halfdome.jpg")
     
-    //var interestBox // bounding box of interest
+    //var interestBox // region of interest (ROI)
+    
+    //TODO remove
+    static var overlayImage:UIImage! = UIImage(named:"halfdome.jpg")
+    static var cameraImage:UIImage! = UIImage(named:"halfdome.jpg")
 }

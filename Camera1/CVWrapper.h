@@ -19,4 +19,8 @@
 
 + (UIImage*) toGreyImage:(UIImage*)inputImage;
 
++ (UIImage*) toKeypointsImage:(UIImage*)inputImage;
+
++ (UIImage*) toROI:(UIImage*)inputImage;
+
 @end

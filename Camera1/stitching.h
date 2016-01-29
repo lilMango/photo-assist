@@ -10,7 +10,10 @@
 #define CVOpenTemplate_Header_h
 #include <opencv2/opencv.hpp>
 
-cv::Mat stitch (std::vector <cv::Mat> & images);
 
+
+cv::Mat stitch (std::vector <cv::Mat> & images);
+cv::Mat getKeypoints (cv::Mat image);
+cv::Mat getROI (cv::Mat image);
 
 #endif

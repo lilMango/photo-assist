@@ -85,12 +85,16 @@ class OverlaySettingsViewController: UIViewController,
             
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier(identifier, forIndexPath: indexPath) as! OverlayCell
             
-          selectedOverlayImgView.image=libraryPhotos[indexPath.row] as? UIImage
+            let temp=libraryPhotos[indexPath.row] as? UIImage
+            
+            selectedOverlayImgView.image = temp
             
             //TODO: Perhaps set this once and other overlay data
             // when user saves overlay?
             OverlayData.image = selectedOverlayImgView.image
     
+            //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
+            OverlayData.overlayImage=selectedOverlayImgView.image
     }
     
     

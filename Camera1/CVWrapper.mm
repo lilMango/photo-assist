@@ -68,4 +68,25 @@
     return result;
 }
 
+
++ (UIImage *) toKeypointsImage:(UIImage*)inputImage
+{
+    cv::Mat inputMat = [inputImage CVMat3];
+    
+    cv::Mat keypointsImg = getKeypoints(inputMat);
+
+    UIImage* result = [UIImage imageWithCVMat:keypointsImg];
+    return result;
+}
+
++ (UIImage *) toROI:(UIImage*)inputImage
+{
+    cv::Mat inputMat = [inputImage CVMat3];
+    
+    
+    cv::Mat roiImg = getROI(inputMat);
+    
+    UIImage* result = [UIImage imageWithCVMat:roiImg];
+    return result;
+}
 @end
