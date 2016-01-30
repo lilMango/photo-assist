@@ -92,10 +92,15 @@ cv::Mat stitch (vector<Mat>& images)
 cv::Mat getKeypoints(Mat image)
 {
     
-    Ptr<GFTTDetector> detector = GFTTDetector::create( 100, 0.1,
+ 
+    Ptr<GFTTDetector> gftt = GFTTDetector::create( 100, 0.1,
                                                       1.0, 3,
                                                       false, 0.04
                                                       );
+    Ptr<FastFeatureDetector> fast = FastFeatureDetector::create(1000, true, FastFeatureDetector::TYPE_9_16); //higher threshold means stricter corner detection
+    Ptr<ORB> orb=ORB::create();
+    
+    Ptr<FeatureDetector> detector=orb;
     
     std::vector<KeyPoint> keypoints_1;
     
@@ -105,12 +110,46 @@ cv::Mat getKeypoints(Mat image)
     Mat img_keypoints_1; //image with points on them
     
     drawKeypoints( image, keypoints_1, img_keypoints_1, Scalar::all(-1), DrawMatchesFlags::DEFAULT );
+    
+    //is this working?
+    //cv::KeyPointsFilter::retainBest(keypoints_1, 100);
     return img_keypoints_1;
 }
 
-cv::Mat getROI (cv::Mat image)
+cv::Mat getKeypoints(Mat img, Rect rect)
 {
-    Rect roiRect = Rect(0,0,100,100); //x,y, width, height
+    
+    
+    Ptr<GFTTDetector> gftt = GFTTDetector::create( 100, 0.1,
+                                                  1.0, 3,
+                                                  false, 0.04
+                                                  );
+    Ptr<FastFeatureDetector> fast = FastFeatureDetector::create(1000, true, FastFeatureDetector::TYPE_9_16); //higher threshold means stricter corner detection
+    Ptr<ORB> orb=ORB::create();
+    
+    Ptr<FeatureDetector> detector=orb;
+    
+    std::vector<KeyPoint> keypoints_1;
+    
+    //Change to ROI matrix
+    cv::Mat image = cv::Mat(img, rect);
+    
+    detector->detect( image, keypoints_1 );
+    
+    //-- Draw keypoints
+    Mat img_keypoints_1; //image with points on them
+    
+    drawKeypoints( image, keypoints_1, img_keypoints_1, Scalar::all(-1), DrawMatchesFlags::DEFAULT );
+    
+    //is this working?
+    //cv::KeyPointsFilter::retainBest(keypoints_1, 100);
+    return img_keypoints_1;
+}
+
+
+cv::Mat getROI (cv::Mat image, cv::Rect rect)
+{
+    Rect roiRect = rect;
     
     cv::Mat roiMat = cv::Mat(image, roiRect); //source image mat, and roi rectangle
     

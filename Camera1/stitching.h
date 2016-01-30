@@ -14,6 +14,7 @@
 
 cv::Mat stitch (std::vector <cv::Mat> & images);
 cv::Mat getKeypoints (cv::Mat image);
-cv::Mat getROI (cv::Mat image);
+cv::Mat getKeypoints (cv::Mat image, cv::Rect rect);
+cv::Mat getROI (cv::Mat image, cv::Rect);
 
 #endif

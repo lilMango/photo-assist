@@ -79,12 +79,24 @@
     return result;
 }
 
-+ (UIImage *) toROI:(UIImage*)inputImage
++ (UIImage*) toKeypointsImage:(UIImage*)inputImage x:(int)x y:(int)y w:(int)w h:(int)h
 {
     cv::Mat inputMat = [inputImage CVMat3];
     
+    cv::Mat keypointsImg = getKeypoints(inputMat,cv::Rect(x,y,w,h));
     
-    cv::Mat roiImg = getROI(inputMat);
+    UIImage* result = [UIImage imageWithCVMat:keypointsImg];
+    return result;
+}
+
++ (UIImage *) toROI:(UIImage*)inputImage x:(short)x y:(short)y w:(short)w h:(short)h
+
+{
+    cv::Mat inputMat = [inputImage CVMat3];
+    
+    cv::Rect rect = cv::Rect(x,y,w,h);
+    
+    cv::Mat roiImg = getROI(inputMat, rect);
     
     UIImage* result = [UIImage imageWithCVMat:roiImg];
     return result;

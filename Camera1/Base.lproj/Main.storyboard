@@ -23,14 +23,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="83" y="45" width="250" height="250"/>
+                                    <rect key="frame" x="63" y="8" width="300" height="300"/>
                                 </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U8S-q1-JN7">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.23921570181846619" green="0.0" blue="0.81960791349411011" alpha="1" colorSpace="deviceRGB"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="88" y="362" width="250" height="250"/>
+                                    <rect key="frame" x="63" y="321" width="300" height="300"/>
                                 </variation>
                             </imageView>
                         </subviews>
