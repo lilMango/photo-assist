@@ -89,6 +89,17 @@
     return result;
 }
 
++ (NSString*) getDiff:(UIImage*)img1 img2:(UIImage*)img2
+{
+    cv::Mat inputMat = [img1 CVMat3];
+    cv::Mat inputMat2 = [img2 CVMat3];
+    NSLog(@"\n%s","@CVWrapper.getDiff (OBJ-C)");
+
+    flannDiff(inputMat,inputMat2);
+    return nullptr;
+
+}
+
 + (UIImage *) toROI:(UIImage*)inputImage x:(short)x y:(short)y w:(short)w h:(short)h
 
 {

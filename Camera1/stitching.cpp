@@ -155,3 +155,65 @@ cv::Mat getROI (cv::Mat image, cv::Rect rect)
     
     return roiMat;
 }
+
+void flannDiff(cv::Mat img1, cv::Mat img2)
+{
+    //-- Step 0. --prepping input as matrix
+    //get overlay image as ROI matrix
+    
+    //pass overlay mat and camera mat to
+    
+    
+    //-- Step 1. Detect key points for each photo, use ORB!
+    Ptr<ORB> orb=ORB::create();
+    
+    Ptr<FeatureDetector> detector=orb; //Feature Detector is also DescriptorExtract (same typedef of Feature2D) as of OpenCV3
+    
+    std::vector<KeyPoint> keypoints_1, keypoints_2;
+    
+    //Change to ROI matrix
+    cv::Mat image = cv::Mat(img1, Rect(100,100,200,200));
+    
+    detector->detect( img1, keypoints_1 );
+    detector->detect( img2, keypoints_2 );
+    
+    //-- Step 2: Calculate descriptors (feature vectors)
+    Mat descriptors_1, descriptors_2;
+    
+    detector->compute( img1, keypoints_1, descriptors_1 );
+    detector->compute( img2, keypoints_2, descriptors_2 );
+    
+    
+    cout << "extractor desc algo name: " << 3 << " " << detector->getDefaultName().c_str() << endl;
+
+   
+    //-- Step 3: Compare Matching descriptor vectors using FLANN matcher
+    FlannBasedMatcher matcher;
+    std::vector< DMatch > matches;
+    
+    //http://stackoverflow.com/questions/29694490/flann-error-in-opencv-3
+    if(descriptors_1.type()!=CV_32F) {
+        descriptors_1.convertTo(descriptors_1, CV_32F);
+    }
+    
+    if(descriptors_2.type()!=CV_32F) {
+        descriptors_2.convertTo(descriptors_2, CV_32F);
+    }
+    
+    matcher.match( descriptors_1, descriptors_2, matches );
+    
+    double max_dist = 0; double min_dist = 100;
+    
+    //-- Quick calculation of max and min distances between keypoints
+    for( int i = 0; i < descriptors_1.rows; i++ )
+    { double dist = matches[i].distance;
+        if( dist < min_dist ) min_dist = dist;
+        if( dist > max_dist ) max_dist = dist;
+    }
+    
+    printf("-- Max dist : %f \n", max_dist );
+    printf("-- Min dist : %f \n", min_dist );
+    
+
+}
+

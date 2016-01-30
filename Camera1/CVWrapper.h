@@ -23,6 +23,8 @@
 
 + (UIImage*) toKeypointsImage:(UIImage*)inputImage x:(int)x y:(int)y w:(int)w h:(int)h;
 
++ (NSString*) getDiff:(UIImage*)img1 img2:(UIImage*)img2;
+
 //useless --ROI has to be in the matrix calculation step. It can't be it's own Image
 + (UIImage*) toROI:(UIImage*)inputImage x:(short)x y:(short)y w:(short)w h:(short)h;
 
