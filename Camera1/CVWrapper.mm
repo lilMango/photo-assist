@@ -12,7 +12,7 @@
 #import "UIImage+OpenCV.h"
 #import "stitching.h"
 #import "UIImage+Rotate.h"
-
+#import "ImageMatch.hpp"
 
 @implementation CVWrapper
 
@@ -110,6 +110,18 @@
     cv::Mat roiImg = getROI(inputMat, rect);
     
     UIImage* result = [UIImage imageWithCVMat:roiImg];
+    return result;
+}
+
+//Get Flann based matching
++ (UIImage*) getMatchedImage:(UIImage*)inputImage x:(int)x y:(int)y w:(int)w h:(int)h sceneImage:(UIImage*)sceneImage {
+    
+    cv::Mat imgm_obj = [inputImage CVMat3];
+    cv::Rect rect = cv::Rect(x,y,w,h);
+    cv::Mat imgm_scene = [inputImage CVMat3];
+    
+    cv::Mat imgmg_obj_scene = getObjInSceneImageMatrix(imgm_obj,rect,imgm_scene);
+    UIImage* result = [UIImage imageWithCVMat:imgmg_obj_scene];//TODO NOT inputImage
     return result;
 }
 @end

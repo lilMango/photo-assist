@@ -11,7 +11,9 @@
 using namespace cv;
 
 
-cv::Mat getKeypointsImageMatrix(cv::Mat &mat); //TODO: refactor to classes, ProcImage -> Object, Scene
-cv::Mat localizeObjInScene(cv::Mat &mat); //TODO: refactor to classes, ProcImage -> Object, Scene
-
-cv::Mat getObjInSceneImageMatrix(cv::Mat &imgm_obj, cv::Mat &imgm_scene);
+Mat getObjInSceneImageMatrix(Mat &imgm_obj, Rect &rect, Mat &imgm_scene) {
+    
+    std::cout << "Inside getObjInSceneMatrix!" << std::endl;
+    
+    return imgm_obj;
+}

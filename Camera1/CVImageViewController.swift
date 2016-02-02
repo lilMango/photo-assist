@@ -39,9 +39,7 @@ class CVImageViewController:UIViewController {
 //            x: 0,y: 100,w:roi_w ,h: roi_h) as UIImage
         let overlayKpImage:UIImage = CVWrapper.toKeypointsImage(OverlayData.overlayImage) as UIImage
         
-        let camKpImage:UIImage = CVWrapper.toKeypointsImage(OverlayData.cameraImage) as UIImage
-        
-        CVWrapper.getDiff(OverlayData.overlayImage, img2: OverlayData.cameraImage)
+        let camKpImage:UIImage = CVWrapper.getMatchedImage(OverlayData.overlayImage, x:100, y:100, w:200, h:200, sceneImage:OverlayData.cameraImage) as UIImage
         
         
         overlayImgView!.image = overlayKpImage
