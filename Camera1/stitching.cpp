@@ -139,7 +139,7 @@ cv::Mat getKeypoints(Mat img, Rect rect)
     //-- Draw keypoints
     Mat img_keypoints_1; //image with points on them
     
-    drawKeypoints( image, keypoints_1, img_keypoints_1, Scalar::all(-1), DrawMatchesFlags::DEFAULT );
+    drawKeypoints( image, keypoints_1, img_keypoints_1, Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
     
     //is this working?
     //cv::KeyPointsFilter::retainBest(keypoints_1, 100);

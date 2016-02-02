@@ -11,7 +11,7 @@
 using namespace cv;
 
 
-Mat getObjInSceneImageMatrix(Mat imgm_obj, Rect &rect, Mat imgm_scene) {
+Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     
     //http://docs.opencv.org/3.0-beta/doc/tutorials/features2d/feature_homography/feature_homography.html
     ////////////////////  ////////////////////  ////////////////////  ////////////////////
@@ -24,7 +24,7 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj, Rect &rect, Mat imgm_scene) {
     std::vector<KeyPoint> keypoints_obj, keypoints_scene;
     
     //Change to ROI matrix
-    //cv::Mat image = cv::Mat(img1, Rect(100,100,200,200));
+    cv::Mat imgm_obj = cv::Mat(imgm_obj0, rect);
     
     detector->detect( imgm_obj, keypoints_obj );
     detector->detect( imgm_scene, keypoints_scene );
