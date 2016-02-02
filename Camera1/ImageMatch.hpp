@@ -28,6 +28,6 @@ cv::Mat getKeypointsImageMatrix(cv::Mat &mat); //TODO: refactor to classes, Proc
 cv::Mat localizeObjInScene(cv::Mat &mat); //TODO: refactor to classes, ProcImage -> Object, Scene
 
 //Will do e2e of descriptor, matching, rendering overlayed matrix image
-cv::Mat getObjInSceneImageMatrix(cv::Mat &imgm_obj, cv::Rect &rect, cv::Mat &imgm_scene);
+cv::Mat getObjInSceneImageMatrix(cv::Mat imgm_obj, cv::Rect &rect, cv::Mat imgm_scene);
 
 #endif /* ImageMatch_hpp */

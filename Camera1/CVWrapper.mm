@@ -118,7 +118,7 @@
     
     cv::Mat imgm_obj = [inputImage CVMat3];
     cv::Rect rect = cv::Rect(x,y,w,h);
-    cv::Mat imgm_scene = [inputImage CVMat3];
+    cv::Mat imgm_scene = [sceneImage CVMat3];
     
     cv::Mat imgmg_obj_scene = getObjInSceneImageMatrix(imgm_obj,rect,imgm_scene);
     UIImage* result = [UIImage imageWithCVMat:imgmg_obj_scene];//TODO NOT inputImage
