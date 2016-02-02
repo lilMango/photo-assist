@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		563C6DBE1C54C5FB00B0A843 /* OverlaySettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */; };
 		5664EB851C5B3D7C008A4DE5 /* CVImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */; };
+		5664EB8A1C607710008A4DE5 /* ImageMatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5664EB881C607710008A4DE5 /* ImageMatch.cpp */; };
 		567393681C40A39100EB1600 /* PlacementNavigatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393671C40A39100EB1600 /* PlacementNavigatorTests.swift */; };
 		5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 567393691C40A3BB00EB1600 /* PlacementNavigator.swift */; };
 		5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936B1C45B6D600EB1600 /* Vector3.swift */; };
@@ -43,6 +44,8 @@
 /* Begin PBXFileReference section */
 		563C6DBD1C54C5FB00B0A843 /* OverlaySettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlaySettingsViewController.swift; sourceTree = "<group>"; };
 		5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CVImageViewController.swift; sourceTree = "<group>"; };
+		5664EB881C607710008A4DE5 /* ImageMatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageMatch.cpp; sourceTree = "<group>"; };
+		5664EB891C607710008A4DE5 /* ImageMatch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ImageMatch.hpp; sourceTree = "<group>"; };
 		567393671C40A39100EB1600 /* PlacementNavigatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigatorTests.swift; sourceTree = "<group>"; };
 		567393691C40A3BB00EB1600 /* PlacementNavigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacementNavigator.swift; sourceTree = "<group>"; };
 		5673936B1C45B6D600EB1600 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
@@ -92,6 +95,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5664EB8B1C607721008A4DE5 /* OpenCVFuncs */ = {
+			isa = PBXGroup;
+			children = (
+				567BD59A1C59EEDE004E81DF /* stitching.cpp */,
+				567BD59B1C59EEDE004E81DF /* stitching.h */,
+				5664EB881C607710008A4DE5 /* ImageMatch.cpp */,
+				5664EB891C607710008A4DE5 /* ImageMatch.hpp */,
+			);
+			name = OpenCVFuncs;
+			sourceTree = "<group>";
+		};
 		567BD58B1C59E753004E81DF /* OverlaySettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,8 +172,7 @@
 				567BD58F1C59EA84004E81DF /* Camera1-Bridging-Header.h */,
 				567BD5971C59EC7C004E81DF /* CVWrapper.h */,
 				567BD5981C59EC7C004E81DF /* CVWrapper.mm */,
-				567BD59A1C59EEDE004E81DF /* stitching.cpp */,
-				567BD59B1C59EEDE004E81DF /* stitching.h */,
+				5664EB8B1C607721008A4DE5 /* OpenCVFuncs */,
 				5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */,
 			);
 			path = Camera1;
@@ -292,6 +305,7 @@
 				5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */,
 				567BD5941C59EA85004E81DF /* UIImage+Rotate.m in Sources */,
 				567BD59C1C59EEDE004E81DF /* stitching.cpp in Sources */,
+				5664EB8A1C607710008A4DE5 /* ImageMatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

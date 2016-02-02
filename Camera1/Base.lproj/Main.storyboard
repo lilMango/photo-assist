@@ -22,29 +22,108 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PEu-T9-gds">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="63" y="8" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PEu-T9-gds" secondAttribute="height" multiplier="1:1" id="R5F-Pj-Kvz"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="R5F-Pj-Kvz"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="R5F-Pj-Kvz"/>
+                                    </mask>
                                 </variation>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="U8S-q1-JN7">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.23921570181846619" green="0.0" blue="0.81960791349411011" alpha="1" colorSpace="deviceRGB"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="63" y="321" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="U8S-q1-JN7" secondAttribute="height" multiplier="1:1" id="Lo5-6d-Mqy"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Lo5-6d-Mqy"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Lo5-6d-Mqy"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Y7q-QH-XlN">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Y7q-QH-XlN" secondAttribute="height" multiplier="1:1" id="EZi-Jz-C6X"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="EZi-Jz-C6X"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="EZi-Jz-C6X"/>
+                                    </mask>
                                 </variation>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="U8S-q1-JN7" firstAttribute="leading" secondItem="lfB-HG-6Y0" secondAttribute="leadingMargin" constant="130" id="2Fg-2d-H1m"/>
+                            <constraint firstItem="PEu-T9-gds" firstAttribute="leading" secondItem="lfB-HG-6Y0" secondAttribute="leadingMargin" constant="-20" id="9uc-wu-GIG"/>
+                            <constraint firstItem="Y7q-QH-XlN" firstAttribute="top" secondItem="JDt-UZ-OrH" secondAttribute="bottom" constant="-19" id="Exw-uA-oZb">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-15"/>
+                            </constraint>
+                            <constraint firstItem="U8S-q1-JN7" firstAttribute="top" secondItem="PEu-T9-gds" secondAttribute="bottom" constant="1" id="JYH-Nk-OIF">
+                                <variation key="heightClass=regular-widthClass=compact" constant="27"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="Y7q-QH-XlN" secondAttribute="trailing" constant="-20" id="Nbw-gK-lDQ"/>
+                            <constraint firstItem="Y7q-QH-XlN" firstAttribute="leading" secondItem="PEu-T9-gds" secondAttribute="trailing" id="SLC-Hz-VMJ">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="PEu-T9-gds" firstAttribute="top" secondItem="JDt-UZ-OrH" secondAttribute="bottom" constant="-15" id="T20-kG-Gjd"/>
+                            <constraint firstItem="U8S-q1-JN7" firstAttribute="top" secondItem="Y7q-QH-XlN" secondAttribute="bottom" constant="28" id="d3b-9g-xVI">
+                                <variation key="heightClass=regular-widthClass=compact" constant="27"/>
+                            </constraint>
+                            <constraint firstAttribute="trailingMargin" secondItem="U8S-q1-JN7" secondAttribute="trailing" constant="-20" id="saP-wo-NUk"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="PEu-T9-gds"/>
                                 <exclude reference="U8S-q1-JN7"/>
+                                <exclude reference="Y7q-QH-XlN"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="9uc-wu-GIG"/>
+                                <exclude reference="T20-kG-Gjd"/>
+                                <exclude reference="Exw-uA-oZb"/>
+                                <exclude reference="Nbw-gK-lDQ"/>
+                                <exclude reference="SLC-Hz-VMJ"/>
+                                <exclude reference="2Fg-2d-H1m"/>
+                                <exclude reference="JYH-Nk-OIF"/>
+                                <exclude reference="d3b-9g-xVI"/>
+                                <exclude reference="saP-wo-NUk"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="PEu-T9-gds"/>
                                 <include reference="U8S-q1-JN7"/>
+                                <include reference="Y7q-QH-XlN"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="9uc-wu-GIG"/>
+                                <include reference="T20-kG-Gjd"/>
+                                <include reference="Exw-uA-oZb"/>
+                                <include reference="Nbw-gK-lDQ"/>
+                                <include reference="SLC-Hz-VMJ"/>
+                                <include reference="2Fg-2d-H1m"/>
+                                <include reference="JYH-Nk-OIF"/>
+                                <include reference="d3b-9g-xVI"/>
+                                <include reference="saP-wo-NUk"/>
                             </mask>
                         </variation>
                     </view>
