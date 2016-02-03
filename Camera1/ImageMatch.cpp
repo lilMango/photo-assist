@@ -19,44 +19,38 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     //http://docs.opencv.org/3.0-beta/doc/tutorials/features2d/feature_homography/feature_homography.html
     ////////////////////  ////////////////////  ////////////////////  ////////////////////
     
-    std::vector<KeyPoint> keypoints_obj, keypoints_scene;
+    std::vector<KeyPoint> keypoints_scene;
     
     //Change to ROI matrix
-    cv::Mat imgm_obj = cv::Mat(imgm_obj0, rect);
-    
+    cv::Mat imgm_obj = ImageMatch::Instance().getImageObj()->getStartImgm();
     ImageMatch::Instance().Hello();
-    ImageMatch::Instance().detector->detect( imgm_obj, keypoints_obj );
+
     ImageMatch::Instance().detector->detect( imgm_scene, keypoints_scene );
     std::cout << "USING singleton class for detectors" << std::endl;
     //-- Step 2: Calculate descriptors (feature vectors) -----------------------------
-    Mat descriptors_obj, descriptors_scene;
+    Mat descriptors_scene;
     
-    ImageMatch::Instance().detector->compute( imgm_obj, keypoints_obj, descriptors_obj );
     ImageMatch::Instance().detector->compute( imgm_scene, keypoints_scene, descriptors_scene );
+    std::cout << "ImageMatch->obj->descriptor count: " << ImageMatch::Instance().getImageObj()->getDescriptors().rows << std::endl;
     
-    std::cout << "descriptors_obj count:" << descriptors_obj.rows << std::endl;
-
     
     //-- Step 3: Compare Matching descriptor vectors using FLANN matcher -----------------------------
     FlannBasedMatcher matcher;
     std::vector< DMatch > matches;
     
     //http://stackoverflow.com/questions/29694490/flann-error-in-opencv-3
-    if(descriptors_obj.type()!=CV_32F) {
-        descriptors_obj.convertTo(descriptors_obj, CV_32F);
-    }
-    
+
     if(descriptors_scene.type()!=CV_32F) {
         descriptors_scene.convertTo(descriptors_scene, CV_32F);
     }
     
-    ImageMatch::Instance().matcher->match( descriptors_obj, descriptors_scene, matches );
-    
+   
+    ImageMatch::Instance().matcher->match( ImageMatch::Instance().getImageObj()->getDescriptors(), descriptors_scene, matches );
     std::cout << "matches: " << matches.size() << std::endl;
     double max_dist = 0; double min_dist = 100;
     
     //-- Quick calculation of max and min distances between keypoints
-    for( int i = 0; i < descriptors_obj.rows; i++ )
+    for( int i = 0; i <  ImageMatch::Instance().getImageObj()->getDescriptors().rows; i++ )
     { double dist = matches[i].distance;
         if( dist < min_dist ) min_dist = dist;
         if( dist > max_dist ) max_dist = dist;
@@ -67,7 +61,7 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     //-- Draw only "good" matches (i.e. whose distance is less than 3*min_dist )
     std::vector< DMatch > good_matches;
     
-    for( int i = 0; i < descriptors_obj.rows; i++ )
+    for( int i = 0; i <  ImageMatch::Instance().getImageObj()->getDescriptors().rows; i++ )
     { if( matches[i].distance < 3*min_dist )
     { good_matches.push_back( matches[i]); }
     }
@@ -91,16 +85,12 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     for( int i = 0; i < good_matches.size(); i++ )
     {
         //-- Get the keypoints from the good matches
-        obj.push_back( keypoints_obj[ good_matches[i].queryIdx ].pt );
+        obj.push_back(  ImageMatch::Instance().getImageObj()->getKeypoints()[ good_matches[i].queryIdx ].pt );
         scene.push_back( keypoints_scene[ good_matches[i].trainIdx ].pt );
     }
 
     std::cout << "good_Matches count:" << good_matches.size() << std::endl;
-    //std::cout << "Printing OBJ[Point2f]" << std::endl;
-    //std::cout << obj << std::endl;
-    //std::cout << "Printing scene[Point2f]" << std::endl;
-    //std::cout << scene << std::endl;
-    
+
     Mat H = findHomography( obj, scene, RANSAC );
     std::cout << "H:\n" << H << std::endl;
     
@@ -134,3 +124,30 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
 //////////////////////////////////////////////////////////////////////
 /////////   ImageMatch class methods ///////////////////////////
 //////////////////////////////////////////////////////////////////////
+void ImageMatch::setImageObj(ProcessedROIImage *img) {
+    std::cout<< "@ImageMatch.setImageObj" << std::endl;
+    delete(obj);
+    obj = NULL;
+    obj = img;
+    
+    //TODO detect And Compute to set keypoints and descriptors ***** we have keypoints in case we want to apply a draw keypoints image
+    img->detectAndCompute(ImageMatch::detector, ImageMatch::matcher);
+    
+}
+
+void ImageMatch::setImageScene(ProcessedImage *img) {
+    delete(scene);
+    scene = NULL;
+    scene= img;
+    
+    scene->detectAndCompute(ImageMatch::detector, ImageMatch::matcher);
+}
+
+
+ProcessedROIImage* ImageMatch::getImageObj() {
+    return obj;
+}
+
+ProcessedImage* ImageMatch::getImageScene() {
+    return scene;
+}

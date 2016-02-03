@@ -19,28 +19,29 @@
 #include "opencv2/calib3d.hpp"
 #include "opencv2/imgproc.hpp"
 
-using namespace cv;
-
 class ProcessedImage {
 public:
+    cv::Mat getStartImgm();
+    cv::Mat getKeypointsImgm();
     void setKeypoints();
-    Mat getKeypoints();
-    void detectAndCompute();
-    ProcessedImage();
-    ~ProcessedImage();
-private:
-    Mat originalImg;
-    std::vector<KeyPoint> keypoints;
-    Mat descriptors;
+    std::vector<cv::KeyPoint> getKeypoints();
+    void detectAndCompute(cv::Ptr<cv::FeatureDetector>, cv::Ptr<cv::DescriptorMatcher> );
+    cv::Mat getDescriptors();
+    ProcessedImage(cv::Mat);
+    ~ProcessedImage(){};
+protected:
+    cv::Mat originalImg;
+    std::vector<cv::KeyPoint> keypoints;
+    cv::Mat descriptors;
 };
 
 
-class ProcessedROIImage: ProcessedImage {
+class ProcessedROIImage: public ProcessedImage {
 public:
-    //Rect roiBox;
-    //ProcessedROIImage(Rect,Mat);
-    ~ProcessedROIImage();
-private:
+    cv::Rect roiBox;
+    ProcessedROIImage(cv::Rect,cv::Mat);
+    ~ProcessedROIImage(){};
+protected:
 
 };
 #endif /* ProcessedImage_hpp */

@@ -44,11 +44,18 @@ public:
     }
     
     cv::Ptr<cv::FeatureDetector> detector;
-    cv::Ptr<DescriptorMatcher> matcher;
-    ProcessedImage *obj;//has ROI image
-    ProcessedImage *scene;
+    cv::Ptr<cv::DescriptorMatcher> matcher;
+    
+    void setImageObj(ProcessedROIImage *img);
+    void setImageScene(ProcessedImage *img);
+    
+    ProcessedROIImage* getImageObj();
+    ProcessedImage* getImageScene();
     //void reset();
-private:
+protected:
+    ProcessedROIImage *obj;//has ROI image
+    ProcessedImage *scene;
+
     ImageMatch() {
         detector = cv::ORB::create();
         matcher = cv::DescriptorMatcher::create("FlannBased");

@@ -50,4 +50,27 @@
     UIImage* result = [UIImage imageWithCVMat:imgmg_obj_scene];//TODO NOT inputImage
     return result;
 }
+
++ (void) setOverlayAsObjectImage:(UIImage*)objImg x:(int)x y:(int)y w:(int)w h:(int)h{
+    std::cout << "@CVWrapper.mm:: setOverlayAsObjectImage( x: " << x << "\ty: " << y << "\tw: " << w << "\th: " << h << std::endl;
+    cv::Mat imgm_obj = [objImg CVMat3];
+    cv::Rect rect = cv::Rect(x,y,w,h);
+    ImageMatch::Instance().setImageObj(new ProcessedROIImage(rect,imgm_obj));
+
+}
+
+
+//TODO
++ (void) setFrameAsSceneImage:(UIImage*)sceneImage {
+    cv::Mat imgm_scene = [sceneImage CVMat3];
+}
+
+//TODO why can't we see keypoints?
++ (UIImage*) getOverlayProcessedUIImage {
+    std::cout << "@CVWrapper.getOverlayProcessedUIImage" << std::endl;
+    cv::Mat kp_imgm = ImageMatch::Instance().getImageObj()->getKeypointsImgm();
+    UIImage* res = [UIImage imageWithCVMat:kp_imgm];
+    return res;
+}
+
 @end

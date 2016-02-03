@@ -51,7 +51,9 @@ class OverlaySettingsViewController: UIViewController,
         
         self.view.addSubview(roiBtn)
         
-        print ("roiBtn:",roiBtn.frame)
+        //TODO refactor these 2 lines to a global somewhere, it's on here 3x...Also rerun the calcs more efficiently at a different point?
+        let roiPixelBoxWidth = Int32(roiWidth * OverlayData.overlayImage.size.width / picWidth)
+        CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: 0, y: 0, w: roiPixelBoxWidth, h: roiPixelBoxWidth)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -125,6 +127,11 @@ class OverlaySettingsViewController: UIViewController,
                 y:roi_py,
                 width:roi_pw,
                 height:roi_pw)
+            
+            
+            //TODO refactor these 2 lines to a global somewhere, it's on here 3x...Also rerun the calcs more efficiently at a different point? <-- try or calculating when finishing dragging, ie on up
+            let roiPixelBoxWidth = Int32(roiWidth * OverlayData.overlayImage.size.width / picWidth)
+            CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: Int32(roi_px), y: Int32(roi_py), w: roiPixelBoxWidth, h: roiPixelBoxWidth)
         }
         recognizer.setTranslation(CGPointZero, inView: self.view)
     }
@@ -167,6 +174,12 @@ class OverlaySettingsViewController: UIViewController,
     
             //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
             OverlayData.overlayImage=selectedOverlayImgView.image
+            
+            //Start precalcs on image
+            //TODO refactor these 2 lines to a global somewhere, it's on here 3x...Also rerun the calcs more efficiently at a different point?
+            var roiPixelBoxWidth = Int32(roiWidth * OverlayData.overlayImage.size.width / picWidth)
+            
+            CVWrapper.setOverlayAsObjectImage(temp, x: 0, y: 0, w: roiPixelBoxWidth, h: roiPixelBoxWidth)
             
     }
     

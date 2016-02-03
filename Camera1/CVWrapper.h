@@ -20,4 +20,8 @@
 //TODO refactor and use a rectangle class?
 + (UIImage*) getMatchedImage:(UIImage*)inputImage x:(int)x y:(int)y w:(int)w h:(int)h sceneImage:(UIImage*)sceneImage;
 
++ (void) setOverlayAsObjectImage:(UIImage*)objImg x:(int)x y:(int)y w:(int)w h:(int)h;
++ (void) setFrameAsSceneImage:(UIImage*)sceneImg;
+
++ (UIImage*) getOverlayProcessedUIImage;
 @end
