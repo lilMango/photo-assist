@@ -113,9 +113,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         self.view.sendSubviewToBack(textOverlay)
         self.view.sendSubviewToBack(previewView)
         
-//        let greyImage:UIImage = CVWrapper.toGreyImage(OverlayData.image) as UIImage
         let kpImage:UIImage = CVWrapper.toKeypointsImage(OverlayData.image) as UIImage
-//        let kpImage:UIImage = CVWrapper.toROI(OverlayData.image) as UIImage
         overlayImageView!.image = kpImage //use the singleton set by overlay settings screen
         
         locationManager!.startUpdatingLocation()

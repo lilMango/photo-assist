@@ -12,63 +12,11 @@
 #import "UIImage+OpenCV.h"
 #import "stitching.h"
 #import "UIImage+Rotate.h"
-#import "ImageMatch.hpp"
 #import "ProcessedImage.hpp"
+#import "ImageMatch.hpp"
+
 
 @implementation CVWrapper
-
-+ (UIImage*) processImageWithOpenCV: (UIImage*) inputImage
-{
-    NSArray* imageArray = [NSArray arrayWithObject:inputImage];
-    UIImage* result = [[self class] processWithArray:imageArray];
-    return result;
-}
-
-+ (UIImage*) processWithOpenCVImage1:(UIImage*)inputImage1 image2:(UIImage*)inputImage2;
-{
-    NSArray* imageArray = [NSArray arrayWithObjects:inputImage1,inputImage2,nil];
-    UIImage* result = [[self class] processWithArray:imageArray];
-    return result;
-}
-
-+ (UIImage*) processWithArray:(NSArray*)imageArray
-{
-    if ([imageArray count]==0){
-        NSLog (@"imageArray is empty");
-        return 0;
-        }
-    std::vector<cv::Mat> matImages;
-
-    for (id image in imageArray) {
-        if ([image isKindOfClass: [UIImage class]]) {
-            /*
-             All images taken with the iPhone/iPa cameras are LANDSCAPE LEFT orientation. The  UIImage imageOrientation flag is an instruction to the OS to transform the image during display only. When we feed images into openCV, they need to be the actual orientation that we expect them to be for stitching. So we rotate the actual pixel matrix here if required.
-             */
-            UIImage* rotatedImage = [image rotateToImageOrientation];
-            cv::Mat matImage = [rotatedImage CVMat3];
-            NSLog (@"matImage: %@",image);
-            matImages.push_back(matImage);
-        }
-    }
-    NSLog (@"stitching...");
-    
-    //Method to call CPP specific code
-    cv::Mat stitchedMat = stitch (matImages);
-    UIImage* result =  [UIImage imageWithCVMat:stitchedMat];
-    return result;
-}
-
-+ (UIImage*) toGreyImage:(UIImage*)inputImage
-{
-    cv::Mat inputMat = [inputImage CVMat3];
-    
-    cv::Mat greyMat;
-    cv::cvtColor(inputMat, greyMat, CV_BGR2GRAY);
-    
-    UIImage* result = [UIImage imageWithCVMat:greyMat];
-    return result;
-}
-
 
 + (UIImage *) toKeypointsImage:(UIImage*)inputImage
 {
@@ -90,29 +38,6 @@
     return result;
 }
 
-+ (NSString*) getDiff:(UIImage*)img1 img2:(UIImage*)img2
-{
-    cv::Mat inputMat = [img1 CVMat3];
-    cv::Mat inputMat2 = [img2 CVMat3];
-    NSLog(@"\n%s","@CVWrapper.getDiff (OBJ-C)");
-
-    flannDiff(inputMat,inputMat2);
-    return nullptr;
-
-}
-
-+ (UIImage *) toROI:(UIImage*)inputImage x:(short)x y:(short)y w:(short)w h:(short)h
-
-{
-    cv::Mat inputMat = [inputImage CVMat3];
-    
-    cv::Rect rect = cv::Rect(x,y,w,h);
-    
-    cv::Mat roiImg = getROI(inputMat, rect);
-    
-    UIImage* result = [UIImage imageWithCVMat:roiImg];
-    return result;
-}
 
 //Get Flann based matching
 + (UIImage*) getMatchedImage:(UIImage*)inputImage x:(int)x y:(int)y w:(int)w h:(int)h sceneImage:(UIImage*)sceneImage {
