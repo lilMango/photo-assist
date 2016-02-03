@@ -22,9 +22,9 @@ import UIKit
 class OverlayData {
     static var image:UIImage! = UIImage(named:"halfdome.jpg")
     
-    //var interestBox // region of interest (ROI)
-    
-    //TODO remove
+    //region of interest (ROI), each value is interpreted as a pixel representation of the container width. TODO should we use percentage?
+    static var roiBox:CGRect = CGRect(x: 0,y: 50,width: 200,height: 200)
+
     static var overlayImage:UIImage! = UIImage(named:"halfdome.jpg")
     static var cameraImage:UIImage! = UIImage(named:"halfdome.jpg")
 }

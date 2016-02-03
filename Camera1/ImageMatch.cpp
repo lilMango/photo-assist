@@ -13,6 +13,9 @@ using namespace cv;
 
 Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     
+    std::cout << "imgm_obj size: " << imgm_obj0.cols << std::endl;
+    std::cout << "imgm_scene size: " << imgm_scene.cols << std::endl;
+    
     //http://docs.opencv.org/3.0-beta/doc/tutorials/features2d/feature_homography/feature_homography.html
     ////////////////////  ////////////////////  ////////////////////  ////////////////////
     

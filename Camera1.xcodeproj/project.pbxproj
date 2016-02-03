@@ -98,6 +98,8 @@
 		5664EB8B1C607721008A4DE5 /* OpenCVFuncs */ = {
 			isa = PBXGroup;
 			children = (
+				567BD5971C59EC7C004E81DF /* CVWrapper.h */,
+				567BD5981C59EC7C004E81DF /* CVWrapper.mm */,
 				567BD59A1C59EEDE004E81DF /* stitching.cpp */,
 				567BD59B1C59EEDE004E81DF /* stitching.h */,
 				5664EB881C607710008A4DE5 /* ImageMatch.cpp */,
@@ -170,8 +172,6 @@
 				567BD58C1C59E770004E81DF /* Helpers */,
 				567BD58B1C59E753004E81DF /* OverlaySettings */,
 				567BD58F1C59EA84004E81DF /* Camera1-Bridging-Header.h */,
-				567BD5971C59EC7C004E81DF /* CVWrapper.h */,
-				567BD5981C59EC7C004E81DF /* CVWrapper.mm */,
 				5664EB8B1C607721008A4DE5 /* OpenCVFuncs */,
 				5664EB841C5B3D7C008A4DE5 /* CVImageViewController.swift */,
 			);

@@ -17,6 +17,7 @@
                         <viewControllerLayoutGuide type="bottom" id="W9G-cp-mfW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lfB-HG-6Y0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PEu-T9-gds">
@@ -99,13 +100,13 @@
                             <mask key="constraints">
                                 <exclude reference="9uc-wu-GIG"/>
                                 <exclude reference="T20-kG-Gjd"/>
-                                <exclude reference="Exw-uA-oZb"/>
-                                <exclude reference="Nbw-gK-lDQ"/>
-                                <exclude reference="SLC-Hz-VMJ"/>
                                 <exclude reference="2Fg-2d-H1m"/>
                                 <exclude reference="JYH-Nk-OIF"/>
                                 <exclude reference="d3b-9g-xVI"/>
                                 <exclude reference="saP-wo-NUk"/>
+                                <exclude reference="Exw-uA-oZb"/>
+                                <exclude reference="Nbw-gK-lDQ"/>
+                                <exclude reference="SLC-Hz-VMJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -117,13 +118,13 @@
                             <mask key="constraints">
                                 <include reference="9uc-wu-GIG"/>
                                 <include reference="T20-kG-Gjd"/>
-                                <include reference="Exw-uA-oZb"/>
-                                <include reference="Nbw-gK-lDQ"/>
-                                <include reference="SLC-Hz-VMJ"/>
                                 <include reference="2Fg-2d-H1m"/>
                                 <include reference="JYH-Nk-OIF"/>
                                 <include reference="d3b-9g-xVI"/>
                                 <include reference="saP-wo-NUk"/>
+                                <include reference="Exw-uA-oZb"/>
+                                <include reference="Nbw-gK-lDQ"/>
+                                <include reference="SLC-Hz-VMJ"/>
                             </mask>
                         </variation>
                     </view>
@@ -131,6 +132,7 @@
                     <connections>
                         <outlet property="cameraImgView" destination="U8S-q1-JN7" id="7Jm-Q7-R3f"/>
                         <outlet property="overlayImgView" destination="PEu-T9-gds" id="Bzg-Q2-8hn"/>
+                        <outlet property="overlayWholeImgView" destination="Y7q-QH-XlN" id="mKm-B5-Tr8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D3T-81-spt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -151,7 +153,7 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTg-5D-xP3">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.78039222959999999" green="0.81960791349999995" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.40000003576278687" blue="0.52549022436141968" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="BTg-5D-xP3" secondAttribute="height" multiplier="1:1" id="hFP-IC-U84"/>
                                 </constraints>

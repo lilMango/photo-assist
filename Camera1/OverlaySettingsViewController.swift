@@ -21,11 +21,13 @@ class OverlaySettingsViewController: UIViewController,
     
     var libraryPhotos:NSMutableArray!=NSMutableArray()
     let identifier = "CellIdentifier"
-    
+    let roiWidth:CGFloat = 200
+    let roiBtn = UIButton(frame: CGRectMake(0, 50, 200, 200))
+    let picWidth=UIScreen.mainScreen().bounds.width
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let picWidth=UIScreen.mainScreen().bounds.width
         print("screenWidth:",picWidth)
         print("imageView.bounds:",selectedOverlayImgView!.bounds)
         print("imageView.frame:",selectedOverlayImgView!.frame)
@@ -38,16 +40,29 @@ class OverlaySettingsViewController: UIViewController,
         collectionView.dataSource = self
         fetchPhotoAtIndexFromEnd(0)
 
+//        roiBtn.image = UIImage(named: "halfdome.jpg")
+        roiBtn.contentMode = .ScaleToFill
+        roiBtn.userInteractionEnabled = true
+        roiBtn.backgroundColor = UIColor.clearColor()
+        roiBtn.layer.cornerRadius = 5
+        roiBtn.layer.borderWidth = 1
+        roiBtn.layer.borderColor = UIColor.yellowColor().CGColor
+        roiBtn.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "handlePan:"))
+        
+        self.view.addSubview(roiBtn)
+        
+        print ("roiBtn:",roiBtn.frame)
     }
     
     override func viewWillAppear(animated: Bool) {
         
         fetchPhotoAtIndexFromEnd(0)
+        self.view.sendSubviewToBack(selectedOverlayImgView)
         
-        
-        
+        print ("roiBtn.Frame:",roiBtn.frame)
         
     }
+    
     
     
     /*****************************
@@ -57,6 +72,63 @@ class OverlaySettingsViewController: UIViewController,
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    //for dragging the roi box, also does translation from Storyboard Points to Pixels. TODO make that a util func
+    @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
+        
+        let translation = recognizer.translationInView(self.view)
+        if let view = recognizer.view {
+            
+            //box stays within bounds
+            var dX:CGFloat = translation.x
+            var dY:CGFloat = translation.y
+            
+            let leftVX = view.frame.minX //left
+            let rightVX = view.frame.maxX //right
+            let topVX = view.frame.minY //top
+            let bottomVX = view.frame.maxY //bottom
+            
+            let topMargin:CGFloat = 50
+
+            if ((rightVX + dX > UIScreen.mainScreen().bounds.maxX)
+                || (leftVX + dX < 0 )) {
+                dX = 0
+            }
+            
+            if ((topVX + dY < selectedOverlayImgView.frame.minY)
+                || (bottomVX + dY > selectedOverlayImgView.frame.maxY)) {
+                dY = 0
+            }
+
+            let overlayImgWidth = OverlayData.overlayImage.size.width
+            let overlayImgHeight = OverlayData.overlayImage.size.height
+            let pointsToPixelsFactor = overlayImgWidth/picWidth
+            
+            view.center = CGPoint (x:view.center.x + dX,
+                y:view.center.y + dY)
+
+
+            //Get image in terms of Storyboard points coordinates
+            //localize storyboard point coordinates (top left @0,0)
+            OverlayData.roiBox = CGRect(x:view.frame.minX, y:view.frame.minY-topMargin, width:roiWidth, height:roiWidth)
+            
+
+            let roi_pw =  OverlayData.roiBox.size.width * pointsToPixelsFactor
+            let roi_px =  OverlayData.roiBox.minX * pointsToPixelsFactor
+            let roi_py =  OverlayData.roiBox.minY * pointsToPixelsFactor
+            
+            print("@OverlaySettings. points2Pixel:",pointsToPixelsFactor,
+                "\n\tw :", OverlayData.roiBox.size.width,"\tx :", OverlayData.roiBox.minX,"\t y:",OverlayData.roiBox.minY,
+                "\n\twp:",roi_pw,"\txp:", roi_px,"\twy:",roi_py)
+
+            //store in terms of pixels //TODO? or just use roiBox as percentage
+            OverlayData.roiBox = CGRect(x:roi_px,
+                y:roi_py,
+                width:roi_pw,
+                height:roi_pw)
+        }
+        recognizer.setTranslation(CGPointZero, inView: self.view)
+    }
+
     // UICollectionViewDataSource delegate
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return libraryPhotos.count
@@ -95,6 +167,7 @@ class OverlaySettingsViewController: UIViewController,
     
             //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
             OverlayData.overlayImage=selectedOverlayImgView.image
+            
     }
     
     
