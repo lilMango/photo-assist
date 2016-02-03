@@ -18,7 +18,7 @@
 #include "opencv2/highgui.hpp"
 #include "opencv2/calib3d.hpp"
 #include "opencv2/imgproc.hpp"
-
+#include "ProcessedImage.hpp"
 
 cv::Mat detectAndDescriptor(cv::Mat &obj, cv::Mat &scene);
 void setMatches(cv::Mat &descriptor_obj, cv::Mat &descriptor_scene, cv::DescriptorMatcher/*Flann*/ &matcher); //have a reset vector for matches
@@ -29,5 +29,34 @@ cv::Mat localizeObjInScene(cv::Mat &mat); //TODO: refactor to classes, ProcImage
 
 //Will do e2e of descriptor, matching, rendering overlayed matrix image
 cv::Mat getObjInSceneImageMatrix(cv::Mat imgm_obj, cv::Rect &rect, cv::Mat imgm_scene);
+
+/** **/
+class ImageMatch {
+public:
+    //zomg Singleton pattern!
+    static ImageMatch &Instance() {
+        static ImageMatch imageMatchInstance;
+        return imageMatchInstance;
+    }
+    
+    void Hello() {
+        std::cout << "Hello from ImageMatch singleton" << std::endl;
+    }
+    
+    cv::Ptr<cv::FeatureDetector> detector;
+    cv::Ptr<DescriptorMatcher> matcher;
+    ProcessedImage *obj;//has ROI image
+    ProcessedImage *scene;
+    //void reset();
+private:
+    ImageMatch() {
+        detector = cv::ORB::create();
+        matcher = cv::DescriptorMatcher::create("FlannBased");
+    };
+    ~ImageMatch(){
+    
+    }
+};
+
 
 #endif /* ImageMatch_hpp */

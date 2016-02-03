@@ -13,6 +13,7 @@
 #import "stitching.h"
 #import "UIImage+Rotate.h"
 #import "ImageMatch.hpp"
+#import "ProcessedImage.hpp"
 
 @implementation CVWrapper
 

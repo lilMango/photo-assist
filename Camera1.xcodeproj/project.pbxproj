@@ -15,6 +15,7 @@
 		5673936C1C45B6D600EB1600 /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936B1C45B6D600EB1600 /* Vector3.swift */; };
 		5673936E1C45BE8800EB1600 /* Vector3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936D1C45BE8800EB1600 /* Vector3Tests.swift */; };
 		567393701C471F9900EB1600 /* ConstantsConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5673936F1C471F9900EB1600 /* ConstantsConfig.swift */; };
+		5679575A1C61CBB7006FE76B /* ProcessedImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567957581C61CBB7006FE76B /* ProcessedImage.cpp */; };
 		567BD58E1C59E8AB004E81DF /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 567BD58D1C59E8AB004E81DF /* opencv2.framework */; };
 		567BD5941C59EA85004E81DF /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 567BD5911C59EA84004E81DF /* UIImage+Rotate.m */; };
 		567BD5951C59EA85004E81DF /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 567BD5931C59EA84004E81DF /* UIImage+OpenCV.mm */; };
@@ -51,6 +52,8 @@
 		5673936B1C45B6D600EB1600 /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
 		5673936D1C45BE8800EB1600 /* Vector3Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3Tests.swift; sourceTree = "<group>"; };
 		5673936F1C471F9900EB1600 /* ConstantsConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantsConfig.swift; sourceTree = "<group>"; };
+		567957581C61CBB7006FE76B /* ProcessedImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessedImage.cpp; sourceTree = "<group>"; };
+		567957591C61CBB7006FE76B /* ProcessedImage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProcessedImage.hpp; sourceTree = "<group>"; };
 		567BD58D1C59E8AB004E81DF /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		567BD58F1C59EA84004E81DF /* Camera1-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Camera1-Bridging-Header.h"; sourceTree = "<group>"; };
 		567BD5901C59EA84004E81DF /* UIImage+Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Rotate.h"; sourceTree = "<group>"; };
@@ -104,6 +107,8 @@
 				567BD59B1C59EEDE004E81DF /* stitching.h */,
 				5664EB881C607710008A4DE5 /* ImageMatch.cpp */,
 				5664EB891C607710008A4DE5 /* ImageMatch.hpp */,
+				567957581C61CBB7006FE76B /* ProcessedImage.cpp */,
+				567957591C61CBB7006FE76B /* ProcessedImage.hpp */,
 			);
 			name = OpenCVFuncs;
 			sourceTree = "<group>";
@@ -305,6 +310,7 @@
 				5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */,
 				567BD5941C59EA85004E81DF /* UIImage+Rotate.m in Sources */,
 				567BD59C1C59EEDE004E81DF /* stitching.cpp in Sources */,
+				5679575A1C61CBB7006FE76B /* ProcessedImage.cpp in Sources */,
 				5664EB8A1C607710008A4DE5 /* ImageMatch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

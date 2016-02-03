@@ -19,24 +19,20 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     //http://docs.opencv.org/3.0-beta/doc/tutorials/features2d/feature_homography/feature_homography.html
     ////////////////////  ////////////////////  ////////////////////  ////////////////////
     
-    //-- Step 1. Detect key points for each photo, use ORB or SURF. -----------------------------
-    Ptr<ORB> orb=ORB::create();
-    
-    Ptr<FeatureDetector> detector=orb; //Feature Detector is also DescriptorExtract (same typedef of Feature2D) as of OpenCV3
-    
     std::vector<KeyPoint> keypoints_obj, keypoints_scene;
     
     //Change to ROI matrix
     cv::Mat imgm_obj = cv::Mat(imgm_obj0, rect);
     
-    detector->detect( imgm_obj, keypoints_obj );
-    detector->detect( imgm_scene, keypoints_scene );
-    
+    ImageMatch::Instance().Hello();
+    ImageMatch::Instance().detector->detect( imgm_obj, keypoints_obj );
+    ImageMatch::Instance().detector->detect( imgm_scene, keypoints_scene );
+    std::cout << "USING singleton class for detectors" << std::endl;
     //-- Step 2: Calculate descriptors (feature vectors) -----------------------------
     Mat descriptors_obj, descriptors_scene;
     
-    detector->compute( imgm_obj, keypoints_obj, descriptors_obj );
-    detector->compute( imgm_scene, keypoints_scene, descriptors_scene );
+    ImageMatch::Instance().detector->compute( imgm_obj, keypoints_obj, descriptors_obj );
+    ImageMatch::Instance().detector->compute( imgm_scene, keypoints_scene, descriptors_scene );
     
     std::cout << "descriptors_obj count:" << descriptors_obj.rows << std::endl;
 
@@ -54,7 +50,7 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
         descriptors_scene.convertTo(descriptors_scene, CV_32F);
     }
     
-    matcher.match( descriptors_obj, descriptors_scene, matches );
+    ImageMatch::Instance().matcher->match( descriptors_obj, descriptors_scene, matches );
     
     std::cout << "matches: " << matches.size() << std::endl;
     double max_dist = 0; double min_dist = 100;
@@ -133,3 +129,8 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     
     return imgm_matches;
 }
+
+
+//////////////////////////////////////////////////////////////////////
+/////////   ImageMatch class methods ///////////////////////////
+//////////////////////////////////////////////////////////////////////
