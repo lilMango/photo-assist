@@ -62,10 +62,11 @@
 
 //TODO
 + (void) setFrameAsSceneImage:(UIImage*)sceneImage {
+
     cv::Mat imgm_scene = [sceneImage CVMat3];
+    ImageMatch::Instance().setImageScene(new ProcessedImage(imgm_scene));
 }
 
-//TODO why can't we see keypoints?
 + (UIImage*) getOverlayProcessedUIImage {
     std::cout << "@CVWrapper.getOverlayProcessedUIImage" << std::endl;
     cv::Mat kp_imgm = ImageMatch::Instance().getImageObj()->getKeypointsImgm();

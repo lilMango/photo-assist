@@ -18,7 +18,7 @@ cv::Mat ProcessedImage::getStartImgm() {
 cv::Mat ProcessedImage::getKeypointsImgm() {
     std::cout << "@ProcessedImg.getKeypointsImgm()" << std::endl;
     cv::Mat kp_imgm;
-    cv::drawKeypoints(originalImg,keypoints,kp_imgm);
+    cv::drawKeypoints(originalImg,keypoints,kp_imgm, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
     return kp_imgm;
 }
 

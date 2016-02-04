@@ -11,41 +11,46 @@
 using namespace cv;
 
 
-Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
+Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene0) {
     
+    cv::Mat imgm_scene = imgm_scene0;
     std::cout << "imgm_obj size: " << imgm_obj0.cols << std::endl;
     std::cout << "imgm_scene size: " << imgm_scene.cols << std::endl;
     
     //http://docs.opencv.org/3.0-beta/doc/tutorials/features2d/feature_homography/feature_homography.html
     ////////////////////  ////////////////////  ////////////////////  ////////////////////
     
-    std::vector<KeyPoint> keypoints_scene;
+//    std::vector<KeyPoint> keypoints_scene;
     
     //Change to ROI matrix
     cv::Mat imgm_obj = ImageMatch::Instance().getImageObj()->getStartImgm();
+    imgm_scene = ImageMatch::Instance().getImageScene()->getStartImgm();
+    
     ImageMatch::Instance().Hello();
 
-    ImageMatch::Instance().detector->detect( imgm_scene, keypoints_scene );
+//    ImageMatch::Instance().detector->detect( imgm_scene, keypoints_scene );
     std::cout << "USING singleton class for detectors" << std::endl;
     //-- Step 2: Calculate descriptors (feature vectors) -----------------------------
-    Mat descriptors_scene;
+//    Mat descriptors_scene;
     
-    ImageMatch::Instance().detector->compute( imgm_scene, keypoints_scene, descriptors_scene );
+//    ImageMatch::Instance().detector->compute( imgm_scene, keypoints_scene, descriptors_scene );
     std::cout << "ImageMatch->obj->descriptor count: " << ImageMatch::Instance().getImageObj()->getDescriptors().rows << std::endl;
-    
+    std::cout << "ImageMatch->scene->descriptor count: " << ImageMatch::Instance().getImageScene()->getDescriptors().rows << std::endl;
     
     //-- Step 3: Compare Matching descriptor vectors using FLANN matcher -----------------------------
-    FlannBasedMatcher matcher;
+//    FlannBasedMatcher matcher;
     std::vector< DMatch > matches;
     
     //http://stackoverflow.com/questions/29694490/flann-error-in-opencv-3
 
-    if(descriptors_scene.type()!=CV_32F) {
-        descriptors_scene.convertTo(descriptors_scene, CV_32F);
-    }
+//    if(descriptors_scene.type()!=CV_32F) {
+//        descriptors_scene.convertTo(descriptors_scene, CV_32F);
+//    }
     
    
-    ImageMatch::Instance().matcher->match( ImageMatch::Instance().getImageObj()->getDescriptors(), descriptors_scene, matches );
+    ImageMatch::Instance().matcher->match( ImageMatch::Instance().getImageObj()->getDescriptors(),
+                                          
+                                          ImageMatch::Instance().getImageScene()->getDescriptors(), matches );
     std::cout << "matches: " << matches.size() << std::endl;
     double max_dist = 0; double min_dist = 100;
     
@@ -65,7 +70,7 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     { if( matches[i].distance < 3*min_dist )
     { good_matches.push_back( matches[i]); }
     }
-
+    
     if (good_matches.size()<4) {
         std::cout << "[ERROR] Not enough good_matches:" << good_matches.size() << "\n\tReturning original scene image instead" << std::endl;
         return imgm_scene;
@@ -74,7 +79,7 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     
     Mat imgm_matches;
     
-    drawKeypoints( imgm_scene, keypoints_scene, imgm_matches, Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+    drawKeypoints( imgm_scene, ImageMatch::Instance().getImageScene()->getKeypoints(), imgm_matches, Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
     
     bool tmp=false;
     if(tmp) { std::cout << "exit keypoint drawing:" << std::endl; return imgm_matches; }
@@ -86,7 +91,7 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     {
         //-- Get the keypoints from the good matches
         obj.push_back(  ImageMatch::Instance().getImageObj()->getKeypoints()[ good_matches[i].queryIdx ].pt );
-        scene.push_back( keypoints_scene[ good_matches[i].trainIdx ].pt );
+        scene.push_back(ImageMatch::Instance().getImageScene()->getKeypoints()[ good_matches[i].trainIdx ].pt );
     }
 
     std::cout << "good_Matches count:" << good_matches.size() << std::endl;
@@ -115,7 +120,6 @@ Mat getObjInSceneImageMatrix(Mat imgm_obj0, Rect &rect, Mat imgm_scene) {
     std::cout << "A:" << scene_corners[1] << "  B: " <<  scene_corners[2] << std::endl;
     std::cout << "A:" << scene_corners[2] << "  B: " <<  scene_corners[3] << std::endl;
     std::cout << "A:" << scene_corners[3] << "  B: " <<  scene_corners[0] << std::endl;
-
     
     return imgm_matches;
 }
@@ -136,6 +140,7 @@ void ImageMatch::setImageObj(ProcessedROIImage *img) {
 }
 
 void ImageMatch::setImageScene(ProcessedImage *img) {
+        std::cout<< "@ImageMatch.setImageScene" << std::endl;
     delete(scene);
     scene = NULL;
     scene= img;

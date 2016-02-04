@@ -19,6 +19,17 @@
 #include "opencv2/calib3d.hpp"
 #include "opencv2/imgproc.hpp"
 
+
+/******************************************
+ * Steps to getting a matched photo
+ * 1. Get obj image you want to look for
+ * 2. Get scene (a frame) you want to find object IN
+ * 3. Calc Keypoints and Descriptors for both photos
+ * 4. Match those descriptors
+ * 5. Render results
+ *
+ ******************************************/
+ 
 class ProcessedImage {
 public:
     cv::Mat getStartImgm();

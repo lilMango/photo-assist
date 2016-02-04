@@ -275,6 +275,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     
                     //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
                     OverlayData.cameraImage=image
+                    CVWrapper.setFrameAsSceneImage(image);
+                    
                 }
             })
         }

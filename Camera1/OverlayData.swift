@@ -15,7 +15,7 @@ import UIKit
  ********************************
  *
  *
- *
+ * TODO deprecate because we're using the singleton class of ImageMatch.cpp
  *
  */
 
