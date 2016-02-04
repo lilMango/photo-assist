@@ -20,15 +20,9 @@
 #include "opencv2/imgproc.hpp"
 #include "ProcessedImage.hpp"
 
-cv::Mat detectAndDescriptor(cv::Mat &obj, cv::Mat &scene);
-void setMatches(cv::Mat &descriptor_obj, cv::Mat &descriptor_scene, cv::DescriptorMatcher/*Flann*/ &matcher); //have a reset vector for matches
-void setGoodMatches(cv::Mat &descriptor_obj, cv::Mat &descriptor_scene); //have a reset vector for matches
 
-cv::Mat getKeypointsImageMatrix(cv::Mat &mat); //TODO: refactor to classes, ProcImage -> Object, Scene
-cv::Mat localizeObjInScene(cv::Mat &mat); //TODO: refactor to classes, ProcImage -> Object, Scene
-
-//Will do e2e of descriptor, matching, rendering overlayed matrix image
-cv::Mat getObjInSceneImageMatrix(cv::Mat imgm_obj, cv::Rect &rect, cv::Mat imgm_scene);
+cv::Mat getKeypoints (cv::Mat image);
+cv::Mat getKeypoints (cv::Mat image, cv::Rect rect);
 
 /** **/
 class ImageMatch {

@@ -20,7 +20,6 @@
 		567BD5941C59EA85004E81DF /* UIImage+Rotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 567BD5911C59EA84004E81DF /* UIImage+Rotate.m */; };
 		567BD5951C59EA85004E81DF /* UIImage+OpenCV.mm in Sources */ = {isa = PBXBuildFile; fileRef = 567BD5931C59EA84004E81DF /* UIImage+OpenCV.mm */; };
 		567BD5991C59EC7C004E81DF /* CVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 567BD5981C59EC7C004E81DF /* CVWrapper.mm */; };
-		567BD59C1C59EEDE004E81DF /* stitching.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 567BD59A1C59EEDE004E81DF /* stitching.cpp */; };
 		568FC6B31C31CE8600D64FEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC6B21C31CE8600D64FEA /* AppDelegate.swift */; };
 		568FC6B51C31CE8600D64FEA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568FC6B41C31CE8600D64FEA /* ViewController.swift */; };
 		568FC6B81C31CE8600D64FEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 568FC6B61C31CE8600D64FEA /* Main.storyboard */; };
@@ -62,8 +61,6 @@
 		567BD5931C59EA84004E81DF /* UIImage+OpenCV.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "UIImage+OpenCV.mm"; sourceTree = "<group>"; };
 		567BD5971C59EC7C004E81DF /* CVWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVWrapper.h; sourceTree = "<group>"; };
 		567BD5981C59EC7C004E81DF /* CVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CVWrapper.mm; sourceTree = "<group>"; };
-		567BD59A1C59EEDE004E81DF /* stitching.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stitching.cpp; sourceTree = "<group>"; };
-		567BD59B1C59EEDE004E81DF /* stitching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stitching.h; sourceTree = "<group>"; };
 		568FC6AF1C31CE8600D64FEA /* Camera1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		568FC6B21C31CE8600D64FEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		568FC6B41C31CE8600D64FEA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -103,8 +100,6 @@
 			children = (
 				567BD5971C59EC7C004E81DF /* CVWrapper.h */,
 				567BD5981C59EC7C004E81DF /* CVWrapper.mm */,
-				567BD59A1C59EEDE004E81DF /* stitching.cpp */,
-				567BD59B1C59EEDE004E81DF /* stitching.h */,
 				5664EB881C607710008A4DE5 /* ImageMatch.cpp */,
 				5664EB891C607710008A4DE5 /* ImageMatch.hpp */,
 				567957581C61CBB7006FE76B /* ProcessedImage.cpp */,
@@ -309,7 +304,6 @@
 				567BD5991C59EC7C004E81DF /* CVWrapper.mm in Sources */,
 				5673936A1C40A3BB00EB1600 /* PlacementNavigator.swift in Sources */,
 				567BD5941C59EA85004E81DF /* UIImage+Rotate.m in Sources */,
-				567BD59C1C59EEDE004E81DF /* stitching.cpp in Sources */,
 				5679575A1C61CBB7006FE76B /* ProcessedImage.cpp in Sources */,
 				5664EB8A1C607710008A4DE5 /* ImageMatch.cpp in Sources */,
 			);

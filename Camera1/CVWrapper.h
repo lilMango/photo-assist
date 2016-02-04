@@ -27,5 +27,5 @@
 + (UIImage*) getOverlayProcessedUIImage;
 
 //The scene with the matched ROI obj marked as green
-+ (UIImage*) trackObjInScene; 
++ (UIImage*) trackObjInSceneFrame;
 @end

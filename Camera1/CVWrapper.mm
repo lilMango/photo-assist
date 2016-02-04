@@ -10,7 +10,6 @@
 
 #import "CVWrapper.h"
 #import "UIImage+OpenCV.h"
-#import "stitching.h"
 #import "UIImage+Rotate.h"
 #import "ProcessedImage.hpp"
 #import "ImageMatch.hpp"
@@ -39,18 +38,6 @@
 }
 
 
-//Get Flann based matching
-+ (UIImage*) getMatchedImage:(UIImage*)inputImage x:(int)x y:(int)y w:(int)w h:(int)h sceneImage:(UIImage*)sceneImage {
-    
-    cv::Mat imgm_obj = [inputImage CVMat3];
-    cv::Rect rect = cv::Rect(x,y,w,h);
-    cv::Mat imgm_scene = [sceneImage CVMat3];
-    
-    cv::Mat imgmg_obj_scene = getObjInSceneImageMatrix(imgm_obj,rect,imgm_scene);
-    UIImage* result = [UIImage imageWithCVMat:imgmg_obj_scene];//TODO NOT inputImage
-    return result;
-}
-
 + (void) setOverlayAsObjectImage:(UIImage*)objImg x:(int)x y:(int)y w:(int)w h:(int)h{
     std::cout << "@CVWrapper.mm:: setOverlayAsObjectImage( x: " << x << "\ty: " << y << "\tw: " << w << "\th: " << h << std::endl;
     cv::Mat imgm_obj = [objImg CVMat3];
@@ -60,7 +47,6 @@
 }
 
 
-//TODO
 + (void) setFrameAsSceneImage:(UIImage*)sceneImage {
 
     cv::Mat imgm_scene = [sceneImage CVMat3];
@@ -74,7 +60,7 @@
     return res;
 }
 
-+ (UIImage*) trackObjInScene {
++ (UIImage*) trackObjInSceneFrame {
     std::cout << "@CVWrapper.trackObjInScene" << std::endl;
     cv::Mat imgm_matches = ImageMatch::Instance().matchImages(
                                                          ImageMatch::Instance().getImageObj()->getDescriptors(),

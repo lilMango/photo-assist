@@ -36,15 +36,9 @@ class CVImageViewController:UIViewController {
         let overlayImgHeight = OverlayData.overlayImage.size.height
         print("width: ", overlayImgWidth, "\theight: ", overlayImgHeight)
         
-        let roi_w = Int32( OverlayData.roiBox.size.width)
-        let roi_x = Int32( OverlayData.roiBox.minX)
-        let roi_y = Int32( OverlayData.roiBox.minY)
         
-        let overlayKpImage:UIImage =
-        CVWrapper.getOverlayProcessedUIImage()
-        //CVWrapper.toKeypointsImage(OverlayData.overlayImage, x:roi_x, y:roi_y, w:roi_w, h:roi_w) as UIImage
-        //let camKpImage:UIImage = CVWrapper.getMatchedImage(OverlayData.overlayImage, x:roi_x, y:roi_y, w:roi_w, h:roi_w, sceneImage:OverlayData.cameraImage) as UIImage
-        let camKpImage:UIImage = CVWrapper.trackObjInScene()
+        let overlayKpImage:UIImage = CVWrapper.getOverlayProcessedUIImage()
+        let camKpImage:UIImage = CVWrapper.trackObjInSceneFrame()
         
         overlayWholeImgView!.image = OverlayData.overlayImage
         overlayImgView!.image = overlayKpImage
