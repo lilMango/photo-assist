@@ -49,7 +49,7 @@ public:
     void setImageObj(ProcessedROIImage *img);
     void setImageScene(ProcessedImage *img);
     
-    std::vector< cv::DMatch > matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor);
+    cv::Mat matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor);
     ProcessedROIImage* getImageObj();
     ProcessedImage* getImageScene();
     //void reset();

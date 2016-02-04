@@ -74,4 +74,14 @@
     return res;
 }
 
++ (UIImage*) trackObjInScene {
+    std::cout << "@CVWrapper.trackObjInScene" << std::endl;
+    cv::Mat imgm_matches = ImageMatch::Instance().matchImages(
+                                                         ImageMatch::Instance().getImageObj()->getDescriptors(),
+                                                         ImageMatch::Instance().getImageScene()->getDescriptors());
+    UIImage* res = [UIImage imageWithCVMat:imgm_matches];
+    return res;
+    
+}
+
 @end

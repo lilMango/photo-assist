@@ -23,5 +23,9 @@
 + (void) setOverlayAsObjectImage:(UIImage*)objImg x:(int)x y:(int)y w:(int)w h:(int)h;
 + (void) setFrameAsSceneImage:(UIImage*)sceneImg;
 
+//The focused part of the image, where we placed the Region of Interest box on the overlay image
 + (UIImage*) getOverlayProcessedUIImage;
+
+//The scene with the matched ROI obj marked as green
++ (UIImage*) trackObjInScene; 
 @end
