@@ -51,12 +51,10 @@ ProcessedImage* ImageMatch::getImageScene() {
  *
  *****************/
 cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) {
-    std::cout << "@ImageMatch. matchImages()---" << std::endl;
     
     std::vector< DMatch > matches;
     matcher->match(objDescriptor, sceneDescriptor, matches);
     
-    std::cout << "matches: " << matches.size() << std::endl;
     double max_dist = 0; double min_dist = 100;
     
     //-- Quick calculation of max and min distances between keypoints
@@ -66,8 +64,6 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) 
         if( dist < min_dist ) min_dist = dist;
         if( dist > max_dist ) max_dist = dist;
     }
-    
-    std::cout << "min_dist:" << min_dist << "\tmax_dist:" << max_dist << std::endl;
     
     //-- Draw only "good" matches (i.e. whose distance is less than 3*min_dist )
     float GOOD_MATCH_DISTANCE_THRESHOLD = 3*min_dist;
@@ -124,13 +120,6 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) 
     line( imgm_matches, scene_corners[2] , scene_corners[3] , Scalar( 0, 255, 0), 10 );
     line( imgm_matches, scene_corners[3] , scene_corners[0] , Scalar( 0, 255, 0), 10 );
 
-//    Point2f a(100.0f, 100.0f), b(1000.0f, 1000.0f);
-//    line( imgm_matches, a, b, Scalar(255,255,0),10 );//yellow line
-    std::cout << "A:" << scene_corners[0] << "  B: " <<  scene_corners[1] << std::endl;
-    std::cout << "A:" << scene_corners[1] << "  B: " <<  scene_corners[2] << std::endl;
-    std::cout << "A:" << scene_corners[2] << "  B: " <<  scene_corners[3] << std::endl;
-    std::cout << "A:" << scene_corners[3] << "  B: " <<  scene_corners[0] << std::endl;
-    
     return imgm_matches;
 
 }//end ImageMatch::matchImages()

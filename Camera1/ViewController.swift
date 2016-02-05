@@ -29,6 +29,10 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     var startLocation:CLLocation?
     var startOrientation:CMAcceleration?
     
+    var possibleAVPresets = [AVCaptureSessionPresetPhoto, AVCaptureSessionPresetHigh, AVCaptureSessionPresetMedium, AVCaptureSessionPresetLow]
+
+    var presetCursor=0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -36,11 +40,9 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         //Initialize overlay with some stock 
         let bounds = UIScreen.mainScreen().bounds
         overlayImageView=UIImageView(image: overlayImg)
-        print("main screen bounds: ",bounds)
         overlayImageView!.contentMode = .ScaleAspectFit
         overlayView.addSubview(overlayImageView!)
-        //overlayView.backgroundColor=UIColor.redColor()
-        //libraryButton.backgroundColor=UIColor.blueColor()
+        
         libraryButton.imageView!.contentMode=UIViewContentMode.ScaleAspectFit
         
         motionManager=CMMotionManager()
@@ -119,7 +121,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         locationManager!.startUpdatingLocation()
         
         captureSession = AVCaptureSession()
-        captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
+        captureSession!.sessionPreset = possibleAVPresets[presetCursor]
         
         let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
         let input = try! AVCaptureDeviceInput(device: backCamera)
@@ -134,13 +136,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         stillImageOutput = AVCaptureStillImageOutput()
         stillImageOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
 
-        print("previewView frame: ", previewView.frame)
-        print("previewView bounds: ", previewView.bounds)
-        print("overlayView frame: ", overlayView.frame)
-        print("overlayView bounds: ", overlayView.bounds)
-        print("textOverlay frame: ", textOverlay.frame)
-        print("textOverlay bounds: ", textOverlay.bounds)
-        
         //init the preview feed
         if captureSession!.canAddOutput(stillImageOutput) {
             captureSession!.addOutput(stillImageOutput)
@@ -159,7 +154,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             previewView.layer.addSublayer(previewLayer!)
             
             print("previewLayer frame: ", previewLayer!.frame)
-            print("previewLayer bounds: ", previewLayer!.bounds)
+            
             captureSession!.startRunning()
         } else {
             print("Failed at add Output to capture Session")
@@ -229,6 +224,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var switchSavePhoto: UISwitch!
     @IBOutlet weak var switchSavePhotoLabel: UILabel!
     
+    @IBOutlet weak var AVPresetSlider: UISlider!
     
     /* *************************************************************
      * Capturing Photo sequence (get buffer, saving it)
@@ -261,10 +257,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                     image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
                     
                     UIGraphicsEndImageContext()
-                    
-                    
-                    //self.libraryButton.setImage(image, forState: UIControlState.Normal)
-                    print("accelerometerData: ", self.motionManager?.accelerometerData)
                     
                     self.startLocation = self.locationManager?.location
                     self.startOrientation = self.motionManager?.accelerometerData?.acceleration
@@ -329,7 +321,24 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         overlayImageView!.alpha = CGFloat(sender.value)
     }
 
-    
+    /**
+    * This slider will adjust the sampling rate of the video resolution based on the eligible AVCaptureSessionPresets
+    *
+    */
+    @IBAction func changeAVPreset(sender: UISlider) {
+
+        //flip from High to low res
+        if( CGFloat(sender.value) > 0.50 && presetCursor==0){
+            print("change Preset to Low Res")
+            presetCursor=1
+            captureSession!.sessionPreset = possibleAVPresets[presetCursor]
+        }else if (CGFloat(sender.value) <= 0.50 && presetCursor==1) { //
+            print("change Preset to High Res")
+            presetCursor=0;
+            captureSession!.sessionPreset = possibleAVPresets[presetCursor]
+        }
+
+    }
     /*********************************************
      * Toggle for saving photo
      **********************************************

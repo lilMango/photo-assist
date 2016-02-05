@@ -451,6 +451,12 @@
                                     <action selector="changeOverlayOpacity:" destination="BYZ-38-t0r" eventType="valueChanged" id="mIO-iw-ro9"/>
                                 </connections>
                             </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="inn-Og-Uc4">
+                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
+                                <connections>
+                                    <action selector="changeAVPreset:" destination="BYZ-38-t0r" eventType="valueChanged" id="Xgl-F7-owF"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -466,8 +472,10 @@
                             <constraint firstItem="atm-5w-zH6" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="Bq2-qb-d0p"/>
                             <constraint firstItem="mHy-p2-pka" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="DBY-bk-LyP"/>
                             <constraint firstItem="atm-5w-zH6" firstAttribute="trailing" secondItem="8Jg-fS-hDs" secondAttribute="trailing" id="DVz-Mf-0K5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="inn-Og-Uc4" secondAttribute="trailing" constant="6" id="IC5-YW-5gj"/>
                             <constraint firstItem="6NC-QY-anu" firstAttribute="bottom" secondItem="8Jg-fS-hDs" secondAttribute="bottom" id="IJy-5A-FFi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ZDu-eP-WAr" secondAttribute="bottom" constant="100" id="Jlh-np-d6a"/>
+                            <constraint firstItem="inn-Og-Uc4" firstAttribute="leading" secondItem="kBt-g6-kpg" secondAttribute="trailing" constant="49" id="QrR-rw-zEU"/>
                             <constraint firstItem="Y10-Fm-Io2" firstAttribute="top" secondItem="Yax-qI-rrR" secondAttribute="bottom" constant="8" symbolic="YES" id="RIO-9J-czM"/>
                             <constraint firstItem="atm-5w-zH6" firstAttribute="leading" secondItem="8Jg-fS-hDs" secondAttribute="leading" id="Sbw-QF-qAa"/>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Wfz-A8-m6h"/>
@@ -477,6 +485,7 @@
                             <constraint firstItem="atm-5w-zH6" firstAttribute="bottom" secondItem="6NC-QY-anu" secondAttribute="bottom" id="dn7-rw-t9A"/>
                             <constraint firstItem="Yax-qI-rrR" firstAttribute="top" secondItem="ZDu-eP-WAr" secondAttribute="bottom" constant="24" id="hbY-6f-x40"/>
                             <constraint firstItem="atm-5w-zH6" firstAttribute="top" secondItem="8Jg-fS-hDs" secondAttribute="top" id="lmO-IA-hsL"/>
+                            <constraint firstItem="inn-Og-Uc4" firstAttribute="top" secondItem="Y10-Fm-Io2" secondAttribute="top" id="mKH-Fe-m9d"/>
                             <constraint firstItem="ZDu-eP-WAr" firstAttribute="trailing" secondItem="6NC-QY-anu" secondAttribute="trailing" id="psX-4d-VpL"/>
                             <constraint firstItem="8Jg-fS-hDs" firstAttribute="leading" secondItem="6NC-QY-anu" secondAttribute="leading" id="srA-8i-agH"/>
                             <constraint firstItem="mHy-p2-pka" firstAttribute="trailing" secondItem="atm-5w-zH6" secondAttribute="trailing" id="yAM-se-URj"/>
@@ -487,15 +496,9 @@
                                 <exclude reference="Y10-Fm-Io2"/>
                                 <exclude reference="kBt-g6-kpg"/>
                                 <exclude reference="Yax-qI-rrR"/>
+                                <exclude reference="inn-Og-Uc4"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Adr-iS-Pmq"/>
-                                <exclude reference="aI5-th-lHs"/>
-                                <exclude reference="dfh-Re-sUH"/>
-                                <exclude reference="hbY-6f-x40"/>
-                                <exclude reference="RIO-9J-czM"/>
-                                <exclude reference="38e-jG-VVd"/>
-                                <exclude reference="BMW-Do-LW5"/>
                                 <exclude reference="1Ty-mZ-lpV"/>
                                 <exclude reference="8jj-Ix-0RX"/>
                                 <exclude reference="DBY-bk-LyP"/>
@@ -510,9 +513,19 @@
                                 <exclude reference="Sbw-QF-qAa"/>
                                 <exclude reference="dn7-rw-t9A"/>
                                 <exclude reference="lmO-IA-hsL"/>
-                                <exclude reference="Jlh-np-d6a"/>
                                 <exclude reference="Wfz-A8-m6h"/>
                                 <exclude reference="psX-4d-VpL"/>
+                                <exclude reference="Adr-iS-Pmq"/>
+                                <exclude reference="aI5-th-lHs"/>
+                                <exclude reference="dfh-Re-sUH"/>
+                                <exclude reference="hbY-6f-x40"/>
+                                <exclude reference="RIO-9J-czM"/>
+                                <exclude reference="38e-jG-VVd"/>
+                                <exclude reference="BMW-Do-LW5"/>
+                                <exclude reference="Jlh-np-d6a"/>
+                                <exclude reference="IC5-YW-5gj"/>
+                                <exclude reference="QrR-rw-zEU"/>
+                                <exclude reference="mKH-Fe-m9d"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -521,15 +534,9 @@
                                 <include reference="Y10-Fm-Io2"/>
                                 <include reference="kBt-g6-kpg"/>
                                 <include reference="Yax-qI-rrR"/>
+                                <include reference="inn-Og-Uc4"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Adr-iS-Pmq"/>
-                                <include reference="aI5-th-lHs"/>
-                                <include reference="dfh-Re-sUH"/>
-                                <include reference="hbY-6f-x40"/>
-                                <include reference="RIO-9J-czM"/>
-                                <include reference="38e-jG-VVd"/>
-                                <include reference="BMW-Do-LW5"/>
                                 <include reference="1Ty-mZ-lpV"/>
                                 <include reference="8jj-Ix-0RX"/>
                                 <include reference="DBY-bk-LyP"/>
@@ -544,15 +551,26 @@
                                 <include reference="Sbw-QF-qAa"/>
                                 <include reference="dn7-rw-t9A"/>
                                 <include reference="lmO-IA-hsL"/>
-                                <include reference="Jlh-np-d6a"/>
                                 <include reference="Wfz-A8-m6h"/>
                                 <include reference="psX-4d-VpL"/>
+                                <include reference="Adr-iS-Pmq"/>
+                                <include reference="aI5-th-lHs"/>
+                                <include reference="dfh-Re-sUH"/>
+                                <include reference="hbY-6f-x40"/>
+                                <include reference="RIO-9J-czM"/>
+                                <include reference="38e-jG-VVd"/>
+                                <include reference="BMW-Do-LW5"/>
+                                <include reference="Jlh-np-d6a"/>
+                                <include reference="IC5-YW-5gj"/>
+                                <include reference="QrR-rw-zEU"/>
+                                <include reference="mKH-Fe-m9d"/>
                             </mask>
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Camera" id="Uaw-zq-tre"/>
                     <navigationItem key="navigationItem" title="refoto" id="N9H-aN-rPa"/>
                     <connections>
+                        <outlet property="AVPresetSlider" destination="inn-Og-Uc4" id="2rU-Bz-yKY"/>
                         <outlet property="libraryButton" destination="Lub-39-iM7" id="0zN-22-SWs"/>
                         <outlet property="overlayButton" destination="2rI-EQ-4VS" id="DZn-7v-GqR"/>
                         <outlet property="overlayOpacitySlider" destination="Yax-qI-rrR" id="vlH-WF-1cj"/>
