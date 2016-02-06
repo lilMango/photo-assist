@@ -13,11 +13,15 @@ import CoreLocation
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,
     UINavigationControllerDelegate,
-    CLLocationManagerDelegate{
+    CLLocationManagerDelegate,
+    AVCaptureVideoDataOutputSampleBufferDelegate{
 
     var captureSession: AVCaptureSession?
     var stillImageOutput: AVCaptureStillImageOutput?
     var previewLayer: AVCaptureVideoPreviewLayer?
+    var processedVideoOutput: AVCaptureVideoDataOutput?
+    var customPreviewLayer: CALayer?
+    var queue = dispatch_queue_create("VideoQueue", DISPATCH_QUEUE_SERIAL)
     
     var overlayImg:UIImage?=UIImage(named:"halfdome.jpg")
     var overlayImageView:UIImageView?
@@ -32,6 +36,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     var possibleAVPresets = [AVCaptureSessionPresetPhoto, AVCaptureSessionPresetHigh, AVCaptureSessionPresetMedium, AVCaptureSessionPresetLow]
 
     var presetCursor=0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +62,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         showOverlay(true)
         
         switchUpdated()
+        
     }
     
     
@@ -137,7 +143,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         stillImageOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
 
         //init the preview feed
-        if captureSession!.canAddOutput(stillImageOutput) {
+        if captureSession!.canAddOutput(stillImageOutput) && false {
             captureSession!.addOutput(stillImageOutput)
             
         
@@ -151,15 +157,48 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             
             previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
             previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.Portrait
+            
+            //Frames are w.r.t. their immediate parent frames (not absolute) ie.
+            previewLayer!.frame = CGRect(x:0,y:0,
+                width:UIScreen.mainScreen().bounds.width,
+                height:UIScreen.mainScreen().bounds.width)
+            
             previewView.layer.addSublayer(previewLayer!)
             
-            print("previewLayer frame: ", previewLayer!.frame)
+
             
             captureSession!.startRunning()
         } else {
-            print("Failed at add Output to capture Session")
+            print("[FAILURE] stillImageOutput[AVCaptureStillImageOutput] not added to capture Session")
         }
 
+        
+        processedVideoOutput = AVCaptureVideoDataOutput()
+        processedVideoOutput!.videoSettings = [kCVPixelBufferPixelFormatTypeKey: NSNumber(unsignedInt:kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
+        processedVideoOutput!.alwaysDiscardsLateVideoFrames = true;
+        
+        if (captureSession!.canAddOutput(processedVideoOutput) && true) {
+            captureSession!.addOutput(processedVideoOutput)
+            print("Added processedVideoOutput[AVCaptureVideoDataOutput] to captureSession")
+            
+            let bounds = UIScreen.mainScreen().bounds
+            let previewViewBounds = previewView.bounds
+            
+            customPreviewLayer = CALayer.init()
+            customPreviewLayer!.bounds = CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width);
+            customPreviewLayer!.position = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0);
+            customPreviewLayer!.setAffineTransform(CGAffineTransformMakeRotation(CGFloat(M_PI/2.0)))
+            
+            previewView.layer.addSublayer(customPreviewLayer!)
+        
+            
+            captureSession!.startRunning()
+            queue = dispatch_queue_create("VideoQueue", DISPATCH_QUEUE_SERIAL)
+            processedVideoOutput!.setSampleBufferDelegate(self,queue: queue)
+
+        } else {
+            print("[FAILURE] processedVideoOutput[AVCaptureVideoDataOutput] not added to capture Session")
+        }
     
         //********** accelerometer inits *********
 
@@ -181,16 +220,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        //Frames are w.r.t. their immediate parent frames (not absolute) ie.
-        previewLayer!.frame = CGRect(x:0,y:0,
-            width:UIScreen.mainScreen().bounds.width,
-            height:UIScreen.mainScreen().bounds.width)
 
         overlayImageView!.frame=CGRect(x:0,y:0,
             width:UIScreen.mainScreen().bounds.width,
             height:UIScreen.mainScreen().bounds.width)
         
-        print("previewLayer frame: ", previewLayer!.frame)
         print("overlayImageView frame: ", overlayImageView!.frame)
         
 
@@ -403,6 +437,31 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
           
         //latestLocation.distanceFromLocation(startLocation)
     
+
+    }
+    
+    // AVCaptureVideoDataOutputSampleBufferDelegate
+    func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
+        print("captureOutput")
+        var imageBuffer =  CMSampleBufferGetImageBuffer(sampleBuffer) //CVImageBufferRef
+        CVPixelBufferLockBaseAddress(imageBuffer!, 0);
+        
+        var width = CVPixelBufferGetWidthOfPlane(imageBuffer!, 0);
+        var height = CVPixelBufferGetHeightOfPlane(imageBuffer!, 0);
+        var bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer!, 0);
+        
+        var lumaBuffer = CVPixelBufferGetBaseAddressOfPlane(imageBuffer!, 0); //Pixel_8 *
+        
+        var grayColorSpace = CGColorSpaceCreateDeviceGray(); //CGColorSpaceRef
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.None.rawValue)
+        var context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, grayColorSpace, bitmapInfo.rawValue) //CGContextRef TODO try this!!
+        var dstImage = CGBitmapContextCreateImage(context) //CGImageRef
+        
+        //waits, blocking thread
+        dispatch_sync(dispatch_get_main_queue(), {
+            self.customPreviewLayer?.contents = dstImage
+            
+        });
 
     }
 }
