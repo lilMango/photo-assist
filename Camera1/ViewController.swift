@@ -185,10 +185,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             let previewViewBounds = previewView.bounds
             
             customPreviewLayer = CALayer.init()
-            customPreviewLayer!.bounds = CGRectMake(0, 0, self.view.frame.size.height, self.view.frame.size.width);
-            customPreviewLayer!.position = CGPointMake(self.view.frame.size.width/2.0, self.view.frame.size.height/2.0);
+
+            customPreviewLayer?.frame = CGRect(x:0,y:0,
+                width:UIScreen.mainScreen().bounds.width,
+                height:UIScreen.mainScreen().bounds.width)
+            customPreviewLayer!.contentsGravity = kCAGravityResizeAspectFill
+
             customPreviewLayer!.setAffineTransform(CGAffineTransformMakeRotation(CGFloat(M_PI/2.0)))
-            
+            print("customPreviewLayer.frame: ",customPreviewLayer!.frame)
             previewView.layer.addSublayer(customPreviewLayer!)
         
             
@@ -307,6 +311,32 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             })
         }
 
+        //////////////////////////// Using customPreviewLayer /////////////////////
+        var image = UIImage(CGImage: self.customPreviewLayer?.contents as! CGImage, scale: 1.0, orientation: UIImageOrientation.Right)
+        print("imageSize:",image.size)
+        
+        //Resizing photo and cropping. Square for now
+        let pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
+        
+        UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
+        
+        image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
+        image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
+        
+        UIGraphicsEndImageContext()
+        
+        if(self.switchSavePhoto.on) {
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        }
+        
+        //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
+        OverlayData.cameraImage=image
+        CVWrapper.setFrameAsSceneImage(image);
+
+        //////////////////////////// END: Using customPreviewLayer /////////////////////
+        
+        
+        
         //THe closest thing to manipulating Z-index of views
         //self.view.bringSubviewToFront(textOverlay)
     }
@@ -362,11 +392,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBAction func changeAVPreset(sender: UISlider) {
 
         //flip from High to low res
-        if( CGFloat(sender.value) > 0.50 && presetCursor==0){
+        if( CGFloat(sender.value) > 0.50 && presetCursor != 3){
             print("change Preset to Low Res")
-            presetCursor=1
+            presetCursor=3
             captureSession!.sessionPreset = possibleAVPresets[presetCursor]
-        }else if (CGFloat(sender.value) <= 0.50 && presetCursor==1) { //
+        }else if (CGFloat(sender.value) <= 0.50 && presetCursor != 0) { //
             print("change Preset to High Res")
             presetCursor=0;
             captureSession!.sessionPreset = possibleAVPresets[presetCursor]
@@ -442,7 +472,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     
     // AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
-        print("captureOutput")
+
         var imageBuffer =  CMSampleBufferGetImageBuffer(sampleBuffer) //CVImageBufferRef
         CVPixelBufferLockBaseAddress(imageBuffer!, 0);
         
@@ -457,10 +487,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         var context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, grayColorSpace, bitmapInfo.rawValue) //CGContextRef TODO try this!!
         var dstImage = CGBitmapContextCreateImage(context) //CGImageRef
         
+
+        let diffHeightWidth=height-width
+        
+        print("width| height| diffHeightWidth:",width,height,diffHeightWidth)
         //waits, blocking thread
         dispatch_sync(dispatch_get_main_queue(), {
             self.customPreviewLayer?.contents = dstImage
-            
+            self.customPreviewLayer?.contentsRect = CGRect(x:0.0,y:0.0,width:1*(Double(height)/Double(width)),height:1.0) //allows us to view exactly square image. Starts from top left. Note* it only crops in the view, but still need to crop for when saving photo
         });
 
     }
