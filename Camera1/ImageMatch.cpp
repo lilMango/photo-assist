@@ -51,10 +51,17 @@ ProcessedImage* ImageMatch::getImageScene() {
  *
  *****************/
 cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) {
-    
+    if ( objDescriptor.empty() ){
+        std::cout << "MatchFinder: Obj Descriptors empty" << std::endl;
+        return scene->getStartImgm();
+    }
+    if ( sceneDescriptor.empty() ) {
+        std::cout << "MatchFinder: Scene Descriptors empty" << std::endl;
+        return scene->getStartImgm();
+    }
     std::vector< DMatch > matches;
     matcher->match(objDescriptor, sceneDescriptor, matches);
-    
+
     double max_dist = 0; double min_dist = 100;
     
     //-- Quick calculation of max and min distances between keypoints

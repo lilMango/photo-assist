@@ -28,4 +28,10 @@
 
 //The scene with the matched ROI obj marked as green
 + (UIImage*) trackObjInSceneFrame;
+
+//indicates whether we can track a scene, given:
+// We have set both Overlay image and Frame object set
+// both Overlay image and Frame object are same resolution TODO
++ (bool) isTrackableScene;
+
 @end

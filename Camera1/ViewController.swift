@@ -476,10 +476,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             OverlayData.cameraImage=image
             CVWrapper.setFrameAsSceneImage(image);
             
-            
-            self.customPreviewLayer?.contents=image.CGImage
-            //self.customPreviewLayer?.contents=CVWrapper.trackObjInSceneFrame().CGImage
-            //TODO  figure out init conditions to tests whether we can use this image like test if overlay and frame not null and same resolution
+            if(CVWrapper.isTrackableScene()) {
+                print("isTrackableScene:[true]");
+                self.customPreviewLayer?.contents=CVWrapper.trackObjInSceneFrame().CGImage! as CGImageRef
+            } else {
+                print("isTrackableScene:[FALSE]");
+                self.customPreviewLayer?.contents=image.CGImage
+            }
 
         });
 

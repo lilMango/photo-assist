@@ -63,4 +63,11 @@
     return res;
 }
 
++ (bool) isTrackableScene {
+    if(ImageMatch::Instance().getImageObj()!=nil && ImageMatch::Instance().getImageScene()!=nil) {        
+        return true;
+    }
+    return false;
+}
+
 @end
