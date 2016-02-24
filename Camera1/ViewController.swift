@@ -191,7 +191,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                 height:UIScreen.mainScreen().bounds.width)
             customPreviewLayer!.contentsGravity = kCAGravityResizeAspectFill
 
-            customPreviewLayer!.setAffineTransform(CGAffineTransformMakeRotation(CGFloat(M_PI/2.0)))
+            //customPreviewLayer!.setAffineTransform(CGAffineTransformMakeRotation(CGFloat(M_PI/2.0)))
             print("customPreviewLayer.frame: ",customPreviewLayer!.frame)
             previewView.layer.addSublayer(customPreviewLayer!)
         
@@ -269,72 +269,18 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
      * *************************************************************
      */
     @IBAction func didPressTakePhoto(sender: UIButton) {
-        
-        if let videoConnection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo) {
-
-            videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
-            stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
-                if (sampleBuffer != nil) {
-                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-                    let dataProvider = CGDataProviderCreateWithCFData(imageData)
-                    let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
-                    
-                    var image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
-
-                    print("imageSize:",image.size)
-                    
-                    //Resizing photo and cropping. Square for now
-                    let pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
-
-                    UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
-
-                    //Crops image so we get the square. Camera doesn't work with previewLayer specs, it captures stuff outside (above and below) the previewLayer frame. So we redraw the image centered of the actual taken photo.
-                    let diffWidthHeight=image.size.height-image.size.width
-                    
-                    image.drawInRect(CGRectMake(0, -diffWidthHeight/2, image.size.width, image.size.height))
-                    image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
-                    
-                    UIGraphicsEndImageContext()
-                    
-                    self.startLocation = self.locationManager?.location
-                    self.startOrientation = self.motionManager?.accelerometerData?.acceleration
-                    
-                    if(self.switchSavePhoto.on) {
-                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-                    }
-                    
-                    //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
-                    OverlayData.cameraImage=image
-                    CVWrapper.setFrameAsSceneImage(image);
-                    
-                }
-            })
-        }
 
         //////////////////////////// Using customPreviewLayer /////////////////////
-        var image = UIImage(CGImage: self.customPreviewLayer?.contents as! CGImage, scale: 1.0, orientation: UIImageOrientation.Right)
+            //Note we had to change the orientation of image here! TODO figure out why!
+        var image = UIImage(CGImage: self.customPreviewLayer?.contents as! CGImage, scale: 1.0, orientation: UIImageOrientation.Up)
         print("imageSize:",image.size)
-        
-        //Resizing photo and cropping. Square for now
-        let pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
-        
-        UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
-        
-        image.drawInRect(CGRectMake(0, 0, image.size.width, image.size.height))
-        image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
-        
-        UIGraphicsEndImageContext()
-        
+
         if(self.switchSavePhoto.on) {
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
         }
-        
-        //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
-        OverlayData.cameraImage=image
-        CVWrapper.setFrameAsSceneImage(image);
 
         //////////////////////////// END: Using customPreviewLayer /////////////////////
-        
+
         
         
         //THe closest thing to manipulating Z-index of views
@@ -488,13 +434,53 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         var dstImage = CGBitmapContextCreateImage(context) //CGImageRef
         
 
-        let diffHeightWidth=height-width
         
-        print("width| height| diffHeightWidth:",width,height,diffHeightWidth)
+
         //waits, blocking thread
         dispatch_sync(dispatch_get_main_queue(), {
-            self.customPreviewLayer?.contents = dstImage
-            self.customPreviewLayer?.contentsRect = CGRect(x:0.0,y:0.0,width:1*(Double(height)/Double(width)),height:1.0) //allows us to view exactly square image. Starts from top left. Note* it only crops in the view, but still need to crop for when saving photo
+            var image = UIImage(CGImage: dstImage!, scale: 1.0, orientation: UIImageOrientation.Right)
+            
+            var minDimension = image.size.height;
+            var diffWidthHeight = image.size.width-image.size.height
+            
+            if (image.size.height > image.size.width){
+                minDimension = image.size.width;
+                diffWidthHeight = image.size.height-image.size.width;
+            }
+            
+            print("image: Width",image.size.width,"\tHeight:",image.size.height,"\t diff=",diffWidthHeight);
+
+            //   ___________0,0
+            //   |         |
+            //   |         | Width
+            //   |         |
+            //   |_________|
+            //     Height
+            
+            //Resizing photo and cropping. Square for now
+            let pictureCanvasSize:CGSize=CGSize(width: minDimension, height: minDimension)
+            
+            UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
+
+            if(image.size.height > image.size.width) {
+                image.drawInRect(CGRectMake(0, CGFloat(-diffWidthHeight/2), image.size.width, image.size.height)) //width/height scales to fit(so use all image)
+            } else {
+                image.drawInRect(CGRectMake(CGFloat(-diffWidthHeight/2),0, image.size.width, image.size.height))
+            }
+            image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
+            
+            UIGraphicsEndImageContext()
+    
+           
+            //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
+            OverlayData.cameraImage=image
+            CVWrapper.setFrameAsSceneImage(image);
+            
+            
+            self.customPreviewLayer?.contents=image.CGImage
+            //self.customPreviewLayer?.contents=CVWrapper.trackObjInSceneFrame().CGImage
+            //TODO  figure out init conditions to tests whether we can use this image like test if overlay and frame not null and same resolution
+
         });
 
     }

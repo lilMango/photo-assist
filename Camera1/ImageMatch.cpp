@@ -74,15 +74,18 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) 
             good_matches.push_back( matches[i]);
         }
     }
-    
-    if (good_matches.size()<4) {
-        std::cout << "[ERROR] Not enough good_matches:" << good_matches.size() << "\n\tReturning original scene image instead" << std::endl;
-        return scene->getStartImgm();
-    }
+
     
     Mat imgm_matches;
     
     drawKeypoints( getImageScene()->getStartImgm(), ImageMatch::Instance().getImageScene()->getKeypoints(), imgm_matches, Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+    
+    if (good_matches.size()<4) {
+        std::cout << "[ERROR] Not enough good_matches:" << good_matches.size() << "\n\tReturning original scene image instead" << std::endl;
+        return imgm_matches;
+        //        return scene->getStartImgm();
+    }
+
     
     bool tmp=false;
     if(tmp) { std::cout << "exit keypoint drawing:" << std::endl; return imgm_matches; }

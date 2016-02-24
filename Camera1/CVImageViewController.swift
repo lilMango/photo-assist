@@ -40,7 +40,7 @@ class CVImageViewController:UIViewController {
         let overlayKpImage:UIImage = CVWrapper.getOverlayProcessedUIImage()
         let camKpImage:UIImage = CVWrapper.trackObjInSceneFrame()
         
-        overlayWholeImgView!.image = OverlayData.overlayImage
+        overlayWholeImgView!.image = UIImage(CGImage: OverlayData.overlayImage.CGImage!, scale: 1.0, orientation: UIImageOrientation.Up)
         overlayImgView!.image = overlayKpImage
         cameraImgView!.image = camKpImage
     }
