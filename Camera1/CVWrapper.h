@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+
+
 //OBJ-C only code. Their implementations *.mm will handle c++, obj-c and swift? code
 @interface CVWrapper : NSObject
-
 
 + (UIImage*) toKeypointsImage:(UIImage*)inputImage;
 
@@ -27,7 +28,7 @@
 + (UIImage*) getOverlayProcessedUIImage;
 
 //The scene with the matched ROI obj marked as green
-+ (UIImage*) trackObjInSceneFrame;
++ (UIImage*) trackObjInSceneFrame:(int)drawingBitmasks;
 
 //indicates whether we can track a scene, given:
 // We have set both Overlay image and Frame object set

@@ -12,3 +12,9 @@ class ConstantsConfig {
 
     static var kDeltaOrientationThreshold:Double = 0.05
 }
+
+enum DrawBitmasks: Int32 {
+    case KEYPOINTS=0x01
+    case ROIBOX=0x02
+    case TRACKED=0x04
+};

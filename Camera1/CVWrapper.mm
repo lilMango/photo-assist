@@ -55,10 +55,11 @@
     return res;
 }
 
-+ (UIImage*) trackObjInSceneFrame {
++ (UIImage*) trackObjInSceneFrame:(int)drawingBitmasks {
     cv::Mat imgm_matches = ImageMatch::Instance().matchImages(
                                                          ImageMatch::Instance().getImageObj()->getDescriptors(),
-                                                         ImageMatch::Instance().getImageScene()->getDescriptors());
+                                                         ImageMatch::Instance().getImageScene()->getDescriptors(),
+                                                         drawingBitmasks);
     UIImage* res = [UIImage imageWithCVMat:imgm_matches];
     return res;
 }

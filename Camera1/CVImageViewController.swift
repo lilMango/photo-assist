@@ -22,10 +22,6 @@ class CVImageViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let picWidth=UIScreen.mainScreen().bounds.width
-        print("screenWidth:",picWidth)
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,7 +34,7 @@ class CVImageViewController:UIViewController {
         
         
         let overlayKpImage:UIImage = CVWrapper.getOverlayProcessedUIImage()
-        let camKpImage:UIImage = CVWrapper.trackObjInSceneFrame()
+        let camKpImage:UIImage = CVWrapper.trackObjInSceneFrame(DrawBitmasks.KEYPOINTS.rawValue | DrawBitmasks.ROIBOX.rawValue | DrawBitmasks.TRACKED.rawValue)
         
         overlayWholeImgView!.image = UIImage(CGImage: OverlayData.overlayImage.CGImage!, scale: 1.0, orientation: UIImageOrientation.Up)
         overlayImgView!.image = overlayKpImage

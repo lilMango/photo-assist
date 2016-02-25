@@ -478,7 +478,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             
             if(CVWrapper.isTrackableScene()) {
                 print("isTrackableScene:[true]");
-                self.customPreviewLayer?.contents=CVWrapper.trackObjInSceneFrame().CGImage! as CGImageRef
+                //
+                self.customPreviewLayer?.contents=CVWrapper.trackObjInSceneFrame( DrawBitmasks.ROIBOX.rawValue | DrawBitmasks.TRACKED.rawValue).CGImage! as CGImageRef
             } else {
                 print("isTrackableScene:[FALSE]");
                 self.customPreviewLayer?.contents=image.CGImage

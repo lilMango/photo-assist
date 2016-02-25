@@ -27,6 +27,11 @@ cv::Mat getKeypoints (cv::Mat image, cv::Rect rect);
 /** **/
 class ImageMatch {
 public:
+    enum DrawBitmasks{
+        KEYPOINTS=0x01,
+        ROIBOX=0x02,
+        TRACKED=0x04
+    };
     //zomg Singleton pattern!
     static ImageMatch &Instance() {
         static ImageMatch imageMatchInstance;
@@ -43,10 +48,11 @@ public:
     void setImageObj(ProcessedROIImage *img);
     void setImageScene(ProcessedImage *img);
     
-    cv::Mat matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor);
+    cv::Mat matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor, int drawingBitmasks);
     ProcessedROIImage* getImageObj();
     ProcessedImage* getImageScene();
     //void reset();
+    
 protected:
     ProcessedROIImage *obj;//has ROI image
     ProcessedImage *scene;

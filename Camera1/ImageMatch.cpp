@@ -50,7 +50,32 @@ ProcessedImage* ImageMatch::getImageScene() {
  * else will show JUST the scene
  *
  *****************/
-cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) {
+cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor, int drawBitmasks) {
+    
+    Mat imgm_matches = getImageScene()->getStartImgm();
+    
+    if(drawBitmasks & ROIBOX) {
+        cv:Rect roiBox=ImageMatch::getImageObj()->roiBox;
+
+        std::vector<Point2f> roiCorners(4);
+        roiCorners[0] = cvPoint(roiBox.x,roiBox.y); roiCorners[1] = cvPoint(roiBox.x+roiBox.width,roiBox.y);
+        roiCorners[2] = cvPoint(roiBox.x,roiBox.y+roiBox.height); roiCorners[3] = cvPoint(roiBox.x+roiBox.width,roiBox.y+roiBox.height);
+        
+        line( imgm_matches, roiCorners[0] , roiCorners[1] , Scalar( 255, 255, 0), 2 );
+        line( imgm_matches, roiCorners[1] , roiCorners[3] , Scalar( 255, 255, 0), 2 );
+        line( imgm_matches, roiCorners[3] , roiCorners[2] , Scalar( 255, 255, 0), 2 );
+        line( imgm_matches, roiCorners[2] , roiCorners[0] , Scalar( 255, 255, 0), 2 );
+    }
+    
+    if (drawBitmasks & KEYPOINTS) {
+        drawKeypoints( getImageScene()->getStartImgm(), ImageMatch::Instance().getImageScene()->getKeypoints(), imgm_matches, Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+    }
+
+    if(!(drawBitmasks & TRACKED)){
+        std::cout << "TRACK OBJ[OFF]" << std::endl;
+        return imgm_matches;
+    }
+    
     if ( objDescriptor.empty() ){
         std::cout << "MatchFinder: Obj Descriptors empty" << std::endl;
         return scene->getStartImgm();
@@ -59,6 +84,8 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) 
         std::cout << "MatchFinder: Scene Descriptors empty" << std::endl;
         return scene->getStartImgm();
     }
+    
+    
     std::vector< DMatch > matches;
     matcher->match(objDescriptor, sceneDescriptor, matches);
 
@@ -81,21 +108,14 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) 
             good_matches.push_back( matches[i]);
         }
     }
-
     
-    Mat imgm_matches;
     
-    drawKeypoints( getImageScene()->getStartImgm(), ImageMatch::Instance().getImageScene()->getKeypoints(), imgm_matches, Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
     
     if (good_matches.size()<4) {
         std::cout << "[ERROR] Not enough good_matches:" << good_matches.size() << "\n\tReturning original scene image instead" << std::endl;
         return imgm_matches;
-        //        return scene->getStartImgm();
     }
 
-    
-    bool tmp=false;
-    if(tmp) { std::cout << "exit keypoint drawing:" << std::endl; return imgm_matches; }
     
     //-- Localize the object ------------------------------------
     std::vector<Point2f> obj;
@@ -124,7 +144,7 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor) 
     perspectiveTransform( obj_corners, scene_corners, H);
     
     //-- Draw lines between the corners (the mapped object in the scene - image_2 )
-    
+            std::cout << "SCENE_CORNERS\t[0]=" << scene_corners[0] <<"\t[1]=" << scene_corners[1] << "\t[2]=" << scene_corners[2] << "\t[3]=" << scene_corners[3] << std::endl;
     line( imgm_matches, scene_corners[0] , scene_corners[1] , Scalar( 0, 255, 0), 10 );
     line( imgm_matches, scene_corners[1] , scene_corners[2] , Scalar( 0, 255, 0), 10 );
     line( imgm_matches, scene_corners[2] , scene_corners[3] , Scalar( 0, 255, 0), 10 );
