@@ -128,12 +128,17 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor, 
         scene.push_back(ImageMatch::Instance().getImageScene()->getKeypoints()[ good_matches[i].trainIdx ].pt );
     }
     
-    std::cout << "good_matches count:" << good_matches.size() << std::endl;
-    
     Mat H = findHomography( obj, scene, RANSAC );
 
     int objCols = getImageObj()->getStartImgm().cols;
     int objRows = getImageObj()->getStartImgm().rows;
+    
+
+    if(H.dims!=2 ) {
+        std::cout << "[ERROR] malformed Homography Matrix expected (2) dimensions, actual: (" << H.dims << ")\n\tReturning original scene image instead" << std::endl;
+        return imgm_matches;
+        
+    }
     
     //-- Get the corners from the image_1 ( the object to be "detected" )
     std::vector<Point2f> obj_corners(4);
