@@ -37,6 +37,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
 
     var presetCursor=0
     
+    //Frame Rate
+    var frames = 0;
+    var starttime = 0.0;
+    var first = true;
+    var fps = 0.0;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -416,6 +421,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
 
     }
     
+    /*
+     * Get current times for FPS
+     */
+    func currentTimeMillis() -> Double{
+        let nowDouble = NSDate().timeIntervalSince1970
+        return Double(nowDouble*1000)
+    }
+    
     // AVCaptureVideoDataOutputSampleBufferDelegate
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
 
@@ -439,7 +452,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         //waits, blocking thread
         dispatch_sync(dispatch_get_main_queue(), {
             var image = UIImage(CGImage: dstImage!, scale: 1.0, orientation: UIImageOrientation.Right)
-            
+      
             var minDimension = image.size.height;
             var diffWidthHeight = image.size.width-image.size.height
             
@@ -471,11 +484,11 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             
             UIGraphicsEndImageContext()
     
-           
+
             //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
             OverlayData.cameraImage=image
             CVWrapper.setFrameAsSceneImage(image);
-            
+
             if(CVWrapper.isTrackableScene()) {
                 print("isTrackableScene:[true]");
                 //
@@ -485,8 +498,32 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                 self.customPreviewLayer?.contents=image.CGImage
             }
 
+            
+            //FPS
+            var timepassed = self.currentTimeMillis();
+
+            if (self.first)
+            {
+                self.frames = 0;
+                self.starttime = timepassed;
+                self.first = false;
+                return;
+            } else {
+                if (timepassed - self.starttime > 1000.0 && self.frames > 3)
+                {
+                    self.fps = Double( Double(self.frames) / (timepassed - self.starttime)) * 1000.0;
+                    self.starttime = timepassed;
+                    self.frames = 0;
+
+                    print("FPS: ",self.fps, "\tTimep: ",timepassed)
+                }
+            
+            }
+            self.frames++;
         });
 
     }
+    
+    
 }
 
