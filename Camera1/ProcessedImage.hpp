@@ -49,7 +49,7 @@ protected:
 
 class ProcessedROIImage: public ProcessedImage {
 public:
-    cv::Rect roiBox;
+    cv::Rect roiBox; //All values deal with unit w.r.t. original image dimensions. (x=0,y=50,w=75,75) =>image starts at bottom left corner, with 75% of image dimensions. Dont forget to divide by 100
     ProcessedROIImage(cv::Rect,cv::Mat);
     ~ProcessedROIImage(){};
 protected:

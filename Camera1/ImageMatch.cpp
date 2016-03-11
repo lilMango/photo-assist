@@ -54,10 +54,20 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor, 
     
     if(drawBitmasks & ROIBOX) {
         cv:Rect roiBox=ImageMatch::getImageObj()->roiBox;
+        float x = roiBox.x / 100.0f;
+        float y = roiBox.y / 100.0;
+        float w = roiBox.width / 100.0;
+        
+        int size = imgm_matches.rows;
+        if (imgm_matches.cols < size) {
+            size = imgm_matches.cols;
+        }
 
         std::vector<Point2f> roiCorners(4);
-        roiCorners[0] = cvPoint(roiBox.x,roiBox.y); roiCorners[1] = cvPoint(roiBox.x+roiBox.width,roiBox.y);
-        roiCorners[2] = cvPoint(roiBox.x,roiBox.y+roiBox.height); roiCorners[3] = cvPoint(roiBox.x+roiBox.width,roiBox.y+roiBox.height);
+        roiCorners[0] = cvPoint(x * size, y * size);
+        roiCorners[1] = cvPoint((x + w) * size, y * size);
+        roiCorners[2] = cvPoint(x * size,(y+w) * size);
+        roiCorners[3] = cvPoint((x + w) * size, (y+w) * size);
         
         line( imgm_matches, roiCorners[0] , roiCorners[1] , Scalar( 255, 255, 0), 2 );
         line( imgm_matches, roiCorners[1] , roiCorners[3] , Scalar( 255, 255, 0), 2 );

@@ -22,7 +22,6 @@ class OverlaySettingsViewController: UIViewController,
     var libraryPhotos:NSMutableArray!=NSMutableArray()
     let identifier = "CellIdentifier"
     let roiWidth:CGFloat = 200
-    let roiBtn = UIButton(frame: CGRectMake(0, 50, 200, 200))
     let picWidth=UIScreen.mainScreen().bounds.width
 
     override func viewDidLoad() {
@@ -31,37 +30,30 @@ class OverlaySettingsViewController: UIViewController,
         print("screenWidth:",picWidth)
         print("imageView.bounds:",selectedOverlayImgView!.bounds)
         print("imageView.frame:",selectedOverlayImgView!.frame)
-//        selectedOverlayImgView!.bounds=CGRect(x:0, y:0,
-//            width:picWidth,height:picWidth)
-//        selectedOverlayImgView!.frame=CGRect(x:0, y:0,
-//            width:picWidth,height:picWidth)
 
         collectionView.delegate=self
         collectionView.dataSource = self
         fetchPhotoAtIndexFromEnd(0)
 
-//        roiBtn.image = UIImage(named: "halfdome.jpg")
+        let roiBtn = UIButton(frame: CGRectMake(0,75,picWidth/2,picWidth/2)) //y:50 is the margin from header
         roiBtn.contentMode = .ScaleToFill
         roiBtn.userInteractionEnabled = true
         roiBtn.backgroundColor = UIColor.clearColor()
-        roiBtn.layer.cornerRadius = 5
+
         roiBtn.layer.borderWidth = 1
         roiBtn.layer.borderColor = UIColor.yellowColor().CGColor
         roiBtn.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "handlePan:"))
         
         self.view.addSubview(roiBtn)
         
-        //TODO refactor these 2 lines to a global somewhere, it's on here 3x...Also rerun the calcs more efficiently at a different point?
-        let roiPixelBoxWidth = Int32(roiWidth * OverlayData.overlayImage.size.width / picWidth)
-        CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: 0, y: 0, w: roiPixelBoxWidth, h: roiPixelBoxWidth)
+        CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: 0, y: 0, w: 50, h: 50)
     }
     
     override func viewWillAppear(animated: Bool) {
         
         fetchPhotoAtIndexFromEnd(0)
         self.view.sendSubviewToBack(selectedOverlayImgView)
-        
-        print ("roiBtn.Frame:",roiBtn.frame)
+
         
     }
     
@@ -80,7 +72,7 @@ class OverlaySettingsViewController: UIViewController,
         let translation = recognizer.translationInView(self.view)
         if let view = recognizer.view {
             
-            //box stays within bounds
+            //box stays within bounds of IOS points system
             var dX:CGFloat = translation.x
             var dY:CGFloat = translation.y
             
@@ -100,38 +92,18 @@ class OverlaySettingsViewController: UIViewController,
                 || (bottomVX + dY > selectedOverlayImgView.frame.maxY)) {
                 dY = 0
             }
-
-            let overlayImgWidth = OverlayData.overlayImage.size.width
-            let overlayImgHeight = OverlayData.overlayImage.size.height
-            let pointsToPixelsFactor = overlayImgWidth/picWidth
             
             view.center = CGPoint (x:view.center.x + dX,
                 y:view.center.y + dY)
 
 
-            //Get image in terms of Storyboard points coordinates
-            //localize storyboard point coordinates (top left @0,0)
-            OverlayData.roiBox = CGRect(x:view.frame.minX, y:view.frame.minY-topMargin, width:roiWidth, height:roiWidth)
+            //localized storyboard point coordinates (top left @0,0) w.r.t the camera view (i.e. iphone storyboard global points -> localized story points of cameraview)
+            let roiPointBox = CGRect(x:view.frame.minX, y:view.frame.minY-topMargin, width:50, height:50)
             
-
-            let roi_pw =  OverlayData.roiBox.size.width * pointsToPixelsFactor
-            let roi_px =  OverlayData.roiBox.minX * pointsToPixelsFactor
-            let roi_py =  OverlayData.roiBox.minY * pointsToPixelsFactor
+            //storyboard points -> percentage of original image (i.e. unit system * 100, so we're passing ints b/c cv::Rect stores int)
+            OverlayData.roiBox = CGRect(x:roiPointBox.minX/picWidth * 100 , y:roiPointBox.minY/picWidth * 100, width:50, height:50)
             
-            print("@OverlaySettings. points2Pixel:",pointsToPixelsFactor,
-                "\n\tw :", OverlayData.roiBox.size.width,"\tx :", OverlayData.roiBox.minX,"\t y:",OverlayData.roiBox.minY,
-                "\n\twp:",roi_pw,"\txp:", roi_px,"\twy:",roi_py)
-
-            //store in terms of pixels //TODO? or just use roiBox as percentage
-            OverlayData.roiBox = CGRect(x:roi_px,
-                y:roi_py,
-                width:roi_pw,
-                height:roi_pw)
-            
-            
-            //TODO refactor these 2 lines to a global somewhere, it's on here 3x...Also rerun the calcs more efficiently at a different point? <-- try or calculating when finishing dragging, ie on up
-            let roiPixelBoxWidth = Int32(roiWidth * OverlayData.overlayImage.size.width / picWidth)
-            CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: Int32(roi_px), y: Int32(roi_py), w: roiPixelBoxWidth, h: roiPixelBoxWidth)
+            CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: Int32(OverlayData.roiBox.minX), y: Int32(OverlayData.roiBox.minY), w: 50, h: 50)
         }
         recognizer.setTranslation(CGPointZero, inView: self.view)
     }
@@ -175,11 +147,7 @@ class OverlaySettingsViewController: UIViewController,
             //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
             OverlayData.overlayImage=selectedOverlayImgView.image
             
-            //Start precalcs on image
-            //TODO refactor these 2 lines to a global somewhere, it's on here 3x...Also rerun the calcs more efficiently at a different point?
-            var roiPixelBoxWidth = Int32(roiWidth * OverlayData.overlayImage.size.width / picWidth)
-            
-            CVWrapper.setOverlayAsObjectImage(temp, x: 0, y: 0, w: roiPixelBoxWidth, h: roiPixelBoxWidth)
+            CVWrapper.setOverlayAsObjectImage(OverlayData.overlayImage, x: Int32(OverlayData.roiBox.minX), y: Int32(OverlayData.roiBox.minY), w: 50, h: 50)
             
     }
     
