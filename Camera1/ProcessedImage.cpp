@@ -34,7 +34,6 @@ cv::Mat ProcessedImage::getDescriptors() {
 }
 
 void ProcessedImage::detectAndCompute(cv::Ptr< cv::FeatureDetector >detector, cv::Ptr< cv::DescriptorMatcher > matcher) {
-    std::cout << "@ProcessedImage detectAndCompute" << std::endl;
     detector->detect(originalImg, keypoints);
     detector->compute(originalImg, keypoints,descriptors);
     
@@ -49,7 +48,6 @@ void ProcessedImage::detectAndCompute(cv::Ptr< cv::FeatureDetector >detector, cv
 /////////   ProcessedROIImage class methods ///////////////////////////
 //////////////////////////////////////////////////////////////////////
 ProcessedROIImage::ProcessedROIImage(cv::Rect rect, cv::Mat origImgm):ProcessedImage(origImgm) {
-    std::cout << "@ProcessedROIImage constructor" << std::endl;
     roiBox=rect;
     originalImg = cv::Mat(origImgm, rect);
 }

@@ -148,7 +148,7 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         stillImageOutput!.outputSettings = [AVVideoCodecKey: AVVideoCodecJPEG]
 
         //init the preview feed
-        if captureSession!.canAddOutput(stillImageOutput) && false {
+        if captureSession!.canAddOutput(stillImageOutput) && true {
             captureSession!.addOutput(stillImageOutput)
             
         
@@ -197,7 +197,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             customPreviewLayer!.contentsGravity = kCAGravityResizeAspectFill
 
             //customPreviewLayer!.setAffineTransform(CGAffineTransformMakeRotation(CGFloat(M_PI/2.0)))
-            print("customPreviewLayer.frame: ",customPreviewLayer!.frame)
             previewView.layer.addSublayer(customPreviewLayer!)
         
             
@@ -233,9 +232,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         overlayImageView!.frame=CGRect(x:0,y:0,
             width:UIScreen.mainScreen().bounds.width,
             height:UIScreen.mainScreen().bounds.width)
-        
-        print("overlayImageView frame: ", overlayImageView!.frame)
-        
 
     }
     
@@ -270,12 +266,14 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var AVPresetSlider: UISlider!
     
     /* *************************************************************
-     * Capturing Photo sequence (get buffer, saving it)
+     * Capturing Photo sequence (get buffer, saving it); taking photo
+     * ------------------------------------------------------------
+     * Currently uses two outputs. One with normal color and the greyscale with object detected
      * *************************************************************
      */
     @IBAction func didPressTakePhoto(sender: UIButton) {
 
-        //////////////////////////// Using customPreviewLayer /////////////////////
+        //////////////////////////// Using customPreviewLayer the realtime frame rendering /////////////////////
             //Note we had to change the orientation of image here! TODO figure out why!
         var image = UIImage(CGImage: self.customPreviewLayer?.contents as! CGImage, scale: 1.0, orientation: UIImageOrientation.Up)
         print("imageSize:",image.size)
@@ -287,9 +285,39 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         //////////////////////////// END: Using customPreviewLayer /////////////////////
 
         
+        if let videoConnection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo) {
+            
+            videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
+            stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: {(sampleBuffer, error) in
+                if (sampleBuffer != nil) {
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                    let dataProvider = CGDataProviderCreateWithCFData(imageData)
+                    let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, CGColorRenderingIntent.RenderingIntentDefault)
+                    
+                    var image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                    
+                    print("imageSize:",image.size)
+                    
+                    //Resizing photo and cropping. Square for now
+                    var pictureCanvasSize:CGSize=CGSize(width: image.size.width, height: image.size.width)
+                    
+                    UIGraphicsBeginImageContextWithOptions(pictureCanvasSize, false, image.scale)
+                    
+                    //Crops image so we get the square. Camera doesn't work with previewLayer specs, it captures stuff outside (above and below) the previewLayer frame. So we redraw the image centered of the actual taken photo.
+                    var diffWidthHeight=image.size.height-image.size.width
+                    
+                    image.drawInRect(CGRectMake(0, -diffWidthHeight/2, image.size.width, image.size.height))
+                    image = UIGraphicsGetImageFromCurrentImageContext() //this returns a normalized image
+                    
+                    UIGraphicsEndImageContext()
+                    
+                    if(self.switchSavePhoto.on) {
+                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+                    }
+                }
+            })
+        }
         
-        //THe closest thing to manipulating Z-index of views
-        //self.view.bringSubviewToFront(textOverlay)
     }
 
     /***************************************
@@ -438,15 +466,21 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
         var width = CVPixelBufferGetWidthOfPlane(imageBuffer!, 0);
         var height = CVPixelBufferGetHeightOfPlane(imageBuffer!, 0);
         var bytesPerRow = CVPixelBufferGetBytesPerRowOfPlane(imageBuffer!, 0);
-        
+        print("bytesPerRow: ",bytesPerRow)
         var lumaBuffer = CVPixelBufferGetBaseAddressOfPlane(imageBuffer!, 0); //Pixel_8 *
         
         var grayColorSpace = CGColorSpaceCreateDeviceGray(); //CGColorSpaceRef
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.None.rawValue)
-        var context = CGBitmapContextCreate(lumaBuffer, width, height, 8, bytesPerRow, grayColorSpace, bitmapInfo.rawValue) //CGContextRef TODO try this!!
-        var dstImage = CGBitmapContextCreateImage(context) //CGImageRef
         
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.None.rawValue)
 
+        var context = CGBitmapContextCreate(lumaBuffer,      // pointer to data
+                                            width,           // width of bitmap
+                                            height,          // height of bitmap
+                                            8,               // bits per component
+                                            bytesPerRow,     // bytes per row
+                                            grayColorSpace,   // color space
+                                            bitmapInfo.rawValue) //CGContextRef TODO try this!!
+        var dstImage = CGBitmapContextCreateImage(context) //CGImageRef
         
 
         //waits, blocking thread
@@ -461,8 +495,6 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
                 diffWidthHeight = image.size.height-image.size.width;
             }
             
-            print("image: Width",image.size.width,"\tHeight:",image.size.height,"\t diff=",diffWidthHeight);
-
             //   ___________0,0
             //   |         |
             //   |         | Width

@@ -15,7 +15,6 @@ using namespace cv;
 /////////   ImageMatch class methods ///////////////////////////
 //////////////////////////////////////////////////////////////////////
 void ImageMatch::setImageObj(ProcessedROIImage *img) {
-    std::cout<< "@ImageMatch.setImageObj" << std::endl;
     delete(obj);
     obj = NULL;
     obj = img;
@@ -26,7 +25,6 @@ void ImageMatch::setImageObj(ProcessedROIImage *img) {
 }
 
 void ImageMatch::setImageScene(ProcessedImage *img) {
-        std::cout<< "@ImageMatch.setImageScene" << std::endl;
     delete(scene);
     scene = NULL;
     scene= img;
@@ -148,8 +146,8 @@ cv::Mat ImageMatch::matchImages(cv::Mat objDescriptor, cv::Mat sceneDescriptor, 
     
     perspectiveTransform( obj_corners, scene_corners, H);
     
-    //-- Draw lines between the corners (the mapped object in the scene - image_2 )
-            std::cout << "SCENE_CORNERS\t[0]=" << scene_corners[0] <<"\t[1]=" << scene_corners[1] << "\t[2]=" << scene_corners[2] << "\t[3]=" << scene_corners[3] << std::endl;
+
+    //-- Draw lines between the corners (the mapped object in the scene - image_2 )            std::cout << "SCENE_CORNERS\t[0]=" << scene_corners[0] <<"\t[1]=" << scene_corners[1] << "\t[2]=" << scene_corners[2] << "\t[3]=" << scene_corners[3] << std::endl;
     line( imgm_matches, scene_corners[0] , scene_corners[1] , Scalar( 0, 255, 0), 10 );
     line( imgm_matches, scene_corners[1] , scene_corners[2] , Scalar( 0, 255, 0), 10 );
     line( imgm_matches, scene_corners[2] , scene_corners[3] , Scalar( 0, 255, 0), 10 );
