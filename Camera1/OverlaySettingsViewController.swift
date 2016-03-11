@@ -50,10 +50,10 @@ class OverlaySettingsViewController: UIViewController,
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        libraryPhotos!.removeAllObjects()
         fetchPhotoAtIndexFromEnd(0)
         self.view.sendSubviewToBack(selectedOverlayImgView)
-
+        collectionView!.reloadData()
         
     }
     
@@ -122,7 +122,6 @@ class OverlaySettingsViewController: UIViewController,
         let imgView = UIImageView.init(frame: CGRectMake(0,0,100, 100))
         imgView.image=libraryPhotos[indexPath.row] as? UIImage
         
-        cell.imageView=imgView
         cell.addSubview(imgView)
 
         return cell
@@ -158,7 +157,7 @@ class OverlaySettingsViewController: UIViewController,
      // Repeatedly call the following method while incrementing
      // the index until all the photos are fetched
     func fetchPhotoAtIndexFromEnd(index:Int) {
-        
+
         let imgManager = PHImageManager.defaultManager()
         
         // Note that if the request is not set to synchronous
