@@ -49,6 +49,13 @@ void ProcessedImage::detectAndCompute(cv::Ptr< cv::FeatureDetector >detector, cv
 //////////////////////////////////////////////////////////////////////
 ProcessedROIImage::ProcessedROIImage(cv::Rect rect, cv::Mat origImgm):ProcessedImage(origImgm) {
     roiBox=rect;
-    originalImg = cv::Mat(origImgm, rect);
+    
+    //convert Unit Percentage ROI to pixels
+    float percToPixels = origImgm.cols / 100.0;
+    cv::Rect pixROI = cv::Rect(rect.x * percToPixels,
+                               rect.y * percToPixels,
+                               rect.width * percToPixels,
+                               rect.height * percToPixels);
+    originalImg = cv::Mat(origImgm, pixROI);
 }
 

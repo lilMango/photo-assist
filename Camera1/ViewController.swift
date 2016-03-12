@@ -275,7 +275,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
 
         //////////////////////////// Using customPreviewLayer the realtime frame rendering /////////////////////
             //Note we had to change the orientation of image here! TODO figure out why!
-        var image = UIImage(CGImage: self.customPreviewLayer?.contents as! CGImage, scale: 1.0, orientation: UIImageOrientation.Up)
+        var image = UIImage(CGImage: OverlayData.cameraImage.CGImage! as! CGImage, scale: 1.0, orientation: UIImageOrientation.Up)
+//        var image = UIImage(CGImage: self.customPreviewLayer?.contents as! CGImage, scale: 1.0, orientation: UIImageOrientation.Up)
         print("imageSize:",image.size)
 
         if(self.switchSavePhoto.on) {
@@ -516,14 +517,13 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,
             
             UIGraphicsEndImageContext()
     
-
-            //TODO: Remove for DEBUGGing tab for OpenCV visual comparisons
+            
             OverlayData.cameraImage=image
             CVWrapper.setFrameAsSceneImage(image);
 
             if(CVWrapper.isTrackableScene()) {
                 print("isTrackableScene:[true]");
-                //
+
                 self.customPreviewLayer?.contents=CVWrapper.trackObjInSceneFrame( DrawBitmasks.ROIBOX.rawValue | DrawBitmasks.TRACKED.rawValue).CGImage! as CGImageRef
             } else {
                 print("isTrackableScene:[FALSE]");
